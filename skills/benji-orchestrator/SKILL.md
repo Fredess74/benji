@@ -43,7 +43,9 @@ If cash is tight, lead with free steps.
 - **Authority:** renters/business tenants → say the landlord approves building work; offer a forwardable note.
 
 ## As a business agent (OpenClaw etc.)
-Schedule `benji-follow-up` monthly and on task due dates. Draft messages and applications; send nothing, book
+If the host has a scheduler and the user requests follow-up, configure `benji-follow-up` at the agreed frequency
+and verify setup. Otherwise offer a manual/calendar reminder; do not claim a future run is scheduled.
+Draft messages and applications; send nothing, book
 nothing, buy nothing without the owner's explicit OK for that specific action. One memory folder per location.
 Tasks in `plan.md` with Owner = your channel (e.g. `openclaw`) were assigned from the dashboard: on each run do
 them within these rules, update their Status and log it.

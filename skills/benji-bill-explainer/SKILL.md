@@ -11,8 +11,10 @@ Uses confirmed bills only (`benji-bills-import`) and `../_shared/formulas.md` (B
 1. **One bill:** fixed charge · supply vs delivery (MA: basic service, competitive supplier or municipal
    aggregation - read it, don't assume) · usage-based charges · demand charges (businesses: $/kW of the peak, not
    the total) · taxes · credits.
-2. **Two bills, same meter:** compare **per day** first, then split the $ change exactly into usage effect, rate
-   effect, fixed change; mention extra billing days and estimated reads (a catch-up bill often follows an "E").
+2. **Two bills, same meter:** compare **per day** first, then reconcile the $ change using consumption effect,
+   usage-rate effect, fixed, demand, tax/other and credit changes (see formulas). Keep any unexplained remainder
+   visible. The consumption effect already includes billing-day differences; do not add them a second time.
+   Mention estimated reads (a catch-up bill often follows an "E").
    No charge detail → say rate and usage can't be separated and ask for the charge page.
 3. **Yearly costs** (≥ 360 days on every meter): usage and cost per fuel, fixed share, **usage-based rate**
    (= usage-based charges ÷ usage; the only rate used for savings), gas heating share (needs summer + winter
@@ -25,8 +27,8 @@ Uses confirmed bills only (`benji-bills-import`) and `../_shared/formulas.md` (B
    payment plans (eligibility decided by the utility).
 
 ## Output
-Three lines first: "Your bill rose $X: about $A from more use, $B from a higher rate, $C from 4 extra days." Details
-only when asked.
+Three lines first: total change, explained components (including demand/tax/credit changes), and any unexplained
+remainder or missing evidence. Explain daily use separately from billing-period length. Details only when asked.
 
 ## Memory
 Finding with bill ids and numbers; usage-based rates in `profile.md`; `log.md` line.

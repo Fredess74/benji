@@ -2,7 +2,7 @@
 
 Catalog version 2026-10-24.2. Curated starter catalog. Program amounts change and depend on utility and equipment; no amount is pre-filled. Every record is 'unverified' until a team member confirms it against the official page on a stated date. Final eligibility and amounts are decided by the program operator.
 
-Every record is a **lead**. Before relying on one, open the official page, then record the URL, the date checked and what it says in memory (`decisions.md`). Use the sector column strictly: residential programs never go to businesses, and the other way round.
+Every record is a **lead**. Before relying on one, open the official page, then record the URL, the date checked and what it says in memory (`findings.md`). Use the sector column strictly: residential programs never go to businesses, and the other way round.
 
 Mass Save sponsors (electric): Eversource, National Grid, Unitil, Cape Light Compact. Gas: Eversource, National Grid, Unitil, Berkshire Gas, Liberty. Municipal-utility customers have separate programs.
 

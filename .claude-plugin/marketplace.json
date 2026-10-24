@@ -1,13 +1,13 @@
 {
   "name": "benji",
   "owner": { "name": "Benji team" },
-  "metadata": { "description": "Benji energy-manager plugin for Claude Code." },
+  "metadata": { "description": "Benji AI energy assistant for Claude Code." },
   "plugins": [
     {
       "name": "benji",
       "source": "./",
-      "description": "12 energy-manager skills + orchestrator, and the Benji MCP server (shared memory, cost cross-check).",
-      "version": "0.2.0"
+      "description": "Investigate energy overspending and navigate programs: 12 skills, an orchestrator and optional shared memory with calculation checks.",
+      "version": "0.2.1"
     }
   ]
 }

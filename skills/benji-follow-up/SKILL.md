@@ -25,8 +25,10 @@ year (measured on your bills); estimate was 14-16%; June was warmer."
 2. Δ per day per fuel; price at the **current** usage-based rate, separately from any rate change.
 3. List confounders with direction: weather (not adjusted), hours/occupancy, other equipment, estimated reads,
    billing days.
-4. Label `measured` with confidence (low 2-3 months · medium a season · higher a year). Keep the original estimate
-   next to it; never overwrite. Far below the estimate → was it fully done, reverted, rebound, wrong input?
+4. Label the result **observed change in bills, not verified savings attributable to the action**. Explain data
+   quality, comparability and confounders; a longer observation period alone does not establish confidence or
+   causation. Keep the original estimate next to it; never overwrite. Far below the estimate → was it fully
+   done, reverted, rebound, wrong input?
 
 ## Memory
 Each check-in in `log.md`; task statuses in `plan.md`; results as findings ("Result: LED - measured"). Real-time

@@ -6,8 +6,8 @@
   "author": {
     "name": "Vladimir Putkov"
   },
-  "homepage": "https://github.com/VladimirPutkov/benji",
-  "repository": "https://github.com/VladimirPutkov/benji",
+  "homepage": "https://github.com/Fredess74/benji",
+  "repository": "https://github.com/Fredess74/benji",
   "keywords": [
     "energy",
     "sustainability",
@@ -29,8 +29,8 @@
           "Help me understand my building's energy bills and choose the next affordable improvement.",
           "I rent a cafe in Massachusetts. Help me reduce energy waste and prepare a plan for my landlord."
         ],
-        "websiteURL": "https://github.com/VladimirPutkov/benji",
-        "supportURL": "https://github.com/VladimirPutkov/benji/issues",
+        "websiteURL": "https://github.com/Fredess74/benji",
+        "supportURL": "https://github.com/Fredess74/benji/issues",
         "logo": "assets/benji-app-icon.svg",
         "composerIcon": "assets/benji-app-icon.svg",
         "brandColor": "#2E6A4F"

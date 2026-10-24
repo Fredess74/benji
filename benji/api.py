@@ -1,12 +1,13 @@
-"""HTTP API used by the (upcoming) Benji Dashboard and future integrations.
+"""HTTP API used by the Benji Dashboard and assistant integrations.
 
 Run:  python -m uvicorn benji.api:app --host 127.0.0.1 --port 8000
-No authentication yet: bind to localhost only (see README security note).
+Optional shared bearer key across data routes; bind to localhost by default.
 """
 
 from __future__ import annotations
 
 import os
+import secrets
 from datetime import datetime, timezone
 from typing import Any, Optional
 
@@ -30,6 +31,19 @@ app = FastAPI(title="Benji API", version="0.1.0",
 store = Store()
 
 MAX_UPLOAD_BYTES = 10 * 1024 * 1024
+
+
+@app.middleware("http")
+async def protect_data_routes(request: Request, call_next):
+    """A configured key must protect every data route, including the calculator API."""
+    path = request.url.path
+    protected = path == "/api" or path.startswith(("/api/", "/memory/", "/assistant/"))
+    if protected and path != "/assistant/openapi.json":
+        try:
+            _require_key(request)
+        except HTTPException as exc:
+            return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
+    return await call_next(request)
 
 
 @app.exception_handler(RequestValidationError)
@@ -70,7 +84,7 @@ def index():
 def integrations():
     return [
         {"id": "http_api", "name": "Benji HTTP API", "status": "available",
-         "detail": "Local REST API over the same skill functions (see /docs). No authentication yet."},
+         "detail": "Local REST API over the same skill functions (see /docs). Optional BENJI_API_KEY; no user accounts."},
         {"id": "ai_explanations", "name": "AI explanations (Anthropic)",
          "status": "configured" if os.environ.get("ANTHROPIC_API_KEY") else "not_configured",
          "detail": "Optional. Rewords validated results only; deterministic summaries are used otherwise."},
@@ -79,8 +93,8 @@ def integrations():
                    "inside the Claude Desktop app. Config: integrations/claude/claude_desktop_config.json; also "
                    "bundled in the Claude Code plugin (.claude-plugin/, .mcp.json)."},
         {"id": "chatgpt_actions", "name": "ChatGPT custom GPT (Actions)", "status": "ready_to_configure",
-         "detail": "OpenAPI schema at /assistant/openapi.json and integrations/chatgpt/. Needs a public HTTPS URL "
-                   "(tunnel) and BENJI_API_KEY; not yet tested inside ChatGPT."},
+         "detail": "OpenAPI schema at /assistant/openapi.json and integrations/chatgpt/. Needs a separately "
+                   "secured HTTPS service and BENJI_API_KEY; not yet tested inside ChatGPT."},
         {"id": "openclaw", "name": "OpenClaw business agent", "status": "ready_to_configure",
          "detail": "Load the same skills/ folder (13 SKILL.md files) and give the agent the benji-memory/ folder "
                    "(or HTTP /memory/*). Tasks assigned to 'openclaw' in plan.md are its to do. Not yet tested "
@@ -523,10 +537,11 @@ def demo_reset():
 
 
 # --- assistant endpoints (ChatGPT Actions, OpenClaw, dashboard quick start) ---------------------------
-# Optional shared secret: set BENJI_API_KEY before exposing the server through a tunnel.
+# Optional shared secret. This is a single-user service, not multi-tenant authorization.
 def _require_key(request: Request) -> None:
     key = os.environ.get("BENJI_API_KEY")
-    if key and request.headers.get("authorization", "") != f"Bearer {key}":
+    supplied = request.headers.get("authorization", "")
+    if key and not secrets.compare_digest(supplied.encode(), f"Bearer {key}".encode()):
         raise HTTPException(401, "Missing or invalid bearer token")
 
 
@@ -586,7 +601,7 @@ def a_bills(request: Request, property_id: str, body: BillsIn):
     return _assist(assistant.add_bills, store, property_id, body.bills, body.confirmed, _channel(request))
 
 
-@app.post("/assistant/properties/{property_id}/bills/confirm", tags=["assistant"], operation_id="confirmBills")
+@app.post("/assistant/properties/{property_id}/bills/confirm", tags=["assistant"], operation_id="confirmPropertyBills")
 def a_confirm(request: Request, property_id: str, body: ConfirmIn):
     _require_key(request)
     return _assist(assistant.confirm_bills, store, property_id, body.bill_ids, _channel(request))

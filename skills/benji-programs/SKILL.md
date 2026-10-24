@@ -9,9 +9,11 @@ Data: `../_shared/data/ma-programs.md` (all records are **leads** until checked 
 
 ## Find
 1. Sector strictly: home 1-4 units → residential · apartment 5+ → multifamily · business/office → business.
-   Renters are residential but can't take owner-only offers.
+   Residential tenants stay in the residential route but can't take owner-only offers. Business tenants stay
+   in the business route; renting a cafe or shop does not make it a residential property.
 2. Utility: Mass Save sponsors are listed in the data file; municipal-utility customers → their light department.
-3. Always include the sector's **no-cost assessment** when the cause of high use is unknown.
+3. When the cause of high use is unknown, check the sector's assessment route. Describe it as no-cost only
+   after verifying current provider/program terms; otherwise label cost and eligibility as unverified.
 4. If you can browse: check official sources only (masssave.com, the utility, mass.gov, MassCEC, boston.gov,
    irs.gov, energystar.gov); record URL, date and what it says. Otherwise list "places to check".
 

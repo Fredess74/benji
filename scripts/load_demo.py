@@ -71,13 +71,13 @@ def _bills() -> str:
 
 FINDINGS = f"""# Findings — {NAME}
 {BANNER}
-## F-001 Summer electricity rises with cooling (2026-10-03, benji-bill-explainer)
-- What: Jun-Aug electricity is about 30% above Feb-Apr.
+## F-001 Summer electricity is higher; investigate cooling (2026-10-03, benji-bill-explainer)
+- What: Jun-Aug monthly electricity averages about 32% above Feb-Apr. Cooling is a hypothesis, not a proven cause; not weather-adjusted.
 - Evidence: E10-E12 vs E06-E08 — from your bills ({TAG})
 - Leads to: closing routine, cooling settings
 
-## F-002 Winter gas is mostly heating (2026-10-03, benji-bill-explainer)
-- What: gas use in Dec-Feb is about 6x the summer months.
+## F-002 Winter gas suggests a heating-related increase (2026-10-03, benji-bill-explainer)
+- What: monthly gas use in Dec-Feb averages about 6.5x Jun-Aug. Heating is a hypothesis; cooking, hot water and operating changes also need checking.
 - Evidence: G04-G06 vs G10-G12 — from your bills ({TAG})
 
 ## F-003 Some equipment may run after closing (2026-10-03, benji-usage-patterns)
@@ -95,19 +95,20 @@ Updated 2026-10-03 from findings F-001..F-004 (bills through 2026-08).
 
 ## Next step
 Tonight at closing, walk through and write down what is still running: lights, fridges, espresso machine, water heater.
+Observe only; keep refrigeration, ventilation, hot-water safety and freeze protection running as required.
 
 ## Actions
 | # | Action | Why now | Cash now | Est. effect / yr | Approves |
 |---|---|---|---|---|---|
-| 1 | Closing-time shutdown routine | free, can start tonight | $0 | estimate after walk-through | you |
-| 2 | Free Mass Save small-business assessment | no-cost, needed before quotes | $0 | assessment only | you |
+| 1 | Check nonessential after-hours loads | start with an observation | $0 for the walk-through | estimate after confirming loads | you |
+| 2 | Check Mass Save small-business assessment eligibility | verify the right support route before quotes | confirm program terms | assessment only | account holder / provider |
 | 3 | LED lighting | lights on 11+ hours a day | [quote needed] | estimate after assessment | landlord |
 
 ## Tasks
 | id | Task | Owner | Due | Status |
 |---|---|---|---|---|
 | T1 | Closing-time walk-through | you | 2026-10-25 | in_progress |
-| T2 | Book the free Mass Save assessment | you | 2026-11-07 | not_started |
+| T2 | Check assessment eligibility and terms with the provider | you | 2026-11-07 | not_started |
 | T3 | Draft the landlord note about LED fixtures | openclaw | 2026-11-01 | not_started |
 
 ## Not now, and why

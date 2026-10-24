@@ -5,26 +5,30 @@ Change decomposition for usage-based charges between bill A and B
     consumption effect = (qB - qA) * pA
     price effect       = (pB - pA) * qB
     fixed change       = fixedB - fixedA
-These sum exactly to the change in (usage-based + fixed) charges.
+Demand, taxes/other charges and signed credits are separate effects.
+Any difference from the total change remains explicitly unexplained.
 """
 
 from __future__ import annotations
 
-from ..billing import bill_cost, bill_days, by_meter, canonical_quantity, canonical_unit, charges
+from ..billing import VARIABLE_CATEGORIES, bill_cost, bill_days, by_meter, canonical_quantity, canonical_unit, charges
 from .base import COMPLETED, NEEDS_DATA, Evidence, SkillContext, SkillResult
 
 
 def explain_bill(b: dict) -> dict:
     c = charges(b)
     q = canonical_quantity(b)
-    usage_based = c["variable"] if b.get("line_items") else None
+    items = b.get("line_items") or []
+    usage_based = c["variable"] if any(li["category"] in VARIABLE_CATEGORIES for li in items) else None
+    total = b.get("total_usd")
+    reconciles = total is None or abs(sum(c.values()) - float(total)) <= 0.01
     return {
         "bill_id": b["id"], "fuel": b["fuel"], "period": [str(b["period_start"]), str(b["period_end"])],
         "days": bill_days(b), "quantity": round(q, 2), "unit": canonical_unit(b["fuel"]),
         "total_usd": b.get("total_usd"), "charges": {k: round(v, 2) for k, v in c.items()},
-        "usage_based_rate": round(usage_based / q, 5) if usage_based and q else None,
-        "average_all_in_rate": round(float(b["total_usd"]) / q, 5) if b.get("total_usd") and q else None,
-        "classification_complete": bool(b.get("line_items")),
+        "usage_based_rate": round(usage_based / q, 5) if usage_based is not None and q else None,
+        "average_all_in_rate": round(float(total) / q, 5) if total is not None and q else None,
+        "classification_complete": bool(items) and b.get("line_items_complete", True) and reconciles,
     }
 
 
@@ -36,13 +40,22 @@ def compare(a: dict, b: dict) -> dict:
            "quantity_change": round(eb["quantity"] - ea["quantity"], 2),
            "days_change": eb["days"] - ea["days"]}
     if ea["usage_based_rate"] is not None and eb["usage_based_rate"] is not None:
-        qa, qb, pa, pb = ea["quantity"], eb["quantity"], ea["usage_based_rate"], eb["usage_based_rate"]
-        out["consumption_effect_usd"] = round((qb - qa) * pa, 2)
-        out["price_effect_usd"] = round((pb - pa) * qb, 2)
-        out["fixed_change_usd"] = round(eb["charges"]["fixed"] - ea["charges"]["fixed"], 2)
-        out["demand_change_usd"] = round(eb["charges"]["demand"] - ea["charges"]["demand"], 2)
-        out["other_change_usd"] = round(eb["charges"]["tax_other"] - ea["charges"]["tax_other"], 2)
-        out["method"] = "Usage-based charges split into consumption and price effects."
+        # Display rates are rounded; using them here invents differences on large bills.
+        qa, qb = canonical_quantity(a), canonical_quantity(b)
+        ac, bc = charges(a), charges(b)
+        pa, pb = ac["variable"] / qa, bc["variable"] / qb
+        effects = {"consumption_effect_usd": (qb - qa) * pa,
+                   "price_effect_usd": (pb - pa) * qb,
+                   "fixed_change_usd": bc["fixed"] - ac["fixed"],
+                   "demand_change_usd": bc["demand"] - ac["demand"],
+                   "other_change_usd": bc["tax_other"] - ac["tax_other"],
+                   "credit_change_usd": bc["credits"] - ac["credits"]}
+        out.update({key: round(value, 2) for key, value in effects.items()})
+        out["unexplained_change_usd"] = (round(cb - ca - sum(effects.values()), 2)
+                                         if ca is not None and cb is not None else None)
+        out["method"] = ("Usage-based charges split into consumption and price effects; fixed, demand, "
+                         "taxes/other and signed credit changes are separate. The remainder is unexplained. "
+                         "Billing-day differences are included in consumption, not an additional effect.")
         parts = []
         if abs(out["consumption_effect_usd"]) >= 1:
             parts.append(f"{'more' if out['consumption_effect_usd'] > 0 else 'less'} usage "
@@ -52,7 +65,15 @@ def compare(a: dict, b: dict) -> dict:
                          f"({out['price_effect_usd']:+,.2f} USD)")
         if abs(out["fixed_change_usd"]) >= 1:
             parts.append(f"fixed charges {out['fixed_change_usd']:+,.2f} USD")
+        for field, label in (("demand_change_usd", "demand charges"),
+                             ("other_change_usd", "taxes/other charges"),
+                             ("credit_change_usd", "credits"),
+                             ("unexplained_change_usd", "unexplained difference")):
+            if out[field] is not None and abs(out[field]) >= 0.01:
+                parts.append(f"{label} {out[field]:+,.2f} USD")
         out["summary"] = "Change driven by " + (", ".join(parts) if parts else "no material change") + "."
+        if out["total_change_usd"] is None:
+            out["summary"] += " Total change is unknown because a complete bill total is missing."
         if out["days_change"]:
             out["summary"] += f" The later bill has {out['days_change']:+d} billing day(s)."
     else:
@@ -76,7 +97,8 @@ def run(ctx: SkillContext) -> SkillResult:
     res.outputs = {"bills": explained, "changes": changes}
     unclassified = [e["bill_id"] for e in explained if not e["classification_complete"]]
     if unclassified:
-        res.warnings.append(f"{len(unclassified)} bill(s) lack a charge breakdown; price vs. usage effects unavailable.")
+        res.warnings.append(f"{len(unclassified)} bill(s) lack a complete, reconciled charge breakdown; "
+                            "some effects may be unavailable or unexplained.")
     res.message = f"Explained {len(explained)} bill(s) and {len(changes)} bill-to-bill change(s)."
     res.evidence.append(Evidence("bills.explained", res.message, "user_provided"))
     return res

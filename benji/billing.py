@@ -121,7 +121,7 @@ def bill_cost(b: dict) -> float | None:
     if b.get("total_usd") is not None:
         return float(b["total_usd"])
     items = b.get("line_items") or []
-    if items:
+    if items and b.get("line_items_complete", True):
         return sum(float(li["amount_usd"]) for li in items)
     return None
 

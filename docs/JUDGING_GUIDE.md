@@ -5,7 +5,7 @@
 
 ## Potential Value
 
-The problem is connecting bills, building conditions, available cash, support rules and approval authority. Benji offers reusable energy-management skills in an existing assistant, with a persistent record and a human management view.
+The problem is the gap between an expensive energy bill and an affordable, informed action. Benji helps investigate avoidable electricity/heating spending and makes support programs easier to navigate. It is an AI assistant built from reusable energy skills and a continuing workflow: use it in a regular Claude session, or connect agents and a dashboard to one place record.
 
 The workflow accounts for tenants and owners, starts with low-cost steps where appropriate, and protects comfort. Bill-based guidance requires no special hardware. Host subscriptions and setup remain costs. The UI is English; replying in the user's language is a skill instruction, not validated multilingual service delivery.
 
@@ -15,7 +15,7 @@ Scalability is a hypothesis supported by reusable skills and local reference ada
 
 Inspect `.kiro/specs/`, `.kiro/steering/` and `.kiro/hooks/`. Kiro supported requirements, implementation, tests and iterative simplification. The reusable record joins conversational work with confirmation, task management and calculation cross-checks.
 
-Claude Code packaging declares skills and local MCP tools. ChatGPT packaging supplies skills only. Nine MCP tools expose memory and calculations. The 176 passing checks cover computational and integration components, not every external client. [Kiro](KIRO.md) · [Architecture](ARCHITECTURE.md) · [Verification](VERIFICATION.md)
+The one-upload Claude archive includes the orchestrator and all 12 specialist workflows. Claude Code packaging declares skills and local MCP tools. ChatGPT packaging supplies skills only. Nine MCP tools expose memory and calculations. Automated checks cover computational and integration components, not every external client. [Kiro](KIRO.md) · [Architecture](ARCHITECTURE.md) · [Verification](VERIFICATION.md)
 
 ## Quality and Design
 
@@ -30,7 +30,7 @@ These are design choices, not proven usability gains or an accessibility certifi
 
 ## Three-minute demonstration
 
-To try the dashboard without a connected client: `python scripts/load_demo.py`, then start the server and open
+For a regular Claude session, start with [the single skill archive](../downloads/benji.zip). To try the dashboard without a connected client: set `BENJI_MEMORY` as in the README, run `python scripts/load_demo.py`, then start the server and open
 `/app`. The example place is invented demo data, labelled as such in every file and on screen.
 
 1. Introduce a business tenant with bills and a limited budget.

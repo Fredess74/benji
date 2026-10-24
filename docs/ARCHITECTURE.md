@@ -61,4 +61,8 @@ The calculator retains 13 implemented runtime functions in its historical 20-slo
 
 The prototype is local and single-user. Bills and runtime memory are excluded from Git, but data submitted to an AI host remains subject to that host's privacy practices. The dashboard loads external Google Fonts.
 
-The optional bearer key does not protect every legacy API route. A public service needs authentication, user isolation, secure storage and upload controls. File memory has no transactional multi-writer conflict resolution. Bill confirmation marks results stale automatically; other edits rely on the skill protocol. Channel labels are declared metadata, not verified identities.
+When configured, `BENJI_API_KEY` protects all data route families: `/api/*`, `/memory/*` and `/assistant/*`. The dashboard shell and API descriptions remain public. This shared key is not user accounts or tenant isolation; keep the development server local. A public service needs per-user authorization, secure storage and deployment hardening.
+
+Bill confirmation, changed profile/bill writes through the memory tools, and question answers mark advice stale. Direct filesystem edits still rely on the skill protocol. File memory has no transactional multi-writer conflict resolution. Channel labels are declared metadata, not verified identities.
+
+The bill adapter preserves explicit usage, demand and credit components. Partial components do not become a complete total. Invalid confirmed rows block the cross-check instead of silently reducing totals. A scaled partial-year result carries `annualized=true` and is displayed as an estimate. Legacy total-minus-fixed inputs retain the simplifying assumption that the remainder is usage-based; supply a full breakdown for complex bills.

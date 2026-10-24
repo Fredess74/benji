@@ -10,7 +10,7 @@
 
 from __future__ import annotations
 
-from ..billing import (SUMMER_MONTHS, WINTER_MONTHS, as_date, bill_cost, bill_days, by_fuel, by_meter,
+from ..billing import (SUMMER_MONTHS, WINTER_MONTHS, VARIABLE_CATEGORIES, as_date, bill_cost, bill_days, by_fuel, by_meter,
                        canonical_unit, charges, latest_window, mid_month, safe_canonical)
 from ..units import to_kbtu
 from .base import COMPLETED, NEEDS_DATA, Evidence, SkillContext, SkillResult
@@ -77,7 +77,7 @@ def fuel_summary(fuel: str, bills: list[dict], override: dict | None = None) -> 
         c = charges(b)
         for k in split:
             split[k] += c[k]
-        if b.get("line_items"):
+        if any(li["category"] in VARIABLE_CATEGORIES for li in (b.get("line_items") or [])):
             classified_qty += safe_canonical(b) or 0.0
     costs = [bill_cost(b) for b in window]
     known = [c for c in costs if c is not None]

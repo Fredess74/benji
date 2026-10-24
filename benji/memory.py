@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import csv
 import io
+import math
 import os
 import re
 import shutil
@@ -85,7 +86,10 @@ def write_file(slug: str, name: str, content: str, channel: str = "agent", skill
     if name == "log.md":
         raise MemoryError_("log.md is append-only: use append_log")
     path = _file(slug, name)
+    changed = _read(path) != content
     path.write_text(content, encoding="utf-8")
+    if changed and name in ("profile.md", "bills.csv"):
+        _mark_stale(slug, f"{name} changed")
     append_log(slug, skill or "-", channel, f"wrote {name}")
     return {"slug": slug, "file": name, "bytes": len(content.encode("utf-8"))}
 
@@ -149,7 +153,20 @@ def _read(path: Path) -> str:
 
 def read_bills(slug: str) -> list[dict]:
     text = _read(_place(slug) / "bills.csv")
-    return [dict(r) for r in csv.DictReader(io.StringIO(text))] if text.strip() else []
+    if not text.strip():
+        return []
+    reader = csv.DictReader(io.StringIO(text))
+    required = {"bill_id", "fuel", "period_start", "period_end", "quantity", "unit", "status"}
+    if not required.issubset(reader.fieldnames or []):
+        raise MemoryError_("bills.csv is missing required columns: " + ", ".join(sorted(required - set(reader.fieldnames or []))))
+    rows = [dict(row) for row in reader]
+    if any(None in row or any(value is None for value in row.values()) for row in rows):
+        raise MemoryError_("bills.csv contains a row with the wrong number of columns; quote commas inside values")
+    for row in rows:
+        row["status"] = row["status"].strip().lower()
+        if row["status"] not in {"pending", "confirmed", "corrected", "excluded"}:
+            raise MemoryError_(f"Bill {row['bill_id']}: status must be pending, confirmed, corrected or excluded")
+    return rows
 
 
 def read_log(slug: str) -> list[dict]:
@@ -211,12 +228,19 @@ def confirm_bills(slug: str, bill_ids: list[str] | None, by: str, channel: str =
     rows = read_bills(slug)
     if not rows:
         return {"confirmed": 0}
+    # Validate every selected row before changing any status.
+    for r in rows:
+        if r.get("status") == "pending" and (bill_ids is None or r.get("bill_id") in bill_ids):
+            try:
+                _bill_input(r)
+            except ValueError as exc:
+                raise MemoryError_(f"Bill {r.get('bill_id')}: {exc}") from exc
     n = 0
     for r in rows:
         if r.get("status") == "pending" and (bill_ids is None or r.get("bill_id") in bill_ids):
             r["status"], r["confirmed_by"], r["confirmed_on"] = "confirmed", _clean(by), date.today().isoformat()
             n += 1
-    fields = list(rows[0].keys())
+    fields = list(dict.fromkeys([*rows[0].keys(), "confirmed_by", "confirmed_on"]))
     buf = io.StringIO()
     w = csv.DictWriter(buf, fieldnames=fields, lineterminator="\n")
     w.writeheader()
@@ -298,6 +322,7 @@ def answer_question(slug: str, qid: str, answer: str, channel: str = "dashboard"
             lines[i] = "| " + " | ".join(cells) + " |"
             path.write_text("\n".join(lines) + "\n", encoding="utf-8")
             append_log(slug, "-", channel, f"answered {qid}")
+            _mark_stale(slug, f"answer to {qid} changed")
             return {"question": qid, "answered": True}
     raise KeyError(qid)
 
@@ -320,6 +345,46 @@ def _num(v):
         return float(str(v).replace("$", "").replace(",", "").split()[0])
     except (TypeError, ValueError, IndexError):
         return None
+
+
+def _bill_input(b: dict) -> dict:
+    """Preserve bill classifications; do not guess unreadable amounts or discard invalid rows."""
+    from .assistant import MonthlyBillIn
+    from .models import Bill
+
+    def number(field):
+        raw = (b.get(field) or "").strip()
+        if not raw:
+            return None
+        try:
+            value = float(raw.replace("$", "").replace(",", ""))
+        except ValueError:
+            raise ValueError(f"{field} must be a number") from None
+        if not math.isfinite(value):
+            raise ValueError(f"{field} must be finite")
+        return value
+
+    fuel = {"electricity": "electricity", "electric": "electricity", "natural_gas": "natural_gas",
+            "gas": "natural_gas"}.get((b.get("fuel") or "").strip().lower())
+    unit = {"kwh": "kWh", "mwh": "MWh", "therm": "therms", "therms": "therms", "ccf": "ccf"}.get(
+        (b.get("unit") or "").strip().lower())
+    item = {"fuel": fuel, "unit": unit, "quantity": number("quantity"),
+            "period_start": b.get("period_start"), "period_end": b.get("period_end"),
+            "account": b.get("account_last4") or None, "utility": b.get("utility") or None,
+            "total_usd": number("total_usd"), "fixed_charge_usd": number("fixed_usd"),
+            "demand_kw": number("demand_kw"), "therms_per_ccf": number("therms_per_ccf")}
+    categories = (("fixed_usd", "fixed"), ("usage_usd", "energy"), ("demand_usd", "demand"),
+                  ("credits_usd", "credit"), ("tax_other_usd", "tax_other"))
+    # Explicit components override the legacy simple total-minus-fixed shortcut.
+    if any((b.get(field) or "").strip() for field, _ in categories[1:]):
+        item["line_items"] = [{"description": field, "category": category, "amount_usd": number(field)}
+                              for field, category in categories if number(field) is not None]
+        item["line_items_complete"] = (item["total_usd"] is not None and
+            abs(sum(li["amount_usd"] for li in item["line_items"]) - item["total_usd"]) < 0.01)
+    m = MonthlyBillIn(**item)
+    Bill(fuel=m.fuel, unit=m.unit, quantity=m.quantity, period_start=m.period_start, period_end=m.period_end,
+         total_usd=m.total_usd, line_items=m.line_items or [], therms_per_ccf=m.therms_per_ccf)
+    return m.model_dump(mode="json", exclude_none=True)
 
 
 def cross_check(slug: str) -> dict:
@@ -346,10 +411,10 @@ def cross_check(slug: str) -> dict:
     if fuel:
         prop["heating_fuel"] = fuel
     util = pv("utilities") or ""
-    for name in ("Eversource", "National Grid", "Unitil", "Cape Light Compact"):
-        if name.lower() in util.lower():
-            prop["electric_utility"] = name
-            break
+    for label, field in (("electric(?:ity)?", "electric_utility"), ("gas", "gas_utility")):
+        match = re.search(rf"\b{label}\s*:\s*([^;\n]+)", util, re.I)
+        if match:
+            prop[field] = match.group(1).strip()
     for k, field in (("floor_area_sqft", "floor_area_sqft"), ("cash_available_now_usd", "cash_available_usd"),
                      ("total_budget_usd", "budget_usd")):
         if (x := _num(pv(k))) is not None and x >= 0:
@@ -364,35 +429,35 @@ def cross_check(slug: str) -> dict:
     for b in r["bills"]:
         if b.get("status") not in ("confirmed", "corrected"):
             continue
-        fuel_b = {"electricity": "electricity", "electric": "electricity", "natural_gas": "natural_gas",
-                  "gas": "natural_gas"}.get((b.get("fuel") or "").lower())
-        unit = {"kwh": "kWh", "mwh": "MWh", "therm": "therms", "therms": "therms", "ccf": "ccf"}.get(
-            (b.get("unit") or "").lower())
-        q = _num(b.get("quantity"))
-        if not (fuel_b and unit and q is not None and b.get("period_start") and b.get("period_end")):
-            skipped.append({"bill_id": b.get("bill_id"), "reason": "fuel/unit/quantity/period missing or unsupported"})
-            continue
-        item = {"fuel": fuel_b, "period_start": b["period_start"], "period_end": b["period_end"], "quantity": q,
-                "unit": unit, "account": b.get("account_last4") or None}
-        if (t := _num(b.get("total_usd"))) is not None:
-            item["total_usd"] = t
-            if (f := _num(b.get("fixed_usd"))) is not None:
-                item["fixed_charge_usd"] = f
-        bills.append(item)
+        try:
+            bills.append(_bill_input(b))
+        except ValueError as exc:
+            skipped.append({"bill_id": b.get("bill_id"), "reason": str(exc)[:500]})
+    if skipped:
+        return {"error": "invalid_bills", "message": "Correct the invalid confirmed bills before using totals or savings.",
+                "skipped": skipped, "costs": {}, "options": [], "inputs_used": used}
     s = Store(":memory:")
     try:
         pid = assistant.create_property(s, prop)["property_id"]
         res = assistant.add_bills(s, pid, bills, confirmed=True) if bills else {"errors": []}
+        if res.get("errors"):
+            return {"error": "invalid_bills", "skipped": res["errors"], "costs": {}, "options": [], "inputs_used": used}
         summary = assistant.analyze(s, pid)
+        analysis = s.get_analysis(pid)
     except assistant.AssistantError as exc:
         return {"error": "invalid_input", "fields": exc.errors, "inputs_used": used}
-    analysis = s.get_analysis(pid)
+    finally:
+        s.close()
     measures = analysis["results"].get("10", {}).get("outputs", {}).get("measures", [])
     costs = analysis["results"].get("09", {}).get("outputs", {}).get("fuels", {})
     return {
+        "decision_ready": summary.get("decision_ready"),
+        "data_quality": analysis["results"].get("03", {}).get("outputs", {}),
+        "warnings": analysis["results"].get("09", {}).get("warnings", []),
+        "assumptions": analysis["results"].get("09", {}).get("assumptions", []),
         "inputs_used": {**used, "confirmed_bills": len(bills)}, "skipped": skipped + res.get("errors", []),
         "costs": {f: {k: v.get(k) for k in ("recorded_quantity", "unit", "recorded_cost_usd", "usage_based_rate",
-                                             "annual_quantity", "annual_cost_usd", "coverage", "heating_split")}
+                                             "annual_quantity", "annual_cost_usd", "annualized", "coverage", "heating_split")}
                   for f, v in costs.items()},
         "benchmark": analysis["results"].get("07", {}).get("message"),
         "options": [{k: m.get(k) for k in ("measure_id", "name", "status", "missing", "annual_energy_change",

@@ -25,10 +25,17 @@ Fuel oil, propane and steam: use the energy content printed on the delivery tick
 - Usage-based rate = (energy + usage-based delivery charges) ÷ quantity. It excludes the customer/fixed charge,
   demand charges, taxes and credits.
 - All-in average rate = total ÷ quantity. Use it only for describing a bill, never for pricing savings.
-- Bill-to-bill change, split exactly:
+- Bill-to-bill change for the same meter, when both bills have a reconciled breakdown:
   - consumption effect = (q₂ − q₁) × rate₁
   - price effect = (rate₂ − rate₁) × q₂
   - fixed change = fixed₂ − fixed₁
+  - demand change = demand₂ − demand₁
+  - tax/other change = other₂ − other₁
+  - credit change = credits₂ − credits₁ (credits are signed, normally negative)
+  - unexplained remainder = total₂ − total₁ − sum of all effects above
+  Report any nonzero remainder; never assign it to consumption automatically. Consumption effect includes
+  different billing-period lengths. Compare daily quantities to discuss intensity, but do not add a separate
+  days effect to this decomposition. Missing components stay unknown; only a reconciled split is exact.
 - Annual totals need about 12 months (≥ 360 covered days on every meter). With 180-359 days you may scale ×(365 ÷
   days) only as a labelled assumption. Below 180 days give recorded totals only.
 

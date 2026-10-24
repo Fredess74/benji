@@ -24,6 +24,8 @@ Every arrow is a hypothesis to test.
 
 **Follow-through:** preserve the estimate, completion date and later bills. Distinguish descriptive changes from savings attributable to the intervention.
 
+**Program access and usefulness:** help identify the appropriate residential/business/provider route, understand current requirements, prepare evidence and follow up on the next step. Measure wrong-route referrals, time to a correct checklist, verified assessment requests, complete applications and projects that actually proceed. Program approval and attribution remain with the operator/evaluator. More recommendations alone are not evidence of better program effectiveness.
+
 ## What to measure
 
 | Stage | Metric | Evidence |

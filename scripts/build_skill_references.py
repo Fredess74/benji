@@ -89,7 +89,7 @@ cat = json.loads((ROOT / "benji" / "catalog" / "incentives.json").read_text(enco
 P = ["# Massachusetts program leads (generated from benji/catalog/incentives.json)", "",
      f"Catalog version {cat['catalog_version']}. {cat['notice']}", "",
      "Every record is a **lead**. Before relying on one, open the official page, then record the URL, the date checked "
-     "and what it says in memory (`decisions.md`). Use the sector column strictly: residential programs never go to "
+     "and what it says in memory (`findings.md`). Use the sector column strictly: residential programs never go to "
      "businesses, and the other way round.", "",
      "Mass Save sponsors (electric): " + ", ".join(cat["mass_save_sponsors"]["electric"]) + ". Gas: "
      + ", ".join(cat["mass_save_sponsors"]["gas"]) + ". Municipal-utility customers have separate programs.", ""]

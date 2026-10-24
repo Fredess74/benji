@@ -1,213 +1,243 @@
 <div align="center">
 
-<img src="docs/brand/benji-app-icon.svg" alt="Benji — a house-shaped b with a leaf window" width="100" height="100">
+<img src="docs/brand/benji-app-icon.svg" alt="Benji: a house-shaped b with a leaf window" width="100" height="100">
 
 # Benji
-### Building energy decisions, made actionable.
+### Less energy waste. A clearer path to savings.
 
-**Energy-management skills for the AI assistant you already use — with shared memory and a dashboard that keeps people in control.**
+**An AI energy and sustainability assistant for people and small businesses — built as reusable skills that work in a Claude conversation or alongside other agents.**
 
-**Hackachusetts 2026 · TRACK 3 — CLIMATE TECH**
-**Challenge: Cleaner, more affordable buildings**
+Hackachusetts 2026 · **TRACK 3 — CLIMATE TECH**
 
-[The problem](#the-problem) · [How it works](#from-a-bill-to-an-action) · [Install](#try-benji) · [For judges](docs/JUDGING_GUIDE.md) · [Evidence](docs/EVIDENCE.md)
+Challenge: **Cleaner, more affordable buildings**
+
+[Try the skill](https://github.com/Fredess74/benji/raw/refs/heads/main/downloads/benji.zip) · [Quick start](#try-benji) · [How it works](#one-workflow-from-bill-to-follow-through) · [For judges](docs/JUDGING_GUIDE.md) · [Evidence](docs/EVIDENCE.md)
 
 </div>
 
-> “I run a coffee shop in Cambridge. We rent the space, our energy bills keep rising, and we have $1,500 available. What should we do first?”
+> “Our energy bill keeps going up. What is avoidable, what can we change, and which support can actually help us pay for it?”
 
-Benji helps answer **what is happening, what can change, what needs to be paid now, and who must approve it**. The product is a set of **12 specialist skills and one orchestrator**. They guide a compatible assistant through bills, building conditions, improvement options and Massachusetts support. Optional tools connect the conversation to a persistent record and calculation cross-checks. The dashboard lets a person review and manage that work.
+**Benji helps people investigate electricity and heating overspending, choose practical improvements, and navigate energy-efficiency programs such as Mass Save.** It combines **12 specialist skills and one orchestrator** into a repeatable workflow: understand the bill, investigate waste, compare options, check support, take an approved next step, and review the next bill.
 
-## The problem
+Start with a bill and a conversation. Add shared memory and a dashboard when people and agents need to continue the work together. No sensors or dedicated hardware are required for this entry point.
 
-An older building can need improvements while its occupants cannot afford a large initial payment. A renter may pay the bill but lack permission to change equipment. A small-business owner may know that assistance exists without knowing which conditions apply. A bill alone does not tell any of them what to do next.
+## The problem: a high bill does not tell you what to do
+
+Massachusetts residents and small businesses face a connected set of problems:
+
+- **Avoidable consumption is hard to identify.** Heating, cooling, lighting and equipment can use more energy than necessary, but a monthly bill does not identify the appliance or cause. Higher prices, weather and longer opening hours can also raise spending.
+- **Knowing an improvement exists does not make it feasible.** Upfront cash, uncertain payback, equipment condition and landlord approval can stop a useful project before it starts.
+- **Programs exist, but reaching the right help takes work.** People must identify their provider and property category, understand conditions, gather documents and know what needs approval before purchase.
+- **Advice often stops before follow-through.** Someone still has to request an assessment, obtain a quote, get consent and check whether a change helped.
+
+**The gap Benji addresses is the path between an expensive bill and an informed, affordable action.** A high bill is a reason to investigate, not proof of waste. Benji preserves comfort, necessary refrigeration and safe building operation while looking for avoidable use.
 
 ### Why this matters
 
-| Evidence | Product implication |
+| Evidence | Why it shapes Benji |
 |---|---|
-| **13.7% vs 3.2%**: median energy burden for low-income households versus all households in the **Boston metro area**. AHS 2021 data, published in 2024. | Affordability and comfort belong in the decision, alongside energy efficiency. [ACEEE](https://www.aceee.org/sites/default/files/pdfs/data_update_-_city_energy_burdens_0.pdf) |
-| **92%** of Massachusetts electric commercial and industrial accounts were microbusiness accounts in **2022**. | Many small customers lack staff time and specialist expertise. Accounts are not businesses; the category includes some non-building loads. [DNV](https://ma-eeac.org/wp-content/uploads/MA24X30-CINPS-CI-Nonparticipant-Study-FINAL_1.17.2025.pdf) |
-| **63% of 341 surveyed HEAT Loan participants** described the loan as essential to their project. | Cash needed now must be separated from eventual rebates and net cost. This is self-reported importance, not causal proof of additional projects. [2026 evaluation](https://ma-eeac.org/wp-content/uploads/MA25R08-B-HEAT_HEAT-Loan-Phase-1-Final-Report_2026-4-29.pdf) |
-| Boston reports **5% of its buildings account for nearly 40% of city carbon emissions**. | Existing-building decisions matter for decarbonization. This is a Boston statistic, not a Massachusetts-wide estimate or a Benji result. [City of Boston](https://www.boston.gov/departments/environment/berdo) |
+| **13.7% vs 3.2%**: median share of income spent on household energy by low-income households versus all households in the **Boston metro area**. AHS 2021 data, published in 2024. | Start with affordability and low-cost steps. Energy burden is not an estimate of how much energy is wasted. [ACEEE](https://www.aceee.org/sites/default/files/pdfs/data_update_-_city_energy_burdens_0.pdf) |
+| A Massachusetts study of **31 small-multifamily nonparticipants** found that nearly all knew of Mass Save, but most had limited understanding of what it could do for their building. | Help with the route to participation, documents and responsibilities, not just a list of rebates. Small qualitative sample; not a statewide rate. [Guidehouse, 2022](https://ma-eeac.org/wp-content/uploads/MA21R36-B-MFB-Small-MF-Barriers_Report_FINAL_11MAR2022.pdf) |
+| **5% of Boston's buildings account for nearly 40% of city carbon emissions**, according to the city. | Existing-building decisions matter for climate as well as bills. This is Boston-specific and not a claim about Benji's impact. [City of Boston](https://www.boston.gov/departments/environment/berdo) |
 
-Awareness is not the same as access. In a Massachusetts study, only **5 of 31** interviewed small-multifamily nonparticipants had never heard of Mass Save, yet understanding of what applied to their buildings was limited. This small qualitative sample identifies a barrier; it is not a population-wide prevalence estimate. [Study](https://ma-eeac.org/wp-content/uploads/MA21R36-B-MFB-Small-MF-Barriers_Report_FINAL_11MAR2022.pdf)
+Mass Save and professional assessors already provide valuable assistance. Benji helps users prepare for and follow through with those services. It does not administer programs or replace an energy assessment. [Full research, dates and limitations](docs/EVIDENCE.md)
 
-Mass Save, city programs, ENERGY STAR tools and professional assessors already help. Benji aims to connect the user's evidence, constraints and next steps across those services. Its additional value over existing assistance remains to be tested. [Research and limitations](docs/EVIDENCE.md)
-
-## From a bill to an action
+## One workflow, from bill to follow-through
 
 ```mermaid
 flowchart LR
-    A["Bills and building facts"] --> B["Read back and confirm"]
-    B --> C["Check data and investigate"]
-    C --> D["Compare feasible options"]
-    D --> E["Cash, support and approvals"]
-    E --> F["Choose the next action"]
-    F --> G["Track tasks and later results"]
-    G --> C
+    A["Understand: bills, building, user role"] --> B["Investigate: usage, rates, equipment"]
+    B --> C["Choose: feasible changes and trade-offs"]
+    C --> D["Enable: support, cash, approvals"]
+    D --> E["Follow through: owner, task, next bill"]
+    E --> B
 ```
 
-For the cafe, Benji first establishes the lease, equipment and billing coverage. It may suggest checking what runs after closing, while distinguishing essential refrigeration from avoidable loads. It can prepare a landlord request before building work and separate a contractor quote from confirmed support.
+| Step | What Benji helps with | What the user gets |
+|---|---|---|
+| **Understand** | Read back bill values for confirmation; record equipment, budget and who decides | A clear starting point, with unknowns visible |
+| **Investigate** | Separate consumption from rates and fixed charges; look for unusual patterns; use suitable BERDO peers when available | Evidence-backed questions about potential waste |
+| **Choose** | Consider operating schedules, lighting, envelope improvements and heating/cooling options | An ordered shortlist with assumptions and trade-offs |
+| **Enable** | Check residential/commercial program routes, required evidence, cash timing and landlord consent | A funding checklist and a concrete next action |
+| **Follow through** | Draft requests, assign responsibilities and review later bills | A continuing record that people or connected agents can pick up |
 
-If too few BERDO peers match, Benji declines to rank the cafe. If heating efficiency or heat-pump performance is unknown, it asks instead of manufacturing a payback. If a scenario reduces estimated emissions but raises operating cost, it shows both. **The useful output is a feasible next action with evidence and responsibility attached.**
+### Example: a leased cafe with a $1,500 budget
 
-## Skills, memory, tools and a human dashboard
+The owner brings electricity and gas bills. Benji checks whether the increase comes from consumption or price, asks about operating changes and proposes an after-closing observation. Essential refrigeration stays running. Monthly bills alone cannot prove an oven was left on.
 
-```mermaid
-flowchart TD
-    U["Resident, business or building manager"] --> A["Compatible AI assistant"]
-    A --> O["Benji orchestrator"]
-    O --> S["12 specialist skills"]
-    S --> R["Rules, formulas and source references"]
-    S --> M["One saved record per place"]
-    S -. "optional connection" .-> T["MCP / HTTP tools"]
-    T <--> M
-    T --> C["Deterministic calculation cross-check"]
-    D["Human dashboard"] <--> T
-    U --> D
-    X["Optional host scheduler"] -. "configured follow-up" .-> A
-```
+For lighting or HVAC work, Benji identifies the need for a quote and landlord approval. It helps check the business's assessment/program route and prepares the relevant questions. A rebate paid later is kept separate from cash required today. The owner leaves with one manageable action and a record to revisit when new information arrives.
 
-- **Skills** specify what to ask, inspect, calculate and record. The host supplies the AI model.
-- **Memory** stores profile, bills, findings, plan, questions and activity in inspectable Markdown/CSV files.
-- **Tools** provide memory operations, supported financial cross-checks and room heating/cooling calculations.
-- **Dashboard** lets people confirm values, answer questions, assign work and inspect the record.
-- **Scheduled follow-up** requires a configured host. Loading Benji does not start an always-on monitor.
+This is the scenario in the optional **clearly labelled synthetic demo**, not a customer case study or measured saving.
 
-### The skill system
+## Why the skills and workflow matter
 
-| Skill | Concrete job and output |
-|---|---|
-| [`benji-orchestrator`](skills/benji-orchestrator/SKILL.md) | Routes to at most two skills per turn; enforces confirmation, cash and authority gates |
-| [`benji-profile`](skills/benji-profile/SKILL.md) | Records place type, role, utilities, equipment, budget and approval responsibilities |
-| [`benji-bills-import`](skills/benji-bills-import/SKILL.md) | Produces a read-back table; extracted figures stay pending until confirmed |
-| [`benji-bill-explainer`](skills/benji-bill-explainer/SKILL.md) | Separates consumption, prices, fixed charges and billing-period effects |
-| [`benji-usage-patterns`](skills/benji-usage-patterns/SKILL.md) | Investigates unusual and after-hours use; monthly bills cannot identify an individual overnight load |
-| [`benji-benchmark`](skills/benji-benchmark/SKILL.md) | Uses compatible BERDO peers or reports insufficient data; a peer gap is not savings |
-| [`benji-comfort`](skills/benji-comfort/SKILL.md) | Investigates cold/hot rooms and warm-up; area alone cannot establish heating time |
-| [`benji-upgrade-options`](skills/benji-upgrade-options/SKILL.md) | Compares operational/equipment choices with cost, carbon and approval trade-offs |
-| [`benji-programs`](skills/benji-programs/SKILL.md) | Finds program leads, identifies conditions and prepares document checklists |
-| [`benji-funding`](skills/benji-funding/SKILL.md) | Distinguishes rebates, loans, discounts, cash gaps and sequencing |
-| [`benji-action-plan`](skills/benji-action-plan/SKILL.md) | Writes priorities, task owners, status and landlord/contractor drafts |
-| [`benji-follow-up`](skills/benji-follow-up/SKILL.md) | Reviews new bills and progress on demand; scheduled delivery needs a host |
-| [`benji-report`](skills/benji-report/SKILL.md) | Prepares an audience-specific decision record with sources and unresolved questions |
+Benji's distinctive product is the **combination of an energy-specific procedure, reusable references, a portable place record and optional calculation checks**. It gives a general assistant a consistent way to handle confirmation, missing evidence, cost versus carbon, tenant/owner responsibilities and program uncertainty.
 
-These consolidate the original 20 capability ideas. A written skill is an instruction workflow, not proof of an automated integration. Photo/PDF interpretation depends on the host. The Python importer separately supports CSV, text PDFs and manual entry, not general photo OCR.
+- **In a regular Claude session:** the skill guides the conversation and can produce a handoff record. The user can start without a local server.
+- **With other agents:** connected agents can read the same profile, bills and plan, continue assigned work and log changes. They must be connected to the same memory location.
+- **In the dashboard:** the human sees the next step, confirms bills, answers questions, assigns tasks and inspects what was saved.
 
-## A working dashboard
+General assistants can also use tools and memory. Benji's additional value is a focused, inspectable workflow; superiority over a well-configured general assistant has not yet been measured. Assigning a task does not launch an autonomous agent.
 
-Open **http://127.0.0.1:8000/app** after starting the server. To see it populated without connecting an assistant,
-run `python scripts/load_demo.py` first: it adds one example place (a leased Cambridge cafe, 12 months of bills plus
-2 waiting for confirmation, a plan with a task assigned to `openclaw`). **All of it is invented demo data**; every file
-says so and the dashboard shows a DEMO DATA banner. The interface is implemented, with four views:
+### The 13 skills
 
-| View | What the user can do |
-|---|---|
-| **Home** | See the next step and supported calculations; confirm bills; answer questions; change task owner/status; assign work |
-| **Agents** | Inspect channel-labelled activity and assignments; view connection guidance |
-| **Memory** | Browse the per-place structure and stored files |
-| **Activity** | Review logged changes grouped by channel and date |
+| Group | Skill | Purpose |
+|---|---|---|
+| Coordinate | [Orchestrator](skills/benji-orchestrator/SKILL.md) | Choose the relevant workflow and keep the next step manageable |
+| Understand | [Profile](skills/benji-profile/SKILL.md) | Establish place, role, equipment, budget and authority |
+| Understand | [Bills Import](skills/benji-bills-import/SKILL.md) | Read back extracted data and request confirmation |
+| Understand | [Bill Explainer](skills/benji-bill-explainer/SKILL.md) | Explain consumption, rates, charges and period changes |
+| Investigate | [Usage Patterns](skills/benji-usage-patterns/SKILL.md) | Find unusual use and plan checks for suspected waste |
+| Investigate | [Benchmark](skills/benji-benchmark/SKILL.md) | Compare suitable BERDO peers or explain why comparison is unavailable |
+| Investigate | [Comfort](skills/benji-comfort/SKILL.md) | Investigate hot/cold rooms, heat loss and heating/cooling needs |
+| Decide | [Upgrade Options](skills/benji-upgrade-options/SKILL.md) | Compare operating changes and modernization options |
+| Enable | [Programs](skills/benji-programs/SKILL.md) | Find support routes, check conditions and prepare application information |
+| Enable | [Funding](skills/benji-funding/SKILL.md) | Separate cash now, rebates later, financing and funding gaps |
+| Act | [Action Plan](skills/benji-action-plan/SKILL.md) | Prioritize tasks and prepare landlord/contractor drafts |
+| Check | [Follow-up](skills/benji-follow-up/SKILL.md) | Review progress and later bills when invoked |
+| Share | [Report](skills/benji-report/SKILL.md) | Produce a short decision record for the relevant person |
 
-The page refreshes saved memory every 10 seconds. This is dashboard refresh, not continuous energy monitoring. Assigning a task does not launch an agent. Channel labels are metadata, not authenticated proof of an external-client session.
-
-## Sustainability and clean energy
-
-1. **Reduce avoidable demand:** investigate schedules, lighting, equipment use and envelope problems before assuming replacement is needed.
-2. **Support practical electrification:** screen heat pumps using explicit performance, tariffs and emissions assumptions. Lower emissions and lower bills are separate outcomes.
-3. **Make modernization feasible:** connect the option to cash, landlord approval and program verification; preserve distinct residential and commercial pathways.
-4. **Prepare clean-energy assessments:** organize questions for solar and other options. Benji does not currently model PV production, size batteries or dispatch equipment.
-5. **Check outcomes:** retain estimates and compare later bills while recording weather, occupancy, tariff and operational changes.
-
-**We have not demonstrated field savings or avoided emissions.** The contribution is a working decision-support prototype and a testable pathway to more feasible improvements. [Impact and evaluation plan](docs/IMPACT.md)
+Skills are instructions for the host AI. PDF/photo understanding and browsing depend on that host. The separate Python importer supports CSV, text PDFs and manual entry, not general photo OCR.
 
 ## Try Benji
 
-### Claude Code plugin: skills and tools
+### 1. Easiest: one skill in Claude
 
-Install Python 3.11+ and dependencies in the Python environment Claude Code will use:
+1. **[Download benji.zip](https://github.com/Fredess74/benji/raw/refs/heads/main/downloads/benji.zip)**. This contains the orchestrator, all 12 workflows and references; no bills, secrets or running server.
+2. In Claude, open **Customize → Skills → + → Create skill → Upload a skill**, upload the ZIP and enable it. Code execution/file creation must be enabled; organization controls may also apply. [Official instructions](https://support.claude.com/en/articles/12512180-use-skills-in-claude)
+3. Start a conversation:
+
+   > Use Benji. I run a small cafe in Massachusetts and rent the space. My electricity bill increased. Help me understand the bill, investigate avoidable use, and check what assistance may apply. Read back any numbers before using them.
+
+Use the same approach for a home, rental or apartment building. No local Python installation is needed for this skills-only route. Without connected memory tools, keep the record in the session and save the handoff for next time. Local dashboard synchronization is a separate setup. The archive is structurally checked; actual upload/invocation in every Claude account has not been tested.
+
+### 2. Optional: shared memory and dashboard
+
+Python **3.11+** is required for the server. Clone this repository and install its dependencies:
 
 ```bash
-git clone https://github.com/VladimirPutkov/benji.git
+git clone https://github.com/Fredess74/benji.git
 cd benji
 python -m pip install -r requirements.txt
 ```
 
-Then run **inside Claude Code**:
-
-```text
-/plugin marketplace add VladimirPutkov/benji
-/plugin install benji@benji
-```
-
-The package declares 13 skills and the `benji` MCP server. The team reports a successful server subprocess check; installation inside the actual Claude Code client has not yet been independently verified. Memory defaults to `~/benji-memory`, outside the replaceable plugin cache.
-
-### Dashboard: use the same memory location
+Set the same memory location for the server and agent **before** loading the demo or starting either.
 
 PowerShell:
 
 ```powershell
 $env:BENJI_MEMORY = "$HOME/benji-memory"
+python scripts/load_demo.py
 python -m uvicorn benji.api:app --host 127.0.0.1 --port 8000
 ```
 
 macOS/Linux:
 
 ```bash
-BENJI_MEMORY="$HOME/benji-memory" python -m uvicorn benji.api:app --host 127.0.0.1 --port 8000
+export BENJI_MEMORY="$HOME/benji-memory"
+python scripts/load_demo.py
+python -m uvicorn benji.api:app --host 127.0.0.1 --port 8000
 ```
 
-Visit **http://127.0.0.1:8000/app**. Empty memory shows onboarding. Use the identical location in your assistant and server; no sensor hardware is required for bill-based guidance.
+Open **http://127.0.0.1:8000/app**. The demo command is optional; omit it to start with empty memory. It refuses to replace an existing demo unless `--reset` is requested.
 
-### Other hosts
+| Dashboard view | User control |
+|---|---|
+| **Home** | Next step, bill totals and estimates, confirmations, questions, task owners and status |
+| **Agents** | Recorded activity and assignments by channel, plus connection guidance |
+| **Memory** | Inspect profile, bills, findings, plan, questions and log |
+| **Activity** | Review recorded changes |
 
-| Host | Route | Boundary |
-|---|---|---|
-| **ChatGPT skills plugin** | [Package and installation](integrations/chatgpt-plugin/README.md) | Skills-only edition; persistent memory and dashboard access require a separate connection |
-| **Claude with custom Skills** | `python scripts/package_skills.py`, then upload supported ZIPs from `dist/skills/` | Local MCP is a separate compatible-client setup; web and desktop capabilities differ |
-| **Kiro / OpenClaw / file-capable agent** | Add `skills/` through the host's supported loading mechanism | Grant access to the intended memory folder; configure schedules separately |
-| **Custom GPT with Actions** | [Instructions](integrations/chatgpt/instructions.md) and `/assistant/openapi.json` | Requires a separately secured HTTPS service; not necessary for local use |
+The interface refreshes saved data every 10 seconds. This is **not live energy telemetry**. Channel labels describe recorded activity; they do not authenticate a connected agent.
 
-AI-host accounts, subscriptions and tool availability are separate prerequisites. The public repository is not a hosted multi-user service.
+### 3. Claude Code or another agent
 
-## Built with Kiro, checked with tests
+After installing Python dependencies in the environment Claude Code uses:
 
-Kiro specifications, steering documents and iterative agent-assisted implementation are preserved in `.kiro/`. The project includes a test-on-save hook, property-based financial checks and regressions for defects found during audit. [Implementation story](docs/KIRO.md)
+```text
+/plugin marketplace add Fredess74/benji
+/plugin install benji@benji
+```
 
-**Fresh check, 2026-10-24:** **176 tests passed** on source revision `45d56cf`, with two warnings. Coverage includes calculations, thermal scenarios, acceptance cases, the 63-case property/bill sweep, memory/API/MCP behavior and plugin structure. This does not establish live external-client installations or user outcomes. [Verification record](docs/VERIFICATION.md)
+The Claude Code package declares the 13 skills and a local MCP server. Its memory defaults to `~/benji-memory`. Use that same path for the dashboard. The server has automated MCP checks; actual Claude Code installation remains to be verified in the client.
+
+For Kiro, OpenClaw or another file-capable agent, load `skills/` using the host's supported mechanism and grant access to the intended memory folder. Schedules need separate host configuration. OpenClaw is an integration path, not a verified always-on deployment. [All connection modes](integrations/README.md)
+
+## Architecture: one record, several ways to help
+
+```mermaid
+flowchart TD
+    P["Person"] --> A["Claude conversation / compatible assistant"]
+    A --> S["Benji orchestrator + 12 skills"]
+    S --> R["Shared rules, formulas and source references"]
+    S -. "without connection" .-> H["Session record + downloadable handoff"]
+    S -. "optional MCP / HTTP / file access" .-> M["One memory folder per place"]
+    G["Other configured agents"] <--> M
+    D["Human dashboard"] <--> M
+    M --> C["Calculation cross-check + data-quality checks"]
+    C --> D
+```
+
+Memory uses readable Markdown and CSV. The optional server provides nine MCP tools, HTTP routes and deterministic calculations. The dashboard reads file memory; the detailed calculator API also has a separate SQLite store. Only supported profile/bill fields are bridged into the memory cross-check. [Architecture and boundaries](docs/ARCHITECTURE.md)
+
+## Sustainability and climate impact: Cleaner, more affordable buildings
+
+| Challenge direction | Benji's contribution |
+|---|---|
+| **Energy waste** | Investigate consumption changes and nonessential loads; distinguish evidence from suspicion |
+| **Retrofit prioritization** | Start with feasible operating improvements, then compare upgrades against budget, condition and authority |
+| **Building performance** | Explain bills and suitable peer comparisons; investigate comfort and heating/cooling scenarios |
+| **Tenant and owner incentives** | Identify who pays, benefits and approves; prepare an actionable handoff |
+| **Access to energy savings** | Make program routes, requirements, cash timing and next steps understandable |
+
+The sustainability pathway is practical: **reduce avoidable demand, make useful improvements feasible, and check what changed**. Heat-pump comparisons keep operating cost and emissions separate; electrification can lower estimated emissions while increasing bills. Benji can prepare questions for clean-energy assessments, but does not model solar output, dispatch batteries or control equipment.
+
+For programs, the intended improvement is better-prepared applicants and fewer wrong-route or incomplete next steps. This is a **testable objective**, not demonstrated program effectiveness. We would measure verified assessment requests, completed applications, completed upgrades and later consumption with weather/occupancy context. **No field savings or avoided emissions have been demonstrated yet.** [Impact and measurement plan](docs/IMPACT.md)
+
+## Built with Kiro; checked against failure cases
+
+Kiro requirements, design, steering and a test-on-save hook are preserved in `.kiro/`. The project combines agent-assisted development with deterministic calculations, property-based checks and regression tests for problems found during review. [Implementation story](docs/KIRO.md)
 
 ```bash
 python -m pytest -q tests
+python scripts/package_session_skill.py
 ```
 
-## Current boundaries
+The [verification record](docs/VERIFICATION.md) lists the current test result, reproduced defects, fixes and remaining limits. Passing tests cover specific behaviors; they are not a guarantee that no bugs remain or proof of external-client integration.
 
-- **13 program leads are unverified**; no incentive amount or approval is guaranteed.
-- BERDO covers larger Boston buildings, not all Massachusetts homes or shops. Historical emission factors are accounting estimates, not marginal-grid forecasts.
-- Room calculations are simplified and single-zone. Electrical drawings are reference evidence, not safety certification.
-- Memory cross-checks do not yet import free-text quotes and approved rebates; detailed calculator inputs must be supplied separately.
-- Agents must mark profile/bill-file changes stale; automatic marking currently occurs on bill confirmation. Concurrent file edits have no conflict-resolution layer.
-- No built-in utility telemetry, autonomous notifications, device control, multi-user accounts or field-validated savings.
-- Keep the HTTP server local. `BENJI_API_KEY` does not secure every legacy calculator route: exposing the entire process through a public tunnel is not a production deployment pattern.
+<details>
+<summary><strong>Current limits and trust boundaries</strong></summary>
+
+- Program catalog records are **unverified leads**. Check current official rules; the operator confirms eligibility and amounts. Benji is independent of Mass Save and its sponsors.
+- BERDO covers larger Boston buildings, so many small shops and homes have too few comparable peers. A peer gap is not recoverable savings.
+- Bill calculations currently support electricity and natural gas. A partial year scaled to 365 days is an estimate. Where only total and fixed charges are supplied, the legacy simple-bill input assumes the remainder is usage-based; supply the actual breakdown for demand charges, credits and taxes.
+- Room calculations are simplified single-zone scenarios, not an HVAC design. Floor area alone cannot determine heating time. Electrical drawings are reference material, not a capacity or safety certification.
+- Free-text quotes and approved rebates are not automatically imported into the memory cross-check; detailed calculator inputs are separate.
+- API changes to bills/profile and question answers mark saved advice stale. Agents editing files directly must follow the same rule. Concurrent writers still need coordination; there is no conflict-resolution layer.
+- Loading a skill does not create persistent memory, deliver reminders, submit applications or start device control. Host capabilities and any account costs remain separate.
+- Run the server on localhost. `BENJI_API_KEY`, when configured, protects all data route families; it is a shared secret, not user accounts or a production multi-tenant security model.
+
+</details>
 
 ## For the judges
 
-| Criterion | Evidence in this repository |
+| Criterion | What to inspect |
 |---|---|
-| **Potential Value** | Sourced needs, cash-aware decisions, tenant/owner responsibilities, and an accessible hardware-free entry point. [Evidence](docs/EVIDENCE.md) · [Impact](docs/IMPACT.md) |
-| **Implementation** | Kiro specs, reusable skills, memory, MCP/HTTP integrations and deterministic checks. [Kiro](docs/KIRO.md) · [Architecture](docs/ARCHITECTURE.md) |
-| **Quality and Design** | Next-step-first dashboard, confirmation gates, explicit uncertainty and inspectable memory. [Judging guide](docs/JUDGING_GUIDE.md) · [Demo](docs/DEMO_SCRIPT.md) |
+| **Potential Value** | A concrete bill-to-action problem, no-hardware entry, tenant-aware plans and program navigation. [Evidence](docs/EVIDENCE.md) · [Impact](docs/IMPACT.md) |
+| **Implementation** | Kiro artifacts, reusable skills, shared memory, MCP/HTTP and tested calculations. [Kiro](docs/KIRO.md) · [Verification](docs/VERIFICATION.md) |
+| **Quality and Design** | A next-step-first interface, confirmation gates, transparent estimates and portable records. [Judge's guide](docs/JUDGING_GUIDE.md) · [Demo](docs/DEMO_SCRIPT.md) |
 
 ```text
-skills/                 Specialist skills, orchestrator, shared rules and references
+downloads/benji.zip      One-upload skill for a regular Claude session
+skills/                 Orchestrator, 12 workflows, rules and references
 .claude-plugin/         Claude Code plugin and marketplace
-benji/                  Memory, MCP/HTTP server, calculator, thermal model
-dashboard/index.html    Management interface; no frontend build step
+benji/                  Memory, server, calculator and thermal model
+dashboard/index.html    Interface with no frontend build step
 data/processed/         De-identified BERDO peer extract
-integrations/           Host-specific installation and packaging
+integrations/           Host-specific setup and packaging
 .kiro/                  Specifications, steering and hook
-tests/                  Automated checks
-docs/                   Evidence, architecture, impact, verification and brand
+tests/                  Automated checks and regression cases
+docs/                   Research, architecture, impact and judging guide
 ```
 
-Runtime memory and uploaded bills are excluded from Git. There is currently **no project license**; public availability is not an open-source license grant. See [third-party notices](THIRD_PARTY_NOTICES.md).
+Runtime bills and memory are excluded from Git. The repository is public but currently has **no project license**; public access is not an open-source license grant. [Third-party notices](THIRD_PARTY_NOTICES.md)

@@ -56,6 +56,11 @@ class Store:
         self._conn.executescript(_SCHEMA)
         self._conn.commit()
 
+    def close(self) -> None:
+        """Release the database, including temporary databases used by memory cross-checks."""
+        with self._lock:
+            self._conn.close()
+
     # -- generic helpers -------------------------------------------------
     def _exec(self, sql: str, args: tuple = ()) -> sqlite3.Cursor:
         with self._lock:

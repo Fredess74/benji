@@ -15,7 +15,7 @@ from typing import Any, Literal, Optional
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from . import engine, readiness, thermal
-from .models import Bill, Building
+from .models import Bill, Building, LineItem
 from .skills import registry
 from .store import Store
 
@@ -76,6 +76,10 @@ class MonthlyBillIn(BaseModel):
     unit: Literal["kWh", "MWh", "therms", "ccf"]
     total_usd: Optional[float] = Field(None, ge=-1e8, le=1e8)
     fixed_charge_usd: Optional[float] = Field(None, ge=0, le=1e8)
+    line_items: Optional[list[LineItem]] = None
+    line_items_complete: bool = True
+    demand_kw: Optional[float] = Field(None, ge=0, le=1e6)
+    therms_per_ccf: Optional[float] = Field(None, gt=0.8, le=1.3)
     account: Optional[str] = None
     utility: Optional[str] = None
 
@@ -147,14 +151,15 @@ def add_bills(store: Store, property_id: str, bills: list[dict], confirmed: bool
                 y, mo = map(int, m.month.split("-"))
                 start = date(y, mo, 1)
                 end = date(y + (mo == 12), mo % 12 + 1, 1)
-            items = []
-            if m.fixed_charge_usd is not None and m.total_usd is not None:
+            items = [li.model_dump() for li in m.line_items] if m.line_items is not None else []
+            if m.line_items is None and m.fixed_charge_usd is not None and m.total_usd is not None:
                 items = [{"description": "Fixed / customer charge", "category": "fixed", "amount_usd": m.fixed_charge_usd},
                          {"description": "Usage-based charges", "category": "energy",
                           "amount_usd": round(m.total_usd - m.fixed_charge_usd, 2)}]
             bill = Bill(fuel=m.fuel, utility=m.utility or (b.get("electric_utility") if m.fuel == "electricity" else b.get("gas_utility")),
                         account=m.account, period_start=start, period_end=end, quantity=m.quantity, unit=m.unit,
-                        total_usd=m.total_usd, line_items=items,
+                        total_usd=m.total_usd, line_items=items, line_items_complete=m.line_items_complete, demand_kw=m.demand_kw,
+                        therms_per_ccf=m.therms_per_ccf,
                         source={"kind": "manual", "raw_excerpt": f"entered via {channel}"},
                         status="confirmed" if confirmed else "pending_confirmation",
                         data_label=b.get("data_label", "user_provided"))

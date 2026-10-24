@@ -188,6 +188,7 @@ class Bill(Strict):
     therms_per_ccf: Optional[float] = Field(None, gt=0.8, le=1.3)
     demand_kw: Optional[float] = Field(None, ge=0, le=1e6)
     line_items: list[LineItem] = Field(default_factory=list)
+    line_items_complete: bool = True  # partial components must not substitute for a missing bill total
     total_usd: Optional[float] = Field(None, ge=-1e8, le=1e8)
     source: BillSource = Field(default_factory=lambda: BillSource(kind="manual"))
     extraction_confidence: Optional[Literal["high", "medium", "low"]] = None

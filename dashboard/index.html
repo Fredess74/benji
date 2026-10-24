@@ -83,7 +83,7 @@ ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;font-si
   <aside>
     <div class="logo">
       <i><svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true"><path d="M18 92 V16 Q18 10 24 10 H32 Q38 10 38 16 V44 L62 26 L86 46 V84 Q86 92 78 92 Z" fill="#EEF2EA" stroke="#EEF2EA" stroke-width="6" stroke-linejoin="round"/><path d="M50 80 C50 64 60 55 75 55 C75 71 65 80 50 80 Z" fill="#F2B33D"/><path d="M53 77 L68 62" fill="none" stroke="#2E6A4F" stroke-width="2.6" stroke-linecap="round"/></svg></i>
-      <div><b>benj<span class="idot">ı</span></b><small>energy manager</small></div>
+      <div><b>benj<span class="idot">ı</span></b><small>AI energy assistant</small></div>
     </div>
     <label class="sub" for="place" style="display:flex;flex-direction:column;gap:6px;font-weight:600">Place
       <select id="place" class="field" style="flex:none"></select>
@@ -96,7 +96,7 @@ ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;font-si
     </nav>
     <div class="sync" id="sync"><span style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700"><span class="dot"></span><span id="sync-t">Connecting…</span></span>
       <span>Reads your saved memory every 10 s. Check source labels before using figures.</span>
-      <details><summary>API key</summary><input id="key" class="field" type="password" placeholder="BENJI_API_KEY (if set)" style="margin-top:8px;width:100%"></details>
+      <details><summary>API key</summary><input id="key" class="field" type="password" aria-label="API key" placeholder="BENJI_API_KEY (if set)" style="margin-top:8px;width:100%"></details>
     </div>
   </aside>
 
@@ -128,7 +128,7 @@ ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;font-si
         <div class="main-col">
           <section class="card next"><span class="eyebrow">Next step</span><h2 id="next" style="font-size:28px;line-height:1.25;white-space:pre-line"></h2></section>
           <section class="card" style="display:flex;flex-direction:column;gap:16px">
-            <div class="row" style="justify-content:space-between"><h2 style="font-size:22px">Impact</h2><span class="sub">Recomputed by tested code from confirmed bills</span></div>
+            <div class="row" style="justify-content:space-between"><h2 style="font-size:22px">Energy use &amp; opportunities</h2><span class="sub">Bill totals and modelled estimates; savings are not yet measured</span></div>
             <div class="tiles" id="progress"></div>
             <div id="impact"></div>
           </section>
@@ -142,9 +142,9 @@ ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;font-si
             <div id="tasks"></div>
             <div class="box" style="margin-top:16px">
               <label for="new-task"><b>Give an agent a task</b></label>
-              <p class="sub">Added to <code>plan.md</code>. Agents read the plan before every run; OpenClaw picks up tasks assigned to <code>openclaw</code>.</p>
+              <p class="sub">Choose who should help. A connected assistant can continue from this task on its next run. Adding a task does not start an agent.</p>
               <div class="row"><input id="new-task" class="field" type="text" placeholder="e.g. Draft the landlord note about LED fixtures">
-                <label class="hide" for="new-owner">Owner</label><select id="new-owner" class="field sel"></select>
+                <label class="hide" for="new-owner">Owner</label><select id="new-owner" class="field sel" aria-label="New task owner"></select>
                 <button class="btn primary" data-act="add-task">Add task</button></div>
             </div>
           </section>
@@ -165,7 +165,7 @@ ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;font-si
           <ol>
             <li>Copy the repo's <code>skills/</code> folder into the agent's skills folder (13 <code>SKILL.md</code> files).</li>
             <li>Memory folder for the agent: <code id="root-agents"></code></li>
-            <li>Assign tasks to <code>openclaw</code> on the Home tab. On each run it does them (drafts only — it sends, books or buys nothing without your OK), updates the status and logs it here.</li>
+            <li>Configure the agent in its host, then assign tasks here. The skill instructs it to read tasks on each run and request approval before external actions. Connection and scheduling are separate; OpenClaw has not yet been tested end to end.</li>
           </ol>
         </section>
         <div class="grid" id="agents"></div>
@@ -219,7 +219,7 @@ const FILES = [
 ];
 const STATUSES = ['not_started','in_progress','blocked','done','skipped'];
 const OWNERS = ['you','openclaw','claude','chatgpt','landlord','contractor'];
-const AGENTS = [['openclaw','OpenClaw','Business agent · reads/writes the folder directly · runs on a schedule'],
+const AGENTS = [['openclaw','OpenClaw','Business agent · optional file access and host-configured schedule'],
   ['claude','Claude','Desktop app · memory via MCP'], ['chatgpt','ChatGPT','Custom GPT · memory via HTTP Actions'],
   ['kiro','Kiro / Claude Code','Coding agent · direct file access']];
 let state = {tab:'home', slug:null, place:null, places:[], cc:null, root:'', session:0, file:'plan.md', busy:false};
@@ -284,7 +284,7 @@ function render() {
 
   // ---- Home
   $('stale').classList.toggle('hide', !(p.plan_stale || p.findings_stale));
-  $('next').textContent = p.next_step && !p.next_step.startsWith('<') ? p.next_step : 'No next step yet — ask Benji to make a plan.';
+  $('next').textContent = p.plan_stale ? 'Review the updated information with Benji before following this plan.' : p.next_step && !p.next_step.startsWith('<') ? p.next_step : 'No next step yet — ask Benji to make a plan.';
 
   $('progress').innerHTML = [
     [confirmed.length, 'bills confirmed', pending.length ? pending.length + ' waiting' : ''],
@@ -296,8 +296,10 @@ function render() {
   const cc = state.cc;
   let imp = '';
   if (!confirmed.length) imp = '<p class="sub">No confirmed bills yet — money figures appear after you confirm the bills Benji read.</p>';
-  else if (!cc || cc.error) imp = `<p class="sub">Can't recompute yet: ${esc(cc?.error || 'cross-check unavailable')}</p>`;
+  else if (!cc || cc.error) imp = `<p class="sub">Can't recompute yet: ${esc(cc?.message || cc?.error || 'cross-check unavailable')}</p>${(cc?.skipped || []).map((s) => `<p class="sub">${esc(s.bill_id || s.field)}: ${esc(s.reason || s.message)}</p>`).join('')}`;
   else {
+    const issues = (cc.data_quality?.issues || []).filter((i) => i.severity === 'error');
+    if (issues.length) imp += `<div class="banner">Fix bill data before using estimates: ${issues.map((i) => esc(i.message)).join(' ')}</div>`;
     const fuels = Object.entries(cc.costs || {});
     imp += `<div class="tbl"><table><thead><tr><th>Fuel</th><th>Cost</th><th>Usage</th><th>Covers</th><th></th></tr></thead><tbody>${fuels.map(([f, c]) => {
       const yearly = c.annual_cost_usd != null;
@@ -306,7 +308,7 @@ function render() {
         <td>${yearly ? usd(c.annual_cost_usd) + ' / yr' : c.recorded_cost_usd != null ? usd(c.recorded_cost_usd) : '—'}</td>
         <td>${yearly && c.annual_quantity != null ? num(c.annual_quantity) + ' ' + esc(c.unit) + ' / yr' : c.recorded_quantity != null ? num(c.recorded_quantity) + ' ' + esc(c.unit) : '—'}</td>
         <td>${esc(cov.covered_days ?? '?')} of 365 days${cov.complete ? '' : ' <span class="lab lab-est">partial year</span>'}</td>
-        <td><span class="lab lab-bills">from your bills</span></td></tr>`; }).join('')}</tbody></table></div>`;
+        <td><span class="lab ${c.annualized ? 'lab-est' : 'lab-bills'}">${c.annualized ? 'scaled estimate' : 'from your bills'}</span>${c.annualized ? '<div class="sub">Scaled to 365 days; seasonal use may differ.</div>' : ''}</td></tr>`; }).join('')}</tbody></table></div>`;
     const opts = (cc.options || []).filter((o) => o.status !== 'assessment_only').slice(0, 4);
     if (opts.length) imp += `<div style="margin-top:14px">${opts.map((o) => `<div class="line"><div style="min-width:0"><b style="font-size:14px">${esc(o.name)}</b>
       <div class="muted" style="font-size:13px">${o.annual_operating_cost_change_usd != null ? usd(o.annual_operating_cost_change_usd) + ' / yr' + (o.annual_emissions_change_kgco2e != null ? ' · ' + num(o.annual_emissions_change_kgco2e) + ' kg CO₂e / yr' : '') : 'Needs: ' + esc((o.missing || []).join(', ') || 'more data')}</div></div>
@@ -336,8 +338,8 @@ function render() {
   const ownerOpts = (cur) => [...new Set([...(cur ? [cur] : []), ...OWNERS])].map((o) => `<option value="${esc(o)}"${o === cur ? ' selected' : ''}>${esc(o)}</option>`).join('');
   $('tasks').innerHTML = p.tasks.length ? p.tasks.map((t) => `<div class="line" style="align-items:center;flex-wrap:wrap">
       <div style="flex:1 1 240px;min-width:0"><b style="font-size:15px">${esc(t.Task)}</b><div class="muted" style="font-size:13px">${esc(t.id)}${t.Due ? ' · due ' + esc(t.Due) : ''}</div></div>
-      <label class="hide" for="o-${esc(t.id)}">Owner</label><select id="o-${esc(t.id)}" class="field sel" data-owner="${esc(t.id)}">${ownerOpts((t.Owner || '').trim().toLowerCase())}</select>
-      <label class="hide" for="t-${esc(t.id)}">Status</label><select id="t-${esc(t.id)}" class="field sel" data-task="${esc(t.id)}">${STATUSES.map((s) => `<option value="${s}"${(t.Status || '').trim() === s ? ' selected' : ''}>${s.replace('_', ' ')}</option>`).join('')}</select></div>`).join('')
+      <label class="hide" for="o-${esc(t.id)}">Owner</label><select id="o-${esc(t.id)}" class="field sel" aria-label="Owner for ${esc(t.Task)}" data-owner="${esc(t.id)}">${ownerOpts((t.Owner || '').trim().toLowerCase())}</select>
+      <label class="hide" for="t-${esc(t.id)}">Status</label><select id="t-${esc(t.id)}" class="field sel" aria-label="Status for ${esc(t.Task)}" data-task="${esc(t.id)}">${STATUSES.map((s) => `<option value="${s}"${(t.Status || '').trim() === s ? ' selected' : ''}>${s.replace('_', ' ')}</option>`).join('')}</select></div>`).join('')
     : (p.actions.length ? '' : '<p class="sub">No plan yet.</p>');
   if (!$('new-owner').options.length) $('new-owner').innerHTML = ownerOpts('openclaw');
 
@@ -351,7 +353,7 @@ function render() {
   $('agents').innerHTML = AGENTS.map(([id, label, kind]) => {
     const mine = p.log.filter((l) => l.channel === id);
     const last = mine[mine.length - 1];
-    const st = !last ? ['idle', 'Not connected yet'] : last.date === today ? ['ok', 'Active today'] : ['ok', 'Last active ' + last.date];
+    const st = !last ? ['idle', 'No recorded activity'] : last.date === today ? ['ok', 'Activity recorded today'] : ['ok', 'Last record ' + last.date];
     const assigned = p.tasks.filter((t) => (t.Owner || '').trim().toLowerCase() === id && !['done', 'skipped'].includes((t.Status || '').trim()));
     return `<section class="card" style="display:flex;flex-direction:column;gap:12px"><div class="row" style="justify-content:space-between">${chip(id)}<span class="pill ${st[0]}">${esc(st[1])}</span></div>
       <h2 style="font-size:20px">${esc(label)}</h2><p class="sub">${esc(kind)}</p>
