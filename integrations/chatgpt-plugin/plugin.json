@@ -1,0 +1,52 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "benji",
+  "version": "0.2.1",
+  "description": "Energy-management skills for Massachusetts homes and businesses: understand bills, compare improvements, navigate support and prepare an actionable plan.",
+  "author": {
+    "name": "Vladimir Putkov"
+  },
+  "homepage": "https://github.com/VladimirPutkov/benji",
+  "repository": "https://github.com/VladimirPutkov/benji",
+  "keywords": [
+    "energy",
+    "sustainability",
+    "buildings",
+    "massachusetts",
+    "mass-save",
+    "skills"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Benji",
+        "shortDescription": "Your building energy guide",
+        "longDescription": "12 specialist skills and one orchestrator help residents, renters and small businesses understand bills, investigate comfort problems, compare retrofit options, distinguish cash needed now from later rebates, and prepare next steps. Includes Massachusetts program leads and Boston BERDO references with explicit limits. This skills-only edition uses information supplied in the conversation. It does not install a server, connect a local dashboard, guarantee persistent memory, monitor buildings in the background, or approve incentives. Regional references apply to Massachusetts even when the plugin is available elsewhere.",
+        "developerName": "Vladimir Putkov",
+        "category": "Productivity",
+        "capabilities": [],
+        "defaultPrompt": [
+          "Help me understand my building's energy bills and choose the next affordable improvement.",
+          "I rent a cafe in Massachusetts. Help me reduce energy waste and prepare a plan for my landlord."
+        ],
+        "websiteURL": "https://github.com/VladimirPutkov/benji",
+        "supportURL": "https://github.com/VladimirPutkov/benji/issues",
+        "logo": "assets/benji-app-icon.svg",
+        "composerIcon": "assets/benji-app-icon.svg",
+        "brandColor": "#2E6A4F"
+      },
+      "review": {
+        "prompts": [
+          "I rent a coffee shop in Massachusetts. My bills rose and I have $1,500 available. What information do you need to help me choose the next step?",
+          "A contractor says a rebate will make my heat pump affordable. Explain cash needed upfront versus net cost, and what I should verify before committing.",
+          "My bedroom is cold. It is 150 square feet. Can you tell me exactly how long it will take to warm up?",
+          "I have only electricity bills for a multifamily building with gas heat. Can you compare its total energy use with Boston buildings?"
+        ]
+      },
+      "publication": {
+        "countries": [],
+        "release_notes": "Adds Benji's house-and-leaf icon, clear host capability limits, source-backed energy workflows, and public documentation. Skills-only: no automatic server, monitoring, or dashboard connection."
+      }
+    }
+  }
+}

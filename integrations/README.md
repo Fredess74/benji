@@ -13,6 +13,11 @@ agent, or managed on the dashboard. Each write is logged with its channel.
 check) and on plan due dates. The orchestrator forbids sending, applying, booking or buying without the owner's
 explicit approval for that action.
 
-**Security:** the HTTP server has no user accounts. Keep it on 127.0.0.1. For a ChatGPT demo through a tunnel, set
-`BENJI_API_KEY` first; `/memory/*` then requires `Authorization: Bearer <key>`. Memory holds addresses and bills —
+**Security:** the HTTP server has no user accounts. Keep it on 127.0.0.1. For a separately secured ChatGPT integration, `/memory/*` can require `Authorization: Bearer <key>` when `BENJI_API_KEY` is set; protect the complete exposed surface as described below. Memory holds addresses and bills —
 keep it on the user's machine.
+
+## Current status and access boundaries
+
+The dashboard is implemented at `/app`. Point it and the agent to the same `BENJI_MEMORY` folder. The [ChatGPT skills-only package](chatgpt-plugin/README.md) is distinct from Custom GPT Actions and does not automatically connect local files. Claude Code plugin installation uses the root marketplace; Claude Desktop/web support different installation paths.
+
+The optional bearer key protects memory/assistant routes, not every legacy calculator endpoint. Do not tunnel the complete development server as a production service. Public hosting needs route isolation, authentication and user authorization.

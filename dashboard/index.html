@@ -95,7 +95,7 @@ ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;font-si
       <button class="nav" data-tab="chats">Activity <span class="count" id="c-chats"></span></button>
     </nav>
     <div class="sync" id="sync"><span style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700"><span class="dot"></span><span id="sync-t">Connecting…</span></span>
-      <span>Reads the shared memory every 10 s. Nothing here is sample data.</span>
+      <span>Reads your saved memory every 10 s. Check source labels before using figures.</span>
       <details><summary>API key</summary><input id="key" class="field" type="password" placeholder="BENJI_API_KEY (if set)" style="margin-top:8px;width:100%"></details>
     </div>
   </aside>
@@ -286,7 +286,7 @@ function render() {
     [confirmed.length, 'bills confirmed', pending.length ? pending.length + ' waiting' : ''],
     [`${tasksDone}/${p.tasks.length}`, 'tasks done', ''],
     [`${qTotal - p.open_questions.length}/${qTotal}`, 'questions answered', ''],
-    [agentLog.length, 'changes by agents', 'last 50 log lines'],
+    [agentLog.length, 'updates outside dashboard', 'last 50 log lines'],
   ].map(([v, l, s]) => `<div class="tile"><b>${esc(v)}</b><span class="sub">${esc(l)}</span>${s ? `<span class="muted" style="font-size:12px">${esc(s)}</span>` : ''}</div>`).join('');
 
   const cc = state.cc;

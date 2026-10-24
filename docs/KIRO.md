@@ -20,3 +20,7 @@ Built in the **Kiro IDE** (agent in autopilot) on 2026-10-24, in increments. Eve
   merged 20 skills into 12, added hard length/turn limits and fixed packaging for Claude.ai.
 - **MCP.** Benji ships its own MCP server (`benji/mcp_server.py`) for memory and cross-checks. No third-party MCP
   servers were used inside Kiro. **Kiro powers:** none.
+
+## Current delivery and judging evidence
+
+The current repository includes the memory-based dashboard at `/app`, Claude Code plugin/marketplace manifests and pinned `fastmcp`. See [ARCHITECTURE.md](ARCHITECTURE.md) for the current division between skills, tools and UI. Independent release checks are recorded in [VERIFICATION.md](VERIFICATION.md); do not infer live external-client installation from structural tests. The later ChatGPT skills package and documentation preparation used Plugin Creator/Codex and are separate from the Kiro implementation work.

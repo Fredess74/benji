@@ -25,11 +25,10 @@
 | minimum peer sample | 30 | Design choice | n/a |
 | heating split | Summer (Jun-Aug) daily gas use = baseload | Needs 330+ days including summer and winter bills | modelled_estimate |
 
-No default heat-loss coefficient, thermal capacity, COP, equipment output, tariff, quote or incentive amount exists
-anywhere in the code. Missing values are reported as missing.
+The numerical model requires explicit heat-loss coefficient, thermal capacity, COP, equipment output, tariff, quote and incentive inputs for the relevant scenario. Synthetic test fixtures contain example values and are not market data. Missing required values are reported as missing.
 
 ## Incentives
-There are 10 Mass Save records in `benji/catalog/incentives.json`. All are **unverified** leads that link only to
+There are 13 program records in `benji/catalog/incentives.json`. All are **unverified** leads that link only to
 masssave.com and have no pre-filled amounts. The confirmed financial view counts an incentive only when the user
 records an approval (status approved or disbursed) together with reported_by, reported_on and a reference.
 Benji does not verify approvals.
@@ -37,3 +36,7 @@ Benji does not verify approvals.
 ## Synthetic demo values
 Everything in `benji/demo.py` is synthetic: tariffs, bills, quotes, COP, heat-loss coefficient, thermal capacity and
 approval references. These are test values, not Massachusetts market data.
+
+## Problem evidence and claim boundaries
+
+See [EVIDENCE.md](EVIDENCE.md) for independently sourced community/problem statistics and [IMPACT.md](IMPACT.md) for the proposed outcome measurement. A program lead is not approval, a peer gap is not recoverable savings, and a model estimate is not a measured result.

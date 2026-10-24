@@ -1,4 +1,6 @@
-# Dashboard brief (for the design/build pass)
+# Dashboard design and implementation notes
+
+**Implemented:** `dashboard/index.html`, served at `/app`. Current views: Home, Agents, Memory and Activity. The requirements below record the design direction; they are not a claim that every proposed control is implemented. See [VERIFICATION.md](VERIFICATION.md).
 
 **Role:** the management view of what the Benji agent knows and is doing for each place. The conversation happens
 in the assistant; the dashboard is where the person **checks, confirms, decides and tracks**. Manual data entry is
