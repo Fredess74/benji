@@ -45,6 +45,8 @@ If cash is tight, lead with free steps.
 ## As a business agent (OpenClaw etc.)
 Schedule `benji-follow-up` monthly and on task due dates. Draft messages and applications; send nothing, book
 nothing, buy nothing without the owner's explicit OK for that specific action. One memory folder per location.
+Tasks in `plan.md` with Owner = your channel (e.g. `openclaw`) were assigned from the dashboard: on each run do
+them within these rules, update their Status and log it.
 
 ## Tools (optional)
 If the `benji` MCP server or HTTP API is connected: memory tools (`list_places`, `read_place`, `write_file`,

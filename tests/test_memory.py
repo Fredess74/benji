@@ -134,6 +134,12 @@ def test_http_memory_api(client, mem):
     assert all(p.startswith("/memory/") for p in spec["paths"]) and "/memory/places/{slug}" in spec["paths"]
 
 
+def test_dashboard_page_and_memory_info(client, mem):
+    assert client.get("/app").status_code == 200
+    info = client.get("/memory/info").json()
+    assert info["root"].endswith("benji-memory") and "plan.md" in info["files"]
+
+
 def test_mcp_tools(mem):
     from fastmcp import Client
 

@@ -674,6 +674,12 @@ def _mch(request: Request) -> str:
     return (request.headers.get("x-benji-channel") or "dashboard").lower()
 
 
+@app.get("/memory/info", tags=["memory"], operation_id="memoryInfo")
+def m_info(request: Request):
+    """Where memory lives on disk (agents with file access, e.g. OpenClaw, point here)."""
+    return _mem(request, lambda: {"root": str(memory.root()), "files": list(memory.FILES)})
+
+
 @app.get("/memory/places", tags=["memory"], operation_id="listPlaces")
 def m_list(request: Request):
     """Places with next step, pending bills, open tasks/questions, stale flag and last activity."""

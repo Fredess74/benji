@@ -10,14 +10,15 @@
 :root{--accent:#2E6A4F;--soft:#2E6A4F1F;--bg:#F3F4EF;--ink:#1F2A24;--muted:#5B675F;--line:#E4E8E1}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,sans-serif}
-h1,h2{font-family:'Bricolage Grotesque',system-ui,sans-serif;margin:0;letter-spacing:-.01em}
+h1,h2,h3{font-family:'Bricolage Grotesque',system-ui,sans-serif;margin:0;letter-spacing:-.01em}
 p{margin:0}
 button,input,select{font:inherit}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:#EEF1EC;padding:2px 6px;border-radius:6px;word-break:break-all}
 .app{display:flex;flex-wrap:wrap;min-height:100vh}
 aside{flex:1 1 228px;padding:28px 18px;display:flex;flex-direction:column;gap:24px;border-right:1px solid var(--line)}
 main{flex:999 1 560px;min-width:0;padding:32px clamp(16px,3vw,44px) 48px}
-.wrap{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
+.wrap{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
 .logo{display:flex;align-items:center;gap:12px;padding:0 6px}
 .logo i{width:40px;height:40px;border-radius:13px;background:var(--accent);display:flex;align-items:center;justify-content:center}
 .logo b{font-family:'Bricolage Grotesque',sans-serif;font-size:22px}
@@ -32,6 +33,7 @@ main{flex:999 1 560px;min-width:0;padding:32px clamp(16px,3vw,44px) 48px}
 .primary{background:var(--accent);color:#fff}.primary:hover{filter:brightness(.94)}
 .ghost{background:#fff;color:var(--ink);border-color:#D3DAD0}.ghost:hover{background:#F3F5F1}
 .field{min-height:44px;flex:1 1 220px;min-width:0;padding:10px 14px;border-radius:12px;border:1px solid #C8D0C5;background:#fff;color:var(--ink);font-size:15px}
+.sel{flex:0 0 150px;min-height:40px;padding:8px 10px;font-size:14px}
 .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .cols{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start}
 .main-col{flex:999 1 520px;min-width:0;display:flex;flex-direction:column;gap:24px}
@@ -44,6 +46,7 @@ main{flex:999 1 560px;min-width:0;padding:32px clamp(16px,3vw,44px) 48px}
 .ch-claude{background:#F7E5DB;color:#8B3D1C}.ch-chatgpt{background:#DCEEE7;color:#1E584A}.ch-openclaw{background:#E8E4F5;color:#4B3C84}
 .ch-dashboard{background:#E5E9E3;color:#36423B}.ch-kiro{background:#E2ECF7;color:#1E4F80}.ch-agent,.ch-user{background:#F1F3EF;color:#4A564F}
 .lab{display:inline-flex;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;white-space:nowrap;background:#F1F3EF;color:#4A564F}
+.lab-bills{background:#DDEFE3;color:#1D5E3F}.lab-est{background:#FBEAD0;color:#86490A}
 .pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap}
 .ok{background:#DDEFE3;color:#1D5E3F}.warn{background:#FBEAD0;color:#86490A}.idle{background:#ECEFEA;color:#4A564F}
 table{width:100%;border-collapse:collapse;font-size:14px}
@@ -60,6 +63,15 @@ pre{white-space:pre-wrap;word-break:break-word;font-family:ui-monospace,Consolas
 .dot{width:8px;height:8px;border-radius:50%;background:#2E8A5A;display:inline-block}
 .err .dot{background:#B4531A}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.tile{padding:16px;border-radius:16px;background:#F7F8F5;display:flex;flex-direction:column;gap:4px}
+.tile b{font-family:'Bricolage Grotesque',sans-serif;font-size:26px;font-weight:700}
+.fcard{display:flex;flex-direction:column;gap:8px;padding:16px;border-radius:16px;background:#fff;border:1px solid var(--line);text-align:left;cursor:pointer;color:var(--ink);min-height:132px}
+.fcard:hover{border-color:#C8D0C5}.fcard.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--soft)}
+.fcard b{font-size:15px}
+.schema-agents{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.ag{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 14px;border-radius:14px;background:#fff;border:1px solid var(--line);font-size:12px;color:var(--muted)}
+ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;font-size:14px;line-height:1.5}
 .hide{display:none!important}
 </style>
 </head>
@@ -75,12 +87,12 @@ pre{white-space:pre-wrap;word-break:break-word;font-family:ui-monospace,Consolas
     </label>
     <nav aria-label="Main" style="display:flex;flex-direction:column;gap:4px">
       <button class="nav on" data-tab="home">Home <span class="count" id="c-home"></span></button>
-      <button class="nav" data-tab="chats">Chats <span class="count" id="c-chats"></span></button>
       <button class="nav" data-tab="agents">Agents <span class="count" id="c-agents"></span></button>
-      <button class="nav" data-tab="memory">Memory <span class="count">6</span></button>
+      <button class="nav" data-tab="memory">Memory <span class="count" id="c-memory"></span></button>
+      <button class="nav" data-tab="chats">Activity <span class="count" id="c-chats"></span></button>
     </nav>
     <div class="sync" id="sync"><span style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700"><span class="dot"></span><span id="sync-t">Connecting…</span></span>
-      <span>Claude, ChatGPT and OpenClaw write the same memory. Refreshes every 10 s.</span>
+      <span>Reads the shared memory every 10 s. Nothing here is sample data.</span>
       <details><summary>API key</summary><input id="key" class="field" type="password" placeholder="BENJI_API_KEY (if set)" style="margin-top:8px;width:100%"></details>
     </div>
   </aside>
@@ -92,16 +104,28 @@ pre{white-space:pre-wrap;word-break:break-word;font-family:ui-monospace,Consolas
       <p class="sub" id="subtitle"></p>
     </header>
 
-    <div id="empty" class="card hide" style="display:flex;flex-direction:column;gap:12px">
-      <h2 style="font-size:22px">No places yet</h2>
-      <p class="sub">Talk to Benji in Claude, ChatGPT or OpenClaw — for example: “I run a coffee shop in Cambridge, we lease. Here are our last 12 bills.” The agent creates the place in memory and it appears here.</p>
+    <div id="empty" class="card hide" style="display:flex;flex-direction:column;gap:14px">
+      <h2 style="font-size:22px">Memory is empty — connect an agent</h2>
+      <p class="sub">This dashboard shows only what Benji's agents have written. Memory folder on this machine:</p>
+      <code id="root-empty"></code>
+      <ol>
+        <li><b>OpenClaw / Claude Code / Kiro</b> (file access): copy <code>skills/</code> into the agent's skills folder and give it this memory folder as its workspace <code>benji-memory/</code>.</li>
+        <li><b>Claude Desktop</b>: add the <code>benji</code> MCP server (<code>integrations/claude/</code>).</li>
+        <li>Tell the agent about your place and send bills, e.g. “I run a coffee shop in Cambridge, we lease — here are our last 12 bills.” The place appears here within 10 seconds.</li>
+      </ol>
     </div>
 
+    <!-- HOME -->
     <section id="tab-home" class="tab">
       <div id="stale" class="banner hide"><span>Something changed — ask Benji to refresh the plan.</span></div>
-      <div class="cols" style="margin-top:0">
+      <div class="cols">
         <div class="main-col">
           <section class="card next"><span class="eyebrow">Next step</span><h2 id="next" style="font-size:28px;line-height:1.25;white-space:pre-line"></h2></section>
+          <section class="card" style="display:flex;flex-direction:column;gap:16px">
+            <div class="row" style="justify-content:space-between"><h2 style="font-size:22px">Impact</h2><span class="sub">Recomputed by tested code from confirmed bills</span></div>
+            <div class="tiles" id="progress"></div>
+            <div id="impact"></div>
+          </section>
           <section class="card" style="display:flex;flex-direction:column;gap:16px">
             <h2 style="font-size:22px">Waiting for you</h2>
             <div id="waiting" style="display:flex;flex-direction:column;gap:14px"></div>
@@ -110,16 +134,54 @@ pre{white-space:pre-wrap;word-break:break-word;font-family:ui-monospace,Consolas
             <h2 style="font-size:22px;margin-bottom:8px">Plan</h2>
             <div id="actions"></div>
             <div id="tasks"></div>
+            <div class="box" style="margin-top:16px">
+              <label for="new-task"><b>Give an agent a task</b></label>
+              <p class="sub">Added to <code>plan.md</code>. Agents read the plan before every run; OpenClaw picks up tasks assigned to <code>openclaw</code>.</p>
+              <div class="row"><input id="new-task" class="field" type="text" placeholder="e.g. Draft the landlord note about LED fixtures">
+                <label class="hide" for="new-owner">Owner</label><select id="new-owner" class="field sel"></select>
+                <button class="btn primary" data-act="add-task">Add task</button></div>
+            </div>
           </section>
         </div>
         <div class="side-col">
           <section class="card"><h2 style="font-size:20px;margin-bottom:6px">What Benji remembers</h2><div id="facts"></div></section>
           <section class="card"><h2 style="font-size:20px;margin-bottom:10px">Findings</h2><div id="findings"></div></section>
-          <section class="card" style="display:flex;flex-direction:column;gap:14px"><h2 style="font-size:20px">Activity</h2><div id="activity" style="display:flex;flex-direction:column;gap:14px"></div></section>
+          <section class="card" style="display:flex;flex-direction:column;gap:14px"><h2 style="font-size:20px">Latest activity</h2><div id="activity" style="display:flex;flex-direction:column;gap:14px"></div></section>
         </div>
       </div>
     </section>
 
+    <!-- AGENTS -->
+    <section id="tab-agents" class="tab hide">
+      <div style="display:flex;flex-direction:column;gap:24px">
+        <section class="card" style="display:flex;flex-direction:column;gap:12px">
+          <div class="row" style="justify-content:space-between"><h2 style="font-size:22px">Connect an OpenClaw agent</h2><span class="ch ch-openclaw">OpenClaw</span></div>
+          <ol>
+            <li>Copy the repo's <code>skills/</code> folder into the agent's skills folder (13 <code>SKILL.md</code> files).</li>
+            <li>Memory folder for the agent: <code id="root-agents"></code></li>
+            <li>Assign tasks to <code>openclaw</code> on the Home tab. On each run it does them (drafts only — it sends, books or buys nothing without your OK), updates the status and logs it here.</li>
+          </ol>
+        </section>
+        <div class="grid" id="agents"></div>
+      </div>
+    </section>
+
+    <!-- MEMORY -->
+    <section id="tab-memory" class="tab hide">
+      <div style="display:flex;flex-direction:column;gap:24px">
+        <section class="card" style="display:flex;flex-direction:column;gap:18px">
+          <div class="schema-agents" id="writers"></div>
+          <div style="display:flex;justify-content:center" aria-hidden="true"><svg width="24" height="34" viewBox="0 0 24 34" fill="none" stroke="#98A39C" stroke-width="2" stroke-linecap="round"><path d="M12 2v28"/><path d="M5 23l7 7 7-7"/></svg></div>
+          <div style="text-align:center;display:flex;flex-direction:column;gap:4px"><b id="folder" style="font-family:ui-monospace,Consolas,monospace"></b><span class="sub" id="root-mem"></span></div>
+          <div class="grid" id="schema" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px"></div>
+        </section>
+        <section class="card" style="display:flex;flex-direction:column;gap:12px">
+          <h2 style="font-size:20px" id="file-title"></h2><pre id="file-body"></pre>
+        </section>
+      </div>
+    </section>
+
+    <!-- ACTIVITY -->
     <section id="tab-chats" class="tab hide">
       <div class="cols">
         <section class="card" style="flex:1 1 300px;min-width:0;padding:12px" id="sessions"></section>
@@ -127,17 +189,6 @@ pre{white-space:pre-wrap;word-break:break-word;font-family:ui-monospace,Consolas
           <div class="row" style="justify-content:space-between"><h2 style="font-size:22px" id="sess-title"></h2>
             <span class="row"><a class="btn ghost" href="https://claude.ai/new" target="_blank" rel="noopener">Open Claude</a><a class="btn ghost" href="https://chatgpt.com/" target="_blank" rel="noopener">Open ChatGPT</a></span></div>
           <div id="sess-body"></div>
-        </section>
-      </div>
-    </section>
-
-    <section id="tab-agents" class="tab hide"><div class="grid" id="agents"></div></section>
-
-    <section id="tab-memory" class="tab hide">
-      <div class="cols">
-        <section class="card" style="flex:1 1 280px;min-width:0;padding:12px" id="files"></section>
-        <section class="card" style="flex:999 1 520px;min-width:0;display:flex;flex-direction:column;gap:12px">
-          <h2 style="font-size:22px" id="file-title"></h2><pre id="file-body"></pre>
         </section>
       </div>
     </section>
@@ -150,9 +201,22 @@ const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':
 const NAMES = {claude:'Claude', chatgpt:'ChatGPT', openclaw:'OpenClaw', dashboard:'Dashboard', kiro:'Kiro', agent:'Agent', user:'You'};
 const chName = (c) => NAMES[c] || c;
 const chip = (c) => `<span class="ch ch-${esc(c)}">${esc(chName(c))}</span>`;
-const FILE_NAMES = {'profile.md':'Profile','bills.csv':'Bills','findings.md':'Findings','plan.md':'Plan & tasks','open-questions.md':'Open questions','log.md':'Activity log'};
+const usd = (n) => (n < 0 ? '−$' : '$') + Math.abs(Math.round(n)).toLocaleString();
+const num = (n) => Math.round(n).toLocaleString();
+const FILES = [
+  ['profile.md', 'Profile', (l) => l.what.includes('profile.md') || l.what.startsWith('created place')],
+  ['bills.csv', 'Bills', (l) => l.what.includes('bills.csv') || l.what.includes('bill(s)')],
+  ['findings.md', 'Findings', (l) => l.what.includes('findings.md')],
+  ['plan.md', 'Plan & tasks', (l) => l.what.includes('plan.md') || l.what.startsWith('task ')],
+  ['open-questions.md', 'Open questions', (l) => l.what.includes('open-questions.md') || l.what.startsWith('answered ')],
+  ['log.md', 'Activity log', () => true],
+];
 const STATUSES = ['not_started','in_progress','blocked','done','skipped'];
-let state = {tab:'home', slug:null, place:null, places:[], session:0, file:'findings.md', busy:false};
+const OWNERS = ['you','openclaw','claude','chatgpt','landlord','contractor'];
+const AGENTS = [['openclaw','OpenClaw','Business agent · reads/writes the folder directly · runs on a schedule'],
+  ['claude','Claude','Desktop app · memory via MCP'], ['chatgpt','ChatGPT','Custom GPT · memory via HTTP Actions'],
+  ['kiro','Kiro / Claude Code','Coding agent · direct file access']];
+let state = {tab:'home', slug:null, place:null, places:[], cc:null, root:'', session:0, file:'plan.md', busy:false};
 try { $('key').value = localStorage.getItem('benji-key') || ''; } catch (e) {}
 $('key').addEventListener('change', () => { try { localStorage.setItem('benji-key', $('key').value); } catch (e) {} load(); });
 
@@ -163,13 +227,17 @@ async function api(path, opts = {}) {
   if (!r.ok) throw new Error(r.status + ' ' + (await r.text()).slice(0, 200));
   return r.json();
 }
+const base = () => '/memory/places/' + encodeURIComponent(state.slug);
 
 async function load() {
   try {
+    if (!state.root) state.root = (await api('/memory/info')).root;
     state.places = await api('/memory/places');
     if (!state.slug || !state.places.some((p) => p.slug === state.slug)) state.slug = state.places[0]?.slug || null;
     $('place').innerHTML = state.places.map((p) => `<option value="${esc(p.slug)}"${p.slug === state.slug ? ' selected' : ''}>${esc(p.name)}</option>`).join('');
-    state.place = state.slug ? await api('/memory/places/' + encodeURIComponent(state.slug)) : null;
+    state.place = state.slug ? await api(base()) : null;
+    const hasConfirmed = state.place?.bills.some((b) => b.status === 'confirmed' || b.status === 'corrected');
+    state.cc = hasConfirmed ? await api(base() + '/cross-check').catch(() => null) : null;
     $('sync').classList.remove('err'); $('sync-t').textContent = 'Memory synced · ' + new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'});
   } catch (e) {
     $('sync').classList.add('err'); $('sync-t').textContent = 'Not connected: ' + e.message;
@@ -177,40 +245,75 @@ async function load() {
   if (!state.busy) render();
 }
 
-function val(k) { return state.place?.profile?.[k]?.value || ''; }
+const val = (k) => state.place?.profile?.[k]?.value || '';
+const tableRows = (raw) => raw.split('\n').filter((l) => l.trim().startsWith('|')).slice(2).length;
 
 function render() {
   const p = state.place;
+  ['root-empty', 'root-agents'].forEach((id) => $(id).textContent = state.root || '(start the Benji server)');
   $('empty').classList.toggle('hide', !!p);
   document.querySelectorAll('.tab').forEach((t) => t.classList.toggle('hide', !p || t.id !== 'tab-' + state.tab));
   document.querySelectorAll('.nav').forEach((b) => b.classList.toggle('on', b.dataset.tab === state.tab));
-  if (!p) { $('title').textContent = 'Benji'; return; }
+  if (!p) { $('title').textContent = 'Benji'; $('subtitle').textContent = ''; $('eyebrow').textContent = ''; return; }
   const name = val('name') || p.slug;
   const sub = [val('place_type'), val('business_type'), val('zip') && 'ZIP ' + val('zip'), val('user_role')].filter(Boolean).join(' · ').replace(/_/g, ' ');
   const heads = {home:[new Date().toLocaleDateString([], {weekday:'long', month:'long', day:'numeric'}), name, sub],
-    chats:[name, 'Chats', 'What each assistant did for this place, from the shared memory log.'],
-    agents:[name, 'Agents', 'Same 12 skills and one memory, in whichever assistant you use.'],
-    memory:[name, 'Memory', 'benji-memory/' + p.slug + ' — every change records who made it.']}[state.tab];
+    agents:[name, 'Agents', 'Who works on this place, what they did, and what is assigned to them.'],
+    memory:[name, 'Memory', 'The live structure of what Benji stores — click a file to read it.'],
+    chats:[name, 'Activity', 'Every change, grouped by agent and day, from log.md.']}[state.tab];
   $('eyebrow').textContent = heads[0]; $('title').textContent = heads[1]; $('subtitle').textContent = heads[2];
 
   const pending = p.bills.filter((b) => b.status === 'pending');
+  const confirmed = p.bills.filter((b) => b.status === 'confirmed' || b.status === 'corrected');
   const waitingN = (pending.length ? 1 : 0) + p.open_questions.length;
-  $('c-home').textContent = waitingN || ''; $('c-home').classList.toggle('hide', !waitingN);
-  const log = [...p.log].reverse();
+  const tasksDone = p.tasks.filter((t) => (t.Status || '').trim() === 'done').length;
+  const qTotal = tableRows(p.raw['open-questions.md'] || '');
+  const agentLog = p.log.filter((l) => l.channel !== 'dashboard');
   const sessions = groupSessions(p.log);
+  $('c-home').textContent = waitingN || ''; $('c-home').classList.toggle('hide', !waitingN);
   $('c-chats').textContent = sessions.length;
-  const channels = [...new Set(p.log.map((l) => l.channel))].filter((c) => c !== 'dashboard');
-  $('c-agents').textContent = channels.length;
+  $('c-agents').textContent = new Set(agentLog.map((l) => l.channel)).size;
+  $('c-memory').textContent = FILES.length + (p.documents.length ? 1 : 0);
 
-  // Home
+  // ---- Home
   $('stale').classList.toggle('hide', !(p.plan_stale || p.findings_stale));
   $('next').textContent = p.next_step && !p.next_step.startsWith('<') ? p.next_step : 'No next step yet — ask Benji to make a plan.';
+
+  $('progress').innerHTML = [
+    [confirmed.length, 'bills confirmed', pending.length ? pending.length + ' waiting' : ''],
+    [`${tasksDone}/${p.tasks.length}`, 'tasks done', ''],
+    [`${qTotal - p.open_questions.length}/${qTotal}`, 'questions answered', ''],
+    [agentLog.length, 'changes by agents', 'last 50 log lines'],
+  ].map(([v, l, s]) => `<div class="tile"><b>${esc(v)}</b><span class="sub">${esc(l)}</span>${s ? `<span class="muted" style="font-size:12px">${esc(s)}</span>` : ''}</div>`).join('');
+
+  const cc = state.cc;
+  let imp = '';
+  if (!confirmed.length) imp = '<p class="sub">No confirmed bills yet — money figures appear after you confirm the bills Benji read.</p>';
+  else if (!cc || cc.error) imp = `<p class="sub">Can't recompute yet: ${esc(cc?.error || 'cross-check unavailable')}</p>`;
+  else {
+    const fuels = Object.entries(cc.costs || {});
+    imp += `<div class="tbl"><table><thead><tr><th>Fuel</th><th>Cost</th><th>Usage</th><th>Covers</th><th></th></tr></thead><tbody>${fuels.map(([f, c]) => {
+      const yearly = c.annual_cost_usd != null;
+      const cov = c.coverage || {};
+      return `<tr><td><b>${esc(f.replace('_', ' '))}</b></td>
+        <td>${yearly ? usd(c.annual_cost_usd) + ' / yr' : c.recorded_cost_usd != null ? usd(c.recorded_cost_usd) : '—'}</td>
+        <td>${yearly && c.annual_quantity != null ? num(c.annual_quantity) + ' ' + esc(c.unit) + ' / yr' : c.recorded_quantity != null ? num(c.recorded_quantity) + ' ' + esc(c.unit) : '—'}</td>
+        <td>${esc(cov.covered_days ?? '?')} of 365 days${cov.complete ? '' : ' <span class="lab lab-est">partial year</span>'}</td>
+        <td><span class="lab lab-bills">from your bills</span></td></tr>`; }).join('')}</tbody></table></div>`;
+    const opts = (cc.options || []).filter((o) => o.status !== 'assessment_only').slice(0, 4);
+    if (opts.length) imp += `<div style="margin-top:14px">${opts.map((o) => `<div class="line"><div style="min-width:0"><b style="font-size:14px">${esc(o.name)}</b>
+      <div class="muted" style="font-size:13px">${o.annual_operating_cost_change_usd != null ? usd(o.annual_operating_cost_change_usd) + ' / yr' + (o.annual_emissions_change_kgco2e != null ? ' · ' + num(o.annual_emissions_change_kgco2e) + ' kg CO₂e / yr' : '') : 'Needs: ' + esc((o.missing || []).join(', ') || 'more data')}</div></div>
+      <span class="lab lab-est">estimate</span></div>`).join('')}</div>`;
+    if (cc.benchmark) imp += `<p class="sub" style="margin-top:12px">${esc(cc.benchmark)}</p>`;
+  }
+  $('impact').innerHTML = imp;
+
   let w = '';
   if (pending.length) {
     w += `<div class="box"><div><b style="font-size:16px">Benji read ${pending.length} bill${pending.length > 1 ? 's' : ''}. Are they right?</b>
       <p class="sub">Nothing is used until you confirm.</p></div>
       <div class="tbl"><table><thead><tr><th>Period</th><th>Fuel</th><th>Utility</th><th>Usage</th><th>Total</th><th>Read</th><th>Notes</th></tr></thead><tbody>
-      ${pending.map((b) => `<tr><td>${esc(b.period_start)} – ${esc(b.period_end)}</td><td>${esc(b.fuel)}</td><td>${esc(b.utility)}</td><td>${esc(b.quantity)} ${esc(b.unit)}</td><td>${b.total_usd ? '$' + esc(b.total_usd) : ''}</td><td>${b.estimated_read === 'yes' || b.estimated_read === 'true' ? '<span class="lab warn">estimated read</span>' : esc(b.source)}</td><td>${esc(b.notes)}</td></tr>`).join('')}
+      ${pending.map((b) => `<tr><td>${esc(b.period_start)} – ${esc(b.period_end)}</td><td>${esc(b.fuel)}</td><td>${esc(b.utility)}</td><td>${esc(b.quantity)} ${esc(b.unit)}</td><td>${b.total_usd ? '$' + esc(b.total_usd) : ''}</td><td>${['yes', 'true'].includes(b.estimated_read) ? '<span class="lab lab-est">estimated read</span>' : esc(b.source)}</td><td>${esc(b.notes)}</td></tr>`).join('')}
       </tbody></table></div>
       <div class="row"><button class="btn primary" data-act="confirm">Correct — use them</button><button class="btn ghost" data-act="wrong">Something's wrong</button></div></div>`;
   }
@@ -223,42 +326,66 @@ function render() {
 
   $('actions').innerHTML = p.actions.length ? `<div class="tbl" style="margin-bottom:16px"><table><thead><tr><th>#</th><th>Action</th><th>Cash now</th><th>Est. effect / yr</th><th>Approves</th></tr></thead><tbody>
     ${p.actions.map((a) => `<tr><td>${esc(a['#'])}</td><td><b>${esc(a.Action)}</b><div class="muted" style="font-size:13px">${esc(a['Why now'])}</div></td><td>${esc(a['Cash now'])}</td><td>${esc(a['Est. effect / yr'])}</td><td>${esc(a.Approves)}</td></tr>`).join('')}</tbody></table></div>` : '';
+  const ownerOpts = (cur) => [...new Set([...(cur ? [cur] : []), ...OWNERS])].map((o) => `<option value="${esc(o)}"${o === cur ? ' selected' : ''}>${esc(o)}</option>`).join('');
   $('tasks').innerHTML = p.tasks.length ? p.tasks.map((t) => `<div class="line" style="align-items:center;flex-wrap:wrap">
-      <div style="flex:1 1 260px;min-width:0"><b style="font-size:15px">${esc(t.Task)}</b><div class="muted" style="font-size:13px">${esc([t.Owner, t.Due].filter(Boolean).join(' · '))}</div></div>
-      <label class="hide" for="t-${esc(t.id)}">Status</label>
-      <select id="t-${esc(t.id)}" class="field" style="flex:0 0 160px" data-task="${esc(t.id)}">${STATUSES.map((s) => `<option value="${s}"${(t.Status || '').trim() === s ? ' selected' : ''}>${s.replace('_', ' ')}</option>`).join('')}</select></div>`).join('')
+      <div style="flex:1 1 240px;min-width:0"><b style="font-size:15px">${esc(t.Task)}</b><div class="muted" style="font-size:13px">${esc(t.id)}${t.Due ? ' · due ' + esc(t.Due) : ''}</div></div>
+      <label class="hide" for="o-${esc(t.id)}">Owner</label><select id="o-${esc(t.id)}" class="field sel" data-owner="${esc(t.id)}">${ownerOpts((t.Owner || '').trim().toLowerCase())}</select>
+      <label class="hide" for="t-${esc(t.id)}">Status</label><select id="t-${esc(t.id)}" class="field sel" data-task="${esc(t.id)}">${STATUSES.map((s) => `<option value="${s}"${(t.Status || '').trim() === s ? ' selected' : ''}>${s.replace('_', ' ')}</option>`).join('')}</select></div>`).join('')
     : (p.actions.length ? '' : '<p class="sub">No plan yet.</p>');
+  if (!$('new-owner').options.length) $('new-owner').innerHTML = ownerOpts('openclaw');
 
   const facts = Object.entries(p.profile).filter(([, v]) => v.value);
   $('facts').innerHTML = facts.length ? facts.map(([k, v]) => `<div class="line"><div style="min-width:0"><div class="muted" style="font-size:12px;font-weight:600">${esc(k.replace(/_/g, ' '))}</div><div style="font-size:14px;font-weight:600">${esc(v.value)}</div></div>${v.note ? `<span class="lab">${esc(v.note)}</span>` : ''}</div>`).join('') : '<p class="sub">Nothing yet.</p>';
   $('findings').innerHTML = p.findings.length ? p.findings.map((f) => `<div class="line"><span style="font-size:14px">${esc(f)}</span></div>`).join('') : '<p class="sub">No findings yet.</p>';
-  $('activity').innerHTML = log.slice(0, 8).map((l) => `<div class="row" style="flex-wrap:nowrap;align-items:flex-start">${chip(l.channel)}<div><div style="font-size:14px;font-weight:600">${esc(l.what)}</div><div class="muted" style="font-size:12px">${esc(l.date)} · ${esc(l.skill)}</div></div></div>`).join('') || '<p class="sub">No activity yet.</p>';
+  $('activity').innerHTML = [...p.log].reverse().slice(0, 6).map(logRow).join('') || '<p class="sub">No activity yet.</p>';
 
-  // Chats
-  if (state.session >= sessions.length) state.session = 0;
-  $('sessions').innerHTML = sessions.map((s, i) => `<button class="pick${i === state.session ? ' on' : ''}" data-sess="${i}"><span class="row" style="justify-content:space-between;width:100%">${chip(s.channel)}<span class="muted" style="font-size:12px">${esc(s.date)}</span></span><b>${esc(s.items[s.items.length - 1].what)}</b><span class="sub">${s.items.length} change${s.items.length > 1 ? 's' : ''}</span></button>`).join('') || '<p class="sub" style="padding:12px">No conversations yet.</p>';
-  const cur = sessions[state.session];
-  $('sess-title').textContent = cur ? chName(cur.channel) + ' · ' + cur.date : 'No conversations yet';
-  $('sess-body').innerHTML = cur ? cur.items.map((l) => `<div class="line"><span style="font-size:15px">${esc(l.what)}</span><span class="lab">${esc(l.skill)}</span></div>`).join('') : '';
-
-  // Agents
-  const AG = [['claude', 'Claude', 'Desktop app · memory via MCP'], ['chatgpt', 'ChatGPT', 'Custom GPT · memory via HTTP Actions'], ['openclaw', 'OpenClaw', 'Business agent · check-ins on a schedule'], ['kiro', 'Kiro / Claude Code', 'Coding agent · direct file access']];
+  // ---- Agents
   const today = new Date().toISOString().slice(0, 10);
-  $('agents').innerHTML = AG.map(([id, label, kind]) => {
+  $('agents').innerHTML = AGENTS.map(([id, label, kind]) => {
     const mine = p.log.filter((l) => l.channel === id);
     const last = mine[mine.length - 1];
-    const st = !last ? ['idle', 'No activity yet'] : last.date === today ? ['ok', 'Active today'] : ['ok', 'Last seen ' + last.date];
-    return `<section class="card" style="display:flex;flex-direction:column;gap:14px"><div class="row" style="justify-content:space-between">${chip(id)}<span class="pill ${st[0]}">${esc(st[1])}</span></div>
+    const st = !last ? ['idle', 'Not connected yet'] : last.date === today ? ['ok', 'Active today'] : ['ok', 'Last active ' + last.date];
+    const assigned = p.tasks.filter((t) => (t.Owner || '').trim().toLowerCase() === id && !['done', 'skipped'].includes((t.Status || '').trim()));
+    return `<section class="card" style="display:flex;flex-direction:column;gap:12px"><div class="row" style="justify-content:space-between">${chip(id)}<span class="pill ${st[0]}">${esc(st[1])}</span></div>
       <h2 style="font-size:20px">${esc(label)}</h2><p class="sub">${esc(kind)}</p>
-      <div class="line"><span class="muted">Changes here</span><b>${mine.length}</b></div>
-      <div class="line"><span class="muted">Last</span><span style="text-align:right;font-weight:600">${esc(last ? last.what : '—')}</span></div></section>`;
+      <div class="line"><span class="muted">Changes to memory</span><b>${mine.length}</b></div>
+      <div><div class="muted" style="font-size:13px;margin-bottom:6px">Assigned tasks</div>${assigned.length ? assigned.map((t) => `<div style="font-size:14px;font-weight:600">${esc(t.Task)} <span class="lab">${esc(t.Status)}</span></div>`).join('') : '<span class="sub">None</span>'}</div>
+      <div><div class="muted" style="font-size:13px;margin-bottom:6px">Recent</div>${mine.slice(-3).reverse().map((l) => `<div style="font-size:13px">${esc(l.date)} · ${esc(l.what)}</div>`).join('') || '<span class="sub">—</span>'}</div></section>`;
   }).join('');
 
-  // Memory
-  $('files').innerHTML = Object.keys(FILE_NAMES).map((f) => `<button class="pick${f === state.file ? ' on' : ''}" data-file="${f}"><b>${FILE_NAMES[f]}</b><span class="sub">${f}</span></button>`).join('');
-  $('file-title').textContent = FILE_NAMES[state.file] + ' · ' + state.file;
+  // ---- Memory schema
+  const MODES = [['openclaw', 'files'], ['kiro', 'files'], ['claude', 'MCP'], ['chatgpt', 'HTTP'], ['dashboard', 'HTTP']];
+  $('writers').innerHTML = MODES.map(([c, m]) => `<div class="ag">${chip(c)}<span>${m}</span></div>`).join('');
+  $('folder').textContent = 'benji-memory/' + p.slug + '/';
+  $('root-mem').textContent = state.root;
+  const profKeys = Object.keys(p.profile);
+  const stats = {
+    'profile.md': `${facts.length} of ${profKeys.length} facts known`,
+    'bills.csv': `${confirmed.length} confirmed · ${pending.length} pending`,
+    'findings.md': `${p.findings.length} findings${p.findings_stale ? ' · stale' : ''}`,
+    'plan.md': `${p.actions.length} actions · ${tasksDone}/${p.tasks.length} tasks done${p.plan_stale ? ' · stale' : ''}`,
+    'open-questions.md': `${p.open_questions.length} open · ${qTotal - p.open_questions.length} answered`,
+    'log.md': `${p.log.length} recent entries`,
+  };
+  const cards = FILES.map(([f, label, match]) => {
+    const last = [...p.log].reverse().find(match);
+    return `<button class="fcard${f === state.file ? ' on' : ''}" data-file="${f}"><span class="row" style="justify-content:space-between;width:100%"><b>${label}</b>${last ? chip(last.channel) : ''}</span>
+      <code style="align-self:flex-start">${f}</code><span class="sub">${esc(stats[f])}</span><span class="muted" style="font-size:12px">${last ? 'last change ' + esc(last.date) : 'no changes yet'}</span></button>`;
+  });
+  if (p.documents.length) cards.push(`<div class="fcard" style="cursor:default"><b>Documents</b><code style="align-self:flex-start">documents/</code><span class="sub">${p.documents.length} files</span><span class="muted" style="font-size:12px">${esc(p.documents.slice(0, 3).join(', '))}</span></div>`);
+  $('schema').innerHTML = cards.join('');
+  $('file-title').textContent = state.file;
   $('file-body').textContent = p.raw[state.file] || '(empty)';
+
+  // ---- Activity
+  if (state.session >= sessions.length) state.session = 0;
+  $('sessions').innerHTML = sessions.map((s, i) => `<button class="pick${i === state.session ? ' on' : ''}" data-sess="${i}"><span class="row" style="justify-content:space-between;width:100%">${chip(s.channel)}<span class="muted" style="font-size:12px">${esc(s.date)}</span></span><b>${esc(s.items[s.items.length - 1].what)}</b><span class="sub">${s.items.length} change${s.items.length > 1 ? 's' : ''}</span></button>`).join('') || '<p class="sub" style="padding:12px">No activity yet.</p>';
+  const cur = sessions[state.session];
+  $('sess-title').textContent = cur ? chName(cur.channel) + ' · ' + cur.date : 'No activity yet';
+  $('sess-body').innerHTML = cur ? cur.items.map((l) => `<div class="line"><span style="font-size:15px">${esc(l.what)}</span><span class="lab">${esc(l.skill)}</span></div>`).join('') : '';
 }
+
+const logRow = (l) => `<div class="row" style="flex-wrap:nowrap;align-items:flex-start">${chip(l.channel)}<div><div style="font-size:14px;font-weight:600">${esc(l.what)}</div><div class="muted" style="font-size:12px">${esc(l.date)} · ${esc(l.skill)}</div></div></div>`;
 
 function groupSessions(log) {
   const out = [];
@@ -270,28 +397,49 @@ function groupSessions(log) {
   return out.reverse();
 }
 
+function withTask(raw, row) {
+  const lines = raw.replace(/\s+$/, '').split('\n');
+  const h = lines.findIndex((l) => l.trim() === '## Tasks');
+  if (h < 0) return lines.concat(['', '## Tasks', '| id | Task | Owner | Due | Status |', '|---|---|---|---|---|', row]).join('\n') + '\n';
+  let end = lines.length;
+  for (let i = h + 1; i < lines.length; i++) if (lines[i].startsWith('## ')) { end = i; break; }
+  let last = -1;
+  for (let i = h + 1; i < end; i++) if (lines[i].trim().startsWith('|')) last = i;
+  if (last < 0) lines.splice(h + 1, 0, '| id | Task | Owner | Due | Status |', '|---|---|---|---|---|', row);
+  else lines.splice(last + 1, 0, row);
+  return lines.join('\n') + '\n';
+}
+
 document.addEventListener('click', async (e) => {
   const t = e.target.closest('button'); if (!t) return;
   if (t.dataset.tab) { state.tab = t.dataset.tab; render(); return; }
   if (t.dataset.sess) { state.session = +t.dataset.sess; render(); return; }
   if (t.dataset.file) { state.file = t.dataset.file; render(); return; }
-  const base = '/memory/places/' + encodeURIComponent(state.slug);
   try {
-    if (t.dataset.act === 'confirm') await api(base + '/bills/confirm', {method:'POST', body:JSON.stringify({confirmed_by:'user'})});
+    if (t.dataset.act === 'confirm') await api(base() + '/bills/confirm', {method:'POST', body:JSON.stringify({confirmed_by:'user'})});
     if (t.dataset.act === 'wrong') { alert('Tell Benji in your assistant what is wrong — it will re-read the bill.'); return; }
     if (t.dataset.act === 'answer') {
       const v = $('q' + t.dataset.i).value.trim(); if (!v) return;
-      await api(base + '/questions/' + encodeURIComponent(t.dataset.q), {method:'POST', body:JSON.stringify({answer:v})});
+      await api(base() + '/questions/' + encodeURIComponent(t.dataset.q), {method:'POST', body:JSON.stringify({answer:v})});
+    }
+    if (t.dataset.act === 'add-task') {
+      const text = $('new-task').value.replace(/[|\r\n]+/g, ' ').trim(); if (!text) return;
+      const owner = $('new-owner').value;
+      const n = Math.max(0, ...state.place.tasks.map((x) => parseInt(String(x.id).replace(/\D/g, ''), 10) || 0)) + 1;
+      const content = withTask(state.place.raw['plan.md'] || '# Plan\n', `| T${n} | ${text} | ${owner} |  | not_started |`);
+      await api(base() + '/files/plan.md', {method:'PUT', body:JSON.stringify({content, skill:'benji-action-plan'})});
+      await api(base() + '/log', {method:'POST', body:JSON.stringify({skill:'benji-action-plan', what:`task T${n} assigned to ${owner}: ${text}`})});
+      $('new-task').value = '';
     }
     await load();
   } catch (err) { alert(err.message); }
 });
 document.addEventListener('change', async (e) => {
   if (e.target.id === 'place') { state.slug = e.target.value; await load(); return; }
-  if (e.target.dataset.task) {
-    try { await api('/memory/places/' + encodeURIComponent(state.slug) + '/tasks/' + encodeURIComponent(e.target.dataset.task), {method:'PATCH', body:JSON.stringify({status:e.target.value})}); } catch (err) { alert(err.message); }
-    await load();
-  }
+  const id = e.target.dataset.task || e.target.dataset.owner; if (!id) return;
+  const body = e.target.dataset.task ? {status:e.target.value} : {owner:e.target.value};
+  try { await api(base() + '/tasks/' + encodeURIComponent(id), {method:'PATCH', body:JSON.stringify(body)}); } catch (err) { alert(err.message); }
+  await load();
 });
 document.addEventListener('focusin', (e) => { if (e.target.matches('input.field:not(#key)')) state.busy = true; });
 document.addEventListener('focusout', (e) => { if (e.target.matches('input.field:not(#key)')) state.busy = false; });
