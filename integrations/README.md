@@ -5,6 +5,7 @@
 | Claude Code, OpenClaw, Kiro | copy `skills/` into the agent's skills folder | files in `./benji-memory/` (direct) |
 | Claude with custom Skills | Upload [one Benji ZIP](../downloads/benji.zip); individual skill ZIPs remain available through `python scripts/package_skills.py` | Session record by default; persistent tools need a separate compatible connection |
 | Claude Desktop with local MCP | Add the skills separately | Example server config: `claude/claude_desktop_config.json`; replace local paths |
+| ChatGPT with Plugin Creator available | Use the [prepared skills package and setup steps](../README.md#2-chatgpt) to create a private plugin | Session record or exported handoff; no automatic dashboard connection |
 | ChatGPT custom GPT | `chatgpt/instructions.md` + skill files as knowledge | Actions from a separately secured HTTPS service's `/assistant/openapi.json`, bearer `BENJI_API_KEY` |
 
 Connected channels share the same memory folder. With that connection configured, a place can be continued by another agent or managed on the dashboard. A skills-only session does not synchronize automatically. Each tool write is logged with its declared channel.

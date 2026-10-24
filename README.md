@@ -11,17 +11,19 @@ Hackachusetts 2026 · **TRACK 3 — CLIMATE TECH**
 
 Challenge: **Cleaner, more affordable buildings**
 
-[Try the skill](https://github.com/Fredess74/benji/raw/refs/heads/main/downloads/benji.zip) · [How it works](#one-workflow-from-bill-to-follow-through) · [Measuring progress](#what-success-looks-like) · [Quick start](#try-benji) · [For judges](docs/JUDGING_GUIDE.md)
+[Try in Claude](#1-easiest-one-skill-in-claude) · [Try in ChatGPT](#2-chatgpt) · [How it works](#one-workflow-from-bill-to-follow-through) · [Measuring progress](#what-success-looks-like) · [For judges](docs/JUDGING_GUIDE.md)
 
 </div>
 
 > “Why is our energy bill so high, what should we change first, and how will we know it worked?”
 
-**Benji turns electricity and heating bills into a practical energy-efficiency plan.** It explains what drives spending, investigates potential waste, compares improvements by energy use and cost, and helps users find support such as Mass Save. After an action, it guides a comparison with later bills to check what changed.
+**Benji turns energy bills and building information into a practical energy-efficiency plan.** Bring electricity and heating bills, building plans and room layouts, thermal images, equipment lists and operating schedules. The assistant uses the available evidence to investigate heat loss, uneven temperatures, heating and cooling schedules, equipment consumption and lighting efficiency. It explains what drives spending, compares feasible improvements by energy use and cost, and helps users find support such as Mass Save. After an action, it guides a comparison with later bills to check what changed.
+
+Plans and thermal images provide context for AI-assisted investigation when the host supports those files. Quantitative heat-loss, warm-up and lighting estimates require sourced dimensions, system performance, temperatures or fixture data; an image alone does not establish energy losses or equipment capacity.
 
 **The deliverable: a prioritized plan showing potential energy savings, costs, funding options and the next check.** Estimates in kWh or therms and dollars include their inputs and assumptions. Missing evidence becomes a specific question or measurement to collect.
 
-Built for Massachusetts homes and small businesses, Benji combines **12 specialist skills and one orchestrator** that work in a regular Claude conversation or with connected agents. An optional dashboard keeps bills, questions and actions together. Start with a bill and a conversation; no sensors or dedicated hardware are required.
+Built for Massachusetts homes and small businesses, Benji combines **12 specialist skills and one orchestrator** for use in **Claude, ChatGPT or connected agents**, through the setup paths below. An optional dashboard keeps bills, questions and actions together. Start with a bill and a conversation; no sensors or dedicated hardware are required.
 
 ## The problem: a high bill does not tell you what to do
 
@@ -85,7 +87,7 @@ An observed before/after change is not proof that the action caused it. Weather 
 
 The skills make the same energy-efficiency process reusable: **confirm the bill, explain the change, evaluate an action and check the result**. They bring energy-specific references, a portable place record and optional calculation checks into the assistant the user already works with. Funding and program checks help turn a recommended improvement into a feasible one.
 
-- **In a regular Claude session:** the skill guides the conversation and can produce a handoff record. The user can start without a local server.
+- **In Claude or ChatGPT:** the installed skill/plugin guides the conversation and can produce a handoff record. The user can start without a local server.
 - **With other agents:** connected agents can read the same profile, bills and plan, continue assigned work and log changes. They must be connected to the same memory location.
 - **In the dashboard:** the human sees the next step, confirms bills, answers questions, assigns tasks and inspects what was saved.
 
@@ -123,7 +125,19 @@ Skills are instructions for the host AI. PDF/photo understanding and browsing de
 
 Use the same approach for a home, rental or apartment building. No local Python installation is needed for this skills-only route. Without connected memory tools, keep the record in the session and save the handoff for next time. Local dashboard synchronization is a separate setup. The archive is structurally checked; actual upload/invocation in every Claude account has not been tested.
 
-### 2. Optional: shared memory and dashboard
+### 2. ChatGPT
+
+Where **Plugin Creator** is available in your account/workspace:
+
+1. **[Download the ChatGPT package](https://github.com/Fredess74/benji/raw/refs/heads/main/downloads/benji-chatgpt-skills-0.2.1.zip)** — it includes all 13 skills, references and the Benji icon.
+2. Start a ChatGPT conversation, select **@Plugin Creator**, attach the package and ask: **“Create a private Benji skills plugin from this package. Preserve the skills, references and host-capability rules. Do not add server connections.”** Review the result and complete the installation if prompted.
+3. Start a new conversation, select **@Benji**, and provide your bills or building materials: **“Explain my energy spending, identify what to investigate, and prioritize efficiency improvements. Confirm extracted numbers with me first.”**
+
+This follows OpenAI's [Plugin Creator workflow](https://learn.chatgpt.com/docs/build-plugins). Availability depends on account/workspace permissions. The archive is structurally checked; installation and behavior must be tested in the target ChatGPT account. Benji is **not currently a public-directory listing**.
+
+No local Python/server is needed for this skills-only route. Records remain in the conversation or exported handoff unless separately connected. For optional shared-memory setup, including Custom GPT Actions where available, see the [connection guide](integrations/README.md).
+
+### 3. Optional: shared memory and dashboard
 
 Python **3.11+** is required for the server. Clone this repository and install its dependencies:
 
@@ -162,7 +176,7 @@ Open **http://127.0.0.1:8000/app**. The demo command is optional; omit it to sta
 
 The interface refreshes saved data every 10 seconds. This is **not live energy telemetry**. Channel labels describe recorded activity; they do not authenticate a connected agent.
 
-### 3. Claude Code or another agent
+### 4. Claude Code or another agent
 
 After installing Python dependencies in the environment Claude Code uses:
 
@@ -241,6 +255,7 @@ The [verification record](docs/VERIFICATION.md) lists the current test result, r
 
 ```text
 downloads/benji.zip      One-upload skill for a regular Claude session
+downloads/benji-chatgpt-skills-0.2.1.zip  Skills-only package for ChatGPT setup
 skills/                 Orchestrator, 12 workflows, rules and references
 .claude-plugin/         Claude Code plugin and marketplace
 benji/                  Memory, server, calculator and thermal model

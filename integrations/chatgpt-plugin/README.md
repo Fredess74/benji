@@ -6,6 +6,8 @@ Benji's skills-only plugin was created privately through Plugin Creator on 2026-
 
 This account link is not a public-directory listing. Public package files can be downloaded from this repository; directory publication is a separate review process. Package creation does not establish invocation in a live ChatGPT conversation.
 
+**[Download the prepared package](../../downloads/benji-chatgpt-skills-0.2.1.zip)** and follow the [ChatGPT quick start](../../README.md#2-chatgpt) to create a private copy where Plugin Creator is available.
+
 ## Included
 
 - Energy-management procedures, formulas, evidence rules and Massachusetts reference material.
