@@ -22,3 +22,11 @@ keep it on the user's machine.
 The dashboard is implemented at `/app`. Point it and the agent to the same `BENJI_MEMORY` folder. The [ChatGPT skills-only package](chatgpt-plugin/README.md) is distinct from Custom GPT Actions and does not automatically connect local files. Claude Code plugin installation uses the root marketplace; Claude Desktop/web support different installation paths.
 
 The optional bearer key now protects all data route families, including legacy calculator endpoints. It is a single-user shared secret. Do not treat the development server as a hosted multi-user service; public hosting needs user authorization, isolation and deployment hardening.
+
+## Smart-device integration path
+
+Benji's usage-patterns skill can guide analysis of supplied interval readings and compare them with occupied/opening hours. A host agent may supply those readings from its own connected tools or from an export. The current repository does not include a native smart-plug, relay, thermostat or home-automation connector, an automatic telemetry pipeline or device-control tools. Its Python calculator does not implement interval analysis; this is a host-assisted skill workflow.
+
+The planned integration supplies timestamps, device identity, power/energy measurements with units, and relevant operating states or temperature settings. Energy-metering plugs can supply consumption; relay state alone establishes on/off state, not measured kWh. The agent compares this information with the agreed operating schedule, explains potential waste, records the recommended check and reviews readings after an approved change.
+
+The initial target is read-only observations and human-approved actions. Refrigeration, required ventilation and safety systems stay excluded from generic shutdown suggestions. Always-on alerts and device-specific commands need their own connector and end-to-end tests before being presented as deployed functionality.

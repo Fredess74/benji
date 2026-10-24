@@ -2,7 +2,7 @@
 
 Hackachusetts 2026 · Track 3 — Climate Tech · Cleaner, more affordable buildings. Sources checked 2026-10-24.
 
-**Problem statement:** people can struggle to turn building-energy information and available assistance into an affordable, authorized improvement. Research supports the problem; it does not establish demand for a paid Benji product or its effectiveness.
+**Problem statement:** avoidable energy use can remain unnoticed in everyday operation: schedules drift, equipment runs after hours and heating/cooling systems operate inefficiently. People need help connecting the evidence to a practical correction, checking the result and financing larger improvements. Research supports the problem; it does not establish demand for a paid Benji product or its effectiveness.
 
 | ID | Finding and population | Source and location | Interpretation |
 |---|---|---|---|
@@ -12,6 +12,8 @@ Hackachusetts 2026 · Track 3 — Climate Tech · Cleaner, more affordable build
 | E4 | 63% of 341 surveyed HEAT Loan participants called it essential | [Guidehouse, April 2026](https://ma-eeac.org/wp-content/uploads/MA25R08-B-HEAT_HEAT-Loan-Phase-1-Final-Report_2026-4-29.pdf), §4.4.1, PDF p. 41 | Self-report. The report also says over 75% would have pursued work through another route or smaller scope. Do not infer causally enabled projects. |
 | E5 | Only 5 of 31 interviewed small-multifamily nonparticipants had never heard of Mass Save; understanding was limited | [Guidehouse/Cadeo, 2022](https://ma-eeac.org/wp-content/uploads/MA21R36-B-MFB-Small-MF-Barriers_Report_FINAL_11MAR2022.pdf), §4.1, PDF p. 10 | Qualitative sample, not a population rate. Supports personalized guidance rather than another link directory. |
 | E6 | Boston: 5% of buildings account for nearly 40% of city carbon emissions | [Boston BERDO](https://www.boston.gov/departments/environment/berdo), “What is BERDO?” | City-level concentration, not statewide prevalence. Small buildings and large-building portfolios need different comparison methods. |
+| E7 | As much as 30% of energy consumed in many small businesses is wasted | [EPA ENERGY STAR Small Business Toolkit, January 2025](https://www.energystar.gov/sites/default/files/2025-01/Small%20Business%20Toolkit_Jan2025.pdf), printed p. 3 / PDF p. 4 | Preserve “as much as” and “many small businesses.” This is a national guidance statement, not a measured Massachusetts average, an appliance-specific percentage or a Benji savings forecast. |
+| E8 | Median annual energy savings of 9% for fault detection and diagnostics (FDD), versus 3% for energy information systems (EIS), in the 2016–2020 Smart Energy Analytics Campaign | [Berkeley Lab, October 2020](https://bies.lbl.gov/publications/proving-business-case-building); [campaign account](https://newscenter.lbl.gov/2020/10/20/berkeley-lab-building-efficiency-campaign-drives-95m-in-annual-energy-savings/) | The entire campaign covered 104 organizations and over 6,500 buildings; 9% is the FDD result, not the result for every participating building. Analytics were used with operational follow-through. This is external evidence, not validation of Benji or an effect estimate for smart plugs alone. |
 
 These figures must not be added, treated as market size, or presented as Benji savings.
 
@@ -19,6 +21,7 @@ These figures must not be added, treated as market size, or presented as Benji s
 
 | Barrier | Benji response | Limit |
 |---|---|---|
+| Unnoticed operational waste | Review schedules, settings and supplied interval readings; turn flags into checks and follow-up | Native smart-device connectors and continuous monitoring are planned integrations; the skills' supplied-data analysis is distinct from the Python calculator |
 | Unexplained bills | Separate usage, prices, billing periods and hypotheses | A bill cannot diagnose one appliance |
 | Initial cash gap | Separate upfront payment, later support and operating cost | Benji does not finance work |
 | Tenant/owner split | Record payer, beneficiary and approver | A plan does not change a lease |

@@ -5,7 +5,7 @@
 # Benji
 ### Less energy waste. A clearer path to savings.
 
-**An AI assistant that explains energy bills and helps homes and small businesses improve energy efficiency.**
+**An AI assistant that helps uncover unnoticed energy waste, explains bills and guides homes and small businesses toward better energy efficiency.**
 
 Hackachusetts 2026 · **TRACK 3 — CLIMATE TECH**
 
@@ -15,7 +15,7 @@ Challenge: **Cleaner, more affordable buildings**
 
 </div>
 
-> “Why is our energy bill so high, what should we change first, and how will we know it worked?”
+> “What is using energy unnecessarily, what should we change, and how do we keep it from happening again?”
 
 **Benji turns energy bills and building information into a practical energy-efficiency plan.** Bring electricity and heating bills, building plans and room layouts, thermal images, equipment lists and operating schedules. The assistant uses the available evidence to investigate heat loss, uneven temperatures, heating and cooling schedules, equipment consumption and lighting efficiency. It explains what drives spending, compares feasible improvements by energy use and cost, and helps users find support such as Mass Save. After an action, it guides a comparison with later bills to check what changed.
 
@@ -23,30 +23,39 @@ Challenge: **Cleaner, more affordable buildings**
 
 Built for Massachusetts homes and small businesses, Benji combines **12 specialist skills and one orchestrator** for use in **Claude, ChatGPT or connected agents**, through the setup paths below. An optional dashboard keeps bills, questions and actions together. Start with a bill and a conversation; no sensors or dedicated hardware are required.
 
-## The problem: a high bill does not tell you what to do
+## The problem: energy waste often goes unnoticed
 
-Residents and small businesses face three linked decisions: **why spending increased, which efficiency improvement is worth doing, and how to afford it.** Benji connects the charges and consumption in a bill with the equipment, operating patterns and building conditions behind them.
+A building can feel comfortable and a business can run normally while energy is being wasted every day: **a poorly configured heat pump, AC cooling an empty space, a coffee machine left on after a shift, or lighting running beyond opening hours.** These problems can become part of the normal routine and remain unnoticed for months.
 
-**Benji connects bill analysis to an affordable action and a follow-up check.** The objective is lower avoidable energy use and spending while maintaining comfort and essential building services. Program guidance supports that same objective by helping the user take the next verified step toward funding an improvement.
+Residents and small-business owners rarely have time to compare every setting, operating schedule and consumption pattern. A monthly total shows what they paid; it gives little visibility into which daily routines deserve attention.
+
+**Benji helps make hidden waste visible and turns it into a practical next step.** Its skills connect bills, equipment information, operating schedules and supplied readings to investigate unnecessary runtime and inefficient operation. The user gets clear checks and instructions, estimated energy and cost effects, and a follow-up plan to see whether the change worked and the problem returned. When an upgrade makes sense, Benji helps find suitable support such as Mass Save.
 
 ### Why this matters
 
 | Evidence | Why it shapes Benji |
 |---|---|
+| **As much as 30% of energy consumed in many small businesses is wasted**, according to EPA's 2025 ENERGY STAR small-business toolkit. | Look for avoidable runtime and operating inefficiencies before assuming expensive replacement is the first step. [EPA ENERGY STAR, 2025](https://www.energystar.gov/sites/default/files/2025-01/Small%20Business%20Toolkit_Jan2025.pdf) |
+| **9% median annual energy savings** among fault-detection-and-diagnostics users in Berkeley Lab's 2016–2020 Smart Energy Analytics Campaign. The overall campaign covered **104 organizations and more than 6,500 buildings**. | External field evidence that finding operational faults and acting on them can produce meaningful savings. [Berkeley Lab, 2020](https://bies.lbl.gov/publications/proving-business-case-building) |
 | **13.7% vs 3.2%**: median share of income spent on household energy by low-income households versus all households in the **Boston metro area**. AHS 2021 data, published in 2024. | Start with affordability and low-cost steps. Energy burden is not an estimate of how much energy is wasted. [ACEEE](https://www.aceee.org/sites/default/files/pdfs/data_update_-_city_energy_burdens_0.pdf) |
-| A Massachusetts study of **31 small-multifamily nonparticipants** found that nearly all knew of Mass Save, but most had limited understanding of what it could do for their building. | Help with the route to participation, documents and responsibilities, not just a list of rebates. Small qualitative sample; not a statewide rate. [Guidehouse, 2022](https://ma-eeac.org/wp-content/uploads/MA21R36-B-MFB-Small-MF-Barriers_Report_FINAL_11MAR2022.pdf) |
 | **5% of Boston's buildings account for nearly 40% of city carbon emissions**, according to the city. | Existing-building decisions matter for climate as well as bills. This is Boston-specific and not a claim about Benji's impact. [City of Boston](https://www.boston.gov/departments/environment/berdo) |
 
 Mass Save and professional assessors already provide valuable assistance. Benji helps users prepare for and follow through with those services. It does not administer programs or replace an energy assessment. [Full research, dates and limitations](docs/EVIDENCE.md)
+
+### Smart plugs, relays and thermostats: the next integration layer
+
+Connected-device data can bring the same workflow closer to daily operations. With readings supplied by an agent's compatible tools or exports, Benji's skills can compare equipment runtime with opening hours, investigate after-hours loads and explain what to check or adjust.
+
+The planned device connection follows a simple loop: **read consumption and device status → compare with the intended schedule → recommend an action → review the next readings**. Smart plugs with energy metering supply consumption; relays and thermostats can supply operating states and settings. The person or authorized operator carries out the agreed change. [Connection approach and implementation status](integrations/README.md#smart-device-integration-path)
 
 ## One workflow, from bill to follow-through
 
 ```mermaid
 flowchart LR
-    A["Explain the bill: usage, rates, charges"] --> B["Investigate potential waste"]
+    A["Bills, equipment, schedules and supplied readings"] --> B["Investigate unnoticed energy waste"]
     B --> C["Prioritize improvements: energy, cost, feasibility"]
     C --> D["Make action feasible: funding and approvals"]
-    D --> E["Review later bills: consumption and spending"]
+    D --> E["Review later bills and readings; check for recurrence"]
     E --> B
 ```
 
