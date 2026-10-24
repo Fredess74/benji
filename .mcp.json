@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "benji": {
+      "command": "python",
+      "args": ["-m", "benji.mcp_server"],
+      "env": {
+        "PYTHONPATH": "${CLAUDE_PLUGIN_ROOT}",
+        "BENJI_MEMORY": "${BENJI_MEMORY:-~/benji-memory}"
+      }
+    }
+  }
+}

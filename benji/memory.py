@@ -27,7 +27,7 @@ class MemoryError_(ValueError):
 
 
 def root() -> Path:
-    r = Path(os.environ.get("BENJI_MEMORY", REPO / "benji-memory")).resolve()
+    r = Path(os.environ.get("BENJI_MEMORY", REPO / "benji-memory")).expanduser().resolve()  # plugin: ~/benji-memory
     r.mkdir(parents=True, exist_ok=True)
     return r
 

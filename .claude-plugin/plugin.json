@@ -1,0 +1,9 @@
+{
+  "name": "benji",
+  "version": "0.2.0",
+  "description": "Benji, an AI energy and sustainability manager for Massachusetts homes, renters, small businesses and buildings: 12 agent skills plus an orchestrator, and an MCP server with shared per-place memory and a deterministic cost cross-check.",
+  "author": { "name": "Benji team" },
+  "homepage": "https://github.com/VladimirPutkov/benji",
+  "repository": "https://github.com/VladimirPutkov/benji",
+  "keywords": ["energy", "sustainability", "bills", "mass-save", "berdo", "buildings", "mcp"]
+}

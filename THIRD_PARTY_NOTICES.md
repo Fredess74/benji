@@ -8,6 +8,7 @@
 | Pydantic | 2.13.4 | MIT | Validation |
 | python-multipart | 0.0.32 | Apache-2.0 | File uploads |
 | httpx | 0.28.1 | BSD-3-Clause | Optional AI call |
+| fastmcp | 3.1.0 | Apache-2.0 | MCP server (Claude plugin / Desktop) |
 | pdfplumber | 0.11.9 | MIT | Text-PDF bills and drawing text candidates (words with bounding boxes) |
 | pandas | 2.3.3 | BSD-3-Clause | One-time BERDO cache build |
 | openpyxl | 3.1.5 | MIT | Reading the BERDO workbook |

@@ -38,6 +38,15 @@ These cover all 20 originally planned capabilities (e.g. after-hours + unusual u
 alerts + measuring results → `benji-follow-up`; incentives + eligibility + applications → `benji-programs`).
 
 ## Use it
+**Claude Code plugin (skills + MCP in one install):** this repo is a plugin marketplace. Needs Python 3.11+ with
+`pip install -r requirements.txt` (the MCP server runs `python -m benji.mcp_server`).
+```
+/plugin marketplace add VladimirPutkov/benji
+/plugin install benji@benji
+```
+You get the 13 skills (`/benji:benji-orchestrator` …) and the `benji` MCP server. Memory goes to `~/benji-memory`
+(or `BENJI_MEMORY`); to see it in the dashboard, start the server with the same `BENJI_MEMORY`.
+
 **Claude Code / OpenClaw / Kiro (file access):** copy `skills/` into the agent's skills folder (e.g.
 `.claude/skills/`). Memory goes to `./benji-memory/`.
 
