@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "benji": {
+      "command": "python",
+      "args": ["-m", "benji.mcp_server"],
+      "cwd": "C:\\path\\to\\Benji",
+      "env": { "BENJI_MEMORY": "C:\\path\\to\\Benji\\benji-memory" }
+    }
+  }
+}

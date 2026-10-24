@@ -1,0 +1,31 @@
+# Tasks: Benji skills engine
+
+- [x] 1. Reliable data and profiles
+  - [x] 1.1 Models, data labels, SQLite store with dated report snapshots (R2, R5.3, R5.4)
+  - [x] 1.2 Skill 04 profile validation with category-specific required fields (R1.2)
+  - [x] 1.3 Skill 01 CSV/PDF import, pending confirmation, scanned-PDF fallback (R2.1, R2.2)
+  - [x] 1.4 Skill 03 data-quality checks with correction actions (R2.3)
+  - [x] 1.5 Bill correction history and staleness tracking (R2.4)
+- [x] 2. Analysis and benchmarking
+  - [x] 2.1 Skill 09 costs with fixed/usage/demand split and labelled annualisation (R3.1, R3.2)
+  - [x] 2.2 Skill 02 bill explanation with exact price/consumption decomposition
+  - [x] 2.3 Skill 06 year-over-year daily-normalised anomalies with context questions (R3.3)
+  - [x] 2.4 BERDO loader, anonymised cache, emission factors; Skill 07 peer comparison (R3.4)
+- [x] 3. Improvement and incentive logic
+  - [x] 3.1 Measure catalog + assumption register (R4.1)
+  - [x] 3.2 Finance module (upfront vs net, loans, stacking, payback) (R4.4)
+  - [x] 3.3 Skill 10 measures and sequential scenarios, confirmed vs hypothetical views (R4.2, R4.3, R4.6)
+  - [x] 3.4 Incentive catalog; Skills 13 and 14 (R4.5)
+- [x] 4. Decision workflow (API layer)
+  - [x] 4.1 Skill registry (20 skills) and engine with selection/blocking (R1)
+  - [x] 4.2 Skill 17 action plan with ranked reasons, roles and tasks (R5.1, R5.2)
+  - [x] 4.3 Skill 20 Markdown/HTML report (R5.4)
+  - [x] 4.4 FastAPI endpoints, demo mode, AI explanation with fallback (R6)
+- [x] 5. Verification
+  - [x] 5.1 Calculation fixtures (10,000 kWh x $0.20; 5-yr payback; $20k with $10k later rebate)
+  - [x] 5.2 Acceptance checks 1-12 through the API
+  - [x] 5.3 Property tests for financial invariants (Hypothesis)
+- [ ] 6. Next (separate specs)
+  - [ ] 6.1 Dashboard UI (five sections) on top of this API
+  - [ ] 6.2 Verify incentive records against official pages and record dates
+  - [ ] 6.3 Weather normalisation (unlocks skills 08, 11, 19)

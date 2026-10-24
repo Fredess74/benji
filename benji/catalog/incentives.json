@@ -1,0 +1,654 @@
+{
+  "catalog_version": "2026-10-24.2",
+  "notice": "Curated starter catalog. Program amounts change and depend on utility and equipment; no amount is pre-filled. Every record is 'unverified' until a team member confirms it against the official page on a stated date. Final eligibility and amounts are decided by the program operator.",
+  "mass_save_sponsors": {
+    "electric": [
+      "Eversource",
+      "National Grid",
+      "Unitil",
+      "Cape Light Compact"
+    ],
+    "gas": [
+      "Eversource",
+      "National Grid",
+      "Unitil",
+      "Berkshire Gas",
+      "Liberty"
+    ]
+  },
+  "records": [
+    {
+      "id": "ms_business_assessment",
+      "name": "Mass Save business energy assessment",
+      "provider": "Mass Save",
+      "incentive_type": "no_cost_service",
+      "sectors": [
+        "commercial_office",
+        "small_business"
+      ],
+      "measures": [
+        "energy_assessment",
+        "weatherization",
+        "solar_assessment"
+      ],
+      "location": "MA",
+      "amount": {
+        "kind": "no_cost",
+        "value": null,
+        "unit": null,
+        "cap": null,
+        "summary": "Assessment offered to eligible business customers of sponsoring utilities; confirm current terms."
+      },
+      "timing": "before_installation",
+      "preapproval_required": null,
+      "conditions": [
+        {
+          "field": "state",
+          "op": "eq",
+          "value": "MA",
+          "description": "Building is in Massachusetts"
+        },
+        {
+          "field": "electric_utility",
+          "op": "in",
+          "value": "$mass_save_electric",
+          "description": "Electric service from a Mass Save sponsor (municipal utilities run separate programs)"
+        }
+      ],
+      "stacking_group": null,
+      "source_url": "https://www.masssave.com/",
+      "verified_on": null,
+      "verification_status": "unverified",
+      "notes": "Confirm availability and scheduling with Mass Save or the utility."
+    },
+    {
+      "id": "ms_business_lighting",
+      "name": "Mass Save business lighting incentives",
+      "provider": "Mass Save",
+      "incentive_type": "instant_discount",
+      "sectors": [
+        "commercial_office",
+        "small_business"
+      ],
+      "measures": [
+        "led_lighting"
+      ],
+      "location": "MA",
+      "amount": {
+        "kind": "varies",
+        "value": null,
+        "unit": "per fixture",
+        "cap": null,
+        "summary": "Amount varies by product and utility; enter the amount confirmed by the distributor or program."
+      },
+      "timing": "at_purchase",
+      "preapproval_required": null,
+      "conditions": [
+        {
+          "field": "state",
+          "op": "eq",
+          "value": "MA",
+          "description": "Building is in Massachusetts"
+        },
+        {
+          "field": "electric_utility",
+          "op": "in",
+          "value": "$mass_save_electric",
+          "description": "Electric service from a Mass Save sponsor"
+        },
+        {
+          "field": "equipment_on_qualified_list",
+          "op": "eq",
+          "value": true,
+          "description": "Products must be on the program's qualified list"
+        }
+      ],
+      "stacking_group": "commercial_lighting",
+      "source_url": "https://www.masssave.com/",
+      "verified_on": null,
+      "verification_status": "unverified",
+      "notes": "Discount may be applied at the distributor; if instead paid as a rebate after installation, it does not reduce upfront cash."
+    },
+    {
+      "id": "ms_business_controls",
+      "name": "Mass Save business HVAC controls / thermostat incentives",
+      "provider": "Mass Save",
+      "incentive_type": "rebate",
+      "sectors": [
+        "commercial_office",
+        "small_business"
+      ],
+      "measures": [
+        "thermostat_controls"
+      ],
+      "location": "MA",
+      "amount": {
+        "kind": "varies",
+        "value": null,
+        "unit": null,
+        "cap": null,
+        "summary": "Amount varies; confirm with the program."
+      },
+      "timing": "after_installation",
+      "preapproval_required": null,
+      "conditions": [
+        {
+          "field": "state",
+          "op": "eq",
+          "value": "MA",
+          "description": "Building is in Massachusetts"
+        },
+        {
+          "field": "electric_utility",
+          "op": "in",
+          "value": "$mass_save_electric",
+          "description": "Customer of a Mass Save sponsor"
+        }
+      ],
+      "stacking_group": "commercial_controls",
+      "source_url": "https://www.masssave.com/",
+      "verified_on": null,
+      "verification_status": "unverified",
+      "notes": "Rebate is paid after installation: it lowers net cost, not the cash needed upfront."
+    },
+    {
+      "id": "ms_business_heat_pump",
+      "name": "Mass Save business heat pump incentives",
+      "provider": "Mass Save",
+      "incentive_type": "rebate",
+      "sectors": [
+        "commercial_office",
+        "small_business"
+      ],
+      "measures": [
+        "heat_pump_heating"
+      ],
+      "location": "MA",
+      "amount": {
+        "kind": "varies",
+        "value": null,
+        "unit": "per ton",
+        "cap": null,
+        "summary": "Amount depends on equipment type, capacity and utility; confirm with the program."
+      },
+      "timing": "after_installation",
+      "preapproval_required": null,
+      "conditions": [
+        {
+          "field": "state",
+          "op": "eq",
+          "value": "MA",
+          "description": "Building is in Massachusetts"
+        },
+        {
+          "field": "electric_utility",
+          "op": "in",
+          "value": "$mass_save_electric",
+          "description": "Electric service from a Mass Save sponsor"
+        },
+        {
+          "field": "equipment_on_qualified_list",
+          "op": "eq",
+          "value": true,
+          "description": "Equipment must meet program efficiency requirements"
+        }
+      ],
+      "stacking_group": "commercial_heat_pump",
+      "source_url": "https://www.masssave.com/",
+      "verified_on": null,
+      "verification_status": "unverified",
+      "notes": "Paid after installation."
+    },
+    {
+      "id": "ms_business_custom",
+      "name": "Mass Save business custom incentives",
+      "provider": "Mass Save",
+      "incentive_type": "rebate",
+      "sectors": [
+        "commercial_office",
+        "small_business"
+      ],
+      "measures": [
+        "heat_pump_heating",
+        "thermostat_controls",
+        "weatherization"
+      ],
+      "location": "MA",
+      "amount": {
+        "kind": "varies",
+        "value": null,
+        "unit": null,
+        "cap": null,
+        "summary": "Project-specific amount determined by the program after technical review."
+      },
+      "timing": "after_installation",
+      "preapproval_required": true,
+      "conditions": [
+        {
+          "field": "state",
+          "op": "eq",
+          "value": "MA",
+          "description": "Building is in Massachusetts"
+        },
+        {
+          "field": "electric_utility",
+          "op": "in",
+          "value": "$mass_save_electric",
+          "description": "Customer of a Mass Save sponsor"
+        }
+      ],
+      "stacking_group": "commercial_heat_pump",
+      "source_url": "https://www.masssave.com/",
+      "verified_on": null,
+      "verification_status": "unverified",
+      "notes": "Custom projects are reviewed before equipment is purchased; do not order equipment before written approval. Cannot be counted together with a prescriptive rebate for the same equipment."
+    },
+    {
+      "id": "ms_multifamily_assessment",
+      "name": "Mass Save multifamily energy assessment",
+      "provider": "Mass Save",
+      "incentive_type": "no_cost_service",
+      "sectors": [
+        "multifamily"
+      ],
+      "measures": [
+        "energy_assessment",
+        "weatherization",
+        "solar_assessment"
+      ],
+      "location": "MA",
+      "amount": {
+        "kind": "no_cost",
+        "value": null,
+        "unit": null,
+        "cap": null,
+        "summary": "Assessment for multifamily properties of five or more units; confirm current terms."
+      },
+      "timing": "before_installation",
+      "preapproval_required": null,
+      "conditions": [
+        {
+          "field": "state",
+          "op": "eq",
+          "value": "MA",
+          "description": "Building is in Massachusetts"
+        },
+        {
+          "field": "dwelling_units",
+          "op": "gte",
+          "value": 5,
+          "description": "Multifamily program: 5 or more units"
+        },
+        {
+          "field": "electric_utility",
+          "op": "in",
+          "value": "$mass_save_electric",
+          "description": "Electric service from a Mass Save sponsor"
+        }
+      ],
+      "stacking_group": null,
+      "source_url": "https://www.masssave.com/",
+      "verified_on": null,
+      "verification_status": "unverified",
+      "notes": "Buildings of 1-4 units use the residential Home Energy Assessment instead."
+    },
+    {
+      "id": "ms_multifamily_weatherization",
+      "name": "Mass Save multifamily insulation and air sealing incentives",
+      "provider": "Mass Save",
+      "incentive_type": "rebate",
+      "sectors": [
+        "multifamily"
+      ],
+      "measures": [
+        "weatherization"
+      ],
+      "location": "MA",
+      "amount": {
+        "kind": "varies",
+        "value": null,
+        "unit": null,
+        "cap": null,
+        "summary": "Amount set by the program after assessment; confirm with the program."
+      },
+      "timing": "at_purchase",
+      "preapproval_required": true,
+      "conditions": [
+        {
+          "field": "state",
+          "op": "eq",
+          "value": "MA",
+          "description": "Building is in Massachusetts"
+        },
+        {
+          "field": "dwelling_units",
+          "op": "gte",
+          "value": 5,
+          "description": "Multifamily program: 5 or more units"
+        },
+        {
+          "field": "uses_participating_contractor",
+          "op": "eq",
+          "value": true,
+          "description": "Work performed through the program's participating contractors"
+        }
+      ],
+      "stacking_group": "mf_weatherization",
+      "source_url": "https://www.masssave.com/",
+      "verified_on": null,
+      "verification_status": "unverified",
+      "notes": "Typically follows the program assessment."
+    },
+    {
+      "id": "ms_multifamily_heat_pump",
+      "name": "Mass Save multifamily heat pump incentives",
+      "provider": "Mass Save",
+      "incentive_type": "rebate",
+      "sectors": [
+        "multifamily"
+      ],
+      "measures": [
+        "heat_pump_heating"
+      ],
+      "location": "MA",
+      "amount": {
+        "kind": "varies",
+        "value": null,
+        "unit": null,
+        "cap": null,
+        "summary": "Amount depends on equipment and project; confirm with the program."
+      },
+      "timing": "after_installation",
+      "preapproval_required": null,
+      "conditions": [
+        {
+          "field": "state",
+          "op": "eq",
+          "value": "MA",
+          "description": "Building is in Massachusetts"
+        },
+        {
+          "field": "dwelling_units",
+          "op": "gte",
+          "value": 5,
+          "description": "Multifamily program: 5 or more units"
+        },
+        {
+          "field": "electric_utility",
+          "op": "in",
+          "value": "$mass_save_electric",
+          "description": "Electric service from a Mass Save sponsor"
+        },
+        {
+          "field": "equipment_on_qualified_list",
+          "op": "eq",
+          "value": true,
+          "description": "Equipment must meet program requirements"
+        }
+      ],
+      "stacking_group": "mf_heat_pump",
+      "source_url": "https://www.masssave.com/",
+      "verified_on": null,
+      "verification_status": "unverified",
+      "notes": "Paid after installation."
+    },
+    {
+      "id": "ms_multifamily_thermostats",
+      "name": "Mass Save multifamily thermostat / controls offers",
+      "provider": "Mass Save",
+      "incentive_type": "rebate",
+      "sectors": [
+        "multifamily"
+      ],
+      "measures": [
+        "thermostat_controls",
+        "led_lighting"
+      ],
+      "location": "MA",
+      "amount": {
+        "kind": "varies",
+        "value": null,
+        "unit": null,
+        "cap": null,
+        "summary": "Offers vary; confirm with the program."
+      },
+      "timing": "after_installation",
+      "preapproval_required": null,
+      "conditions": [
+        {
+          "field": "state",
+          "op": "eq",
+          "value": "MA",
+          "description": "Building is in Massachusetts"
+        },
+        {
+          "field": "dwelling_units",
+          "op": "gte",
+          "value": 5,
+          "description": "Multifamily program: 5 or more units"
+        },
+        {
+          "field": "electric_utility",
+          "op": "in",
+          "value": "$mass_save_electric",
+          "description": "Customer of a Mass Save sponsor"
+        }
+      ],
+      "stacking_group": "mf_controls",
+      "source_url": "https://www.masssave.com/",
+      "verified_on": null,
+      "verification_status": "unverified",
+      "notes": "Some measures may be installed at no cost through the assessment."
+    },
+    {
+      "id": "ms_heat_loan",
+      "name": "Mass Save HEAT Loan (residential 0% financing)",
+      "provider": "Mass Save",
+      "incentive_type": "loan",
+      "sectors": [
+        "home",
+        "multifamily"
+      ],
+      "measures": [
+        "heat_pump_heating",
+        "weatherization",
+        "thermostat_controls"
+      ],
+      "location": "MA",
+      "amount": {
+        "kind": "interest_free_loan",
+        "value": null,
+        "unit": null,
+        "cap": null,
+        "summary": "Interest-free financing for qualifying residential measures; loan limits and terms must be confirmed."
+      },
+      "timing": "financing",
+      "preapproval_required": true,
+      "conditions": [
+        {
+          "field": "state",
+          "op": "eq",
+          "value": "MA",
+          "description": "Building is in Massachusetts"
+        },
+        {
+          "field": "dwelling_units",
+          "op": "lte",
+          "value": 4,
+          "description": "Residential 1-4 unit buildings"
+        },
+        {
+          "field": "electric_utility",
+          "op": "in",
+          "value": "$mass_save_electric",
+          "description": "Customer of a Mass Save sponsor"
+        },
+        {
+          "field": "occupant_role",
+          "op": "in",
+          "value": [
+            "owner_occupant",
+            "landlord"
+          ],
+          "description": "Borrower owns the property (renters cannot take this loan for the building)"
+        }
+      ],
+      "stacking_group": "financing",
+      "source_url": "https://www.masssave.com/",
+      "verified_on": null,
+      "verification_status": "unverified",
+      "notes": "A loan reduces cash needed upfront but must be repaid; it is not a rebate."
+    },
+    {
+      "id": "ms_home_energy_assessment",
+      "name": "Mass Save Home Energy Assessment (1-4 unit homes)",
+      "provider": "Mass Save",
+      "incentive_type": "no_cost_service",
+      "sectors": [
+        "home"
+      ],
+      "measures": [
+        "energy_assessment",
+        "weatherization",
+        "thermostat_controls",
+        "solar_assessment"
+      ],
+      "location": "MA",
+      "amount": {
+        "kind": "no_cost",
+        "value": null,
+        "unit": null,
+        "cap": null,
+        "summary": "Home assessment for customers of sponsoring utilities; confirm current terms and scheduling."
+      },
+      "timing": "before_installation",
+      "preapproval_required": null,
+      "conditions": [
+        {
+          "field": "state",
+          "op": "eq",
+          "value": "MA",
+          "description": "Home is in Massachusetts"
+        },
+        {
+          "field": "dwelling_units",
+          "op": "lte",
+          "value": 4,
+          "description": "Residential program: 1-4 units"
+        },
+        {
+          "field": "electric_utility",
+          "op": "in",
+          "value": "$mass_save_electric",
+          "description": "Electric service from a Mass Save sponsor (municipal utilities run separate programs)"
+        }
+      ],
+      "stacking_group": null,
+      "source_url": "https://www.masssave.com/",
+      "verified_on": null,
+      "verification_status": "unverified",
+      "notes": "Renters may need the property owner's permission for some work; confirm with the program."
+    },
+    {
+      "id": "ms_home_weatherization",
+      "name": "Mass Save residential insulation and air sealing incentives",
+      "provider": "Mass Save",
+      "incentive_type": "instant_discount",
+      "sectors": [
+        "home"
+      ],
+      "measures": [
+        "weatherization"
+      ],
+      "location": "MA",
+      "amount": {
+        "kind": "varies",
+        "value": null,
+        "unit": null,
+        "cap": null,
+        "summary": "Incentive level set by the program, typically after an assessment; confirm."
+      },
+      "timing": "at_purchase",
+      "preapproval_required": true,
+      "conditions": [
+        {
+          "field": "state",
+          "op": "eq",
+          "value": "MA",
+          "description": "Home is in Massachusetts"
+        },
+        {
+          "field": "dwelling_units",
+          "op": "lte",
+          "value": 4,
+          "description": "Residential program: 1-4 units"
+        },
+        {
+          "field": "uses_participating_contractor",
+          "op": "eq",
+          "value": true,
+          "description": "Work done through a participating contractor"
+        }
+      ],
+      "stacking_group": "home_weatherization",
+      "source_url": "https://www.masssave.com/",
+      "verified_on": null,
+      "verification_status": "unverified",
+      "notes": "Usually follows the Home Energy Assessment."
+    },
+    {
+      "id": "ms_home_heat_pump",
+      "name": "Mass Save residential heat pump rebates",
+      "provider": "Mass Save",
+      "incentive_type": "rebate",
+      "sectors": [
+        "home"
+      ],
+      "measures": [
+        "heat_pump_heating",
+        "heat_pump_water_heater"
+      ],
+      "location": "MA",
+      "amount": {
+        "kind": "varies",
+        "value": null,
+        "unit": null,
+        "cap": null,
+        "summary": "Amount depends on equipment and program rules; confirm before buying."
+      },
+      "timing": "after_installation",
+      "preapproval_required": null,
+      "conditions": [
+        {
+          "field": "state",
+          "op": "eq",
+          "value": "MA",
+          "description": "Home is in Massachusetts"
+        },
+        {
+          "field": "dwelling_units",
+          "op": "lte",
+          "value": 4,
+          "description": "Residential program: 1-4 units"
+        },
+        {
+          "field": "electric_utility",
+          "op": "in",
+          "value": "$mass_save_electric",
+          "description": "Customer of a Mass Save sponsor"
+        },
+        {
+          "field": "equipment_on_qualified_list",
+          "op": "eq",
+          "value": true,
+          "description": "Equipment must meet program requirements"
+        }
+      ],
+      "stacking_group": "home_heat_pump",
+      "source_url": "https://www.masssave.com/",
+      "verified_on": null,
+      "verification_status": "unverified",
+      "notes": "Paid after installation: it does not reduce the cash needed upfront. Mass Save FAQ (checked by the research team 2026-10-24) says rebate processing can take up to 8 weeks."
+    }
+  ]
+}

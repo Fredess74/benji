@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Run Benji tests on save",
+      "trigger": "PostFileSave",
+      "description": "Runs the calculation, acceptance and property tests whenever a Benji engine file or catalog is saved.",
+      "matcher": "benji[\\\\/].*\\.(py|json)$",
+      "action": {
+        "type": "command",
+        "command": "python -m pytest -q -x -p no:cacheprovider tests",
+        "timeout": 180
+      }
+    }
+  ]
+}

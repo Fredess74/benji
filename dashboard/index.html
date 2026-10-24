@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Benji</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{--accent:#2E6A4F;--soft:#2E6A4F1F;--bg:#F3F4EF;--ink:#1F2A24;--muted:#5B675F;--line:#E4E8E1}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+h1,h2{font-family:'Bricolage Grotesque',system-ui,sans-serif;margin:0;letter-spacing:-.01em}
+p{margin:0}
+button,input,select{font:inherit}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.app{display:flex;flex-wrap:wrap;min-height:100vh}
+aside{flex:1 1 228px;padding:28px 18px;display:flex;flex-direction:column;gap:24px;border-right:1px solid var(--line)}
+main{flex:999 1 560px;min-width:0;padding:32px clamp(16px,3vw,44px) 48px}
+.wrap{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
+.logo{display:flex;align-items:center;gap:12px;padding:0 6px}
+.logo i{width:40px;height:40px;border-radius:13px;background:var(--accent);display:flex;align-items:center;justify-content:center}
+.logo b{font-family:'Bricolage Grotesque',sans-serif;font-size:22px}
+.logo small{display:block;font-size:12px;color:var(--muted)}
+.nav{display:flex;align-items:center;gap:12px;width:100%;min-height:46px;padding:10px 14px;border:0;border-radius:14px;background:transparent;color:#3E4A43;font-size:15px;font-weight:600;cursor:pointer;text-align:left}
+.nav:hover{background:#E8ECE5}
+.nav.on{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(31,42,36,.08),0 4px 14px rgba(31,42,36,.05)}
+.count{margin-left:auto;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;background:#E1E6DE}
+.nav.on .count{background:var(--soft);color:var(--accent)}
+.card{background:#fff;border-radius:22px;padding:24px;border:1px solid var(--line)}
+.btn{min-height:44px;padding:10px 18px;border-radius:12px;font-weight:600;font-size:14px;cursor:pointer;border:1px solid transparent;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
+.primary{background:var(--accent);color:#fff}.primary:hover{filter:brightness(.94)}
+.ghost{background:#fff;color:var(--ink);border-color:#D3DAD0}.ghost:hover{background:#F3F5F1}
+.field{min-height:44px;flex:1 1 220px;min-width:0;padding:10px 14px;border-radius:12px;border:1px solid #C8D0C5;background:#fff;color:var(--ink);font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.cols{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start}
+.main-col{flex:999 1 520px;min-width:0;display:flex;flex-direction:column;gap:24px}
+.side-col{flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:24px}
+.muted{color:var(--muted)}
+.sub{font-size:14px;color:#4F5B54;line-height:1.5}
+.box{display:flex;flex-direction:column;gap:12px;padding:18px;border-radius:16px;background:#F7F8F5}
+.line{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:12px 0;border-top:1px solid #EEF1EC}
+.ch{display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;padding:3px 9px;border-radius:8px;white-space:nowrap;min-width:84px}
+.ch-claude{background:#F7E5DB;color:#8B3D1C}.ch-chatgpt{background:#DCEEE7;color:#1E584A}.ch-openclaw{background:#E8E4F5;color:#4B3C84}
+.ch-dashboard{background:#E5E9E3;color:#36423B}.ch-kiro{background:#E2ECF7;color:#1E4F80}.ch-agent,.ch-user{background:#F1F3EF;color:#4A564F}
+.lab{display:inline-flex;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;white-space:nowrap;background:#F1F3EF;color:#4A564F}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap}
+.ok{background:#DDEFE3;color:#1D5E3F}.warn{background:#FBEAD0;color:#86490A}.idle{background:#ECEFEA;color:#4A564F}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:10px 12px;border-top:1px solid #EEF1EC;vertical-align:top}
+th{font-size:12px;color:var(--muted);font-weight:600;border-top:0}
+.tbl{overflow-x:auto;background:#fff;border-radius:12px}
+.pick{display:flex;flex-direction:column;gap:6px;width:100%;padding:14px 16px;border-radius:16px;border:0;background:transparent;text-align:left;cursor:pointer;color:var(--ink)}
+.pick:hover{background:#F3F5F1}.pick.on{background:var(--soft)}
+pre{white-space:pre-wrap;word-break:break-word;font-family:ui-monospace,Consolas,monospace;font-size:13px;line-height:1.6;margin:0;background:#F7F8F5;padding:18px;border-radius:14px;max-height:620px;overflow:auto}
+.banner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-radius:16px;background:#FBEAD0;color:#6E3C08;font-weight:600}
+.next{background:var(--soft);border-color:transparent;padding:30px;display:flex;flex-direction:column;gap:14px}
+.eyebrow{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.04em;text-transform:uppercase}
+.sync{margin-top:auto;padding:14px;border-radius:16px;background:#E9EDE6;display:flex;flex-direction:column;gap:6px;font-size:12px;color:#4F5B54}
+.dot{width:8px;height:8px;border-radius:50%;background:#2E8A5A;display:inline-block}
+.err .dot{background:#B4531A}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.hide{display:none!important}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="logo">
+      <i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/></svg></i>
+      <div><b>Benji</b><small>energy manager</small></div>
+    </div>
+    <label class="sub" for="place" style="display:flex;flex-direction:column;gap:6px;font-weight:600">Place
+      <select id="place" class="field" style="flex:none"></select>
+    </label>
+    <nav aria-label="Main" style="display:flex;flex-direction:column;gap:4px">
+      <button class="nav on" data-tab="home">Home <span class="count" id="c-home"></span></button>
+      <button class="nav" data-tab="chats">Chats <span class="count" id="c-chats"></span></button>
+      <button class="nav" data-tab="agents">Agents <span class="count" id="c-agents"></span></button>
+      <button class="nav" data-tab="memory">Memory <span class="count">6</span></button>
+    </nav>
+    <div class="sync" id="sync"><span style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700"><span class="dot"></span><span id="sync-t">Connecting…</span></span>
+      <span>Claude, ChatGPT and OpenClaw write the same memory. Refreshes every 10 s.</span>
+      <details><summary>API key</summary><input id="key" class="field" type="password" placeholder="BENJI_API_KEY (if set)" style="margin-top:8px;width:100%"></details>
+    </div>
+  </aside>
+
+  <main><div class="wrap">
+    <header style="display:flex;flex-direction:column;gap:6px">
+      <span class="muted" style="font-size:14px" id="eyebrow"></span>
+      <h1 style="font-size:38px" id="title">Benji</h1>
+      <p class="sub" id="subtitle"></p>
+    </header>
+
+    <div id="empty" class="card hide" style="display:flex;flex-direction:column;gap:12px">
+      <h2 style="font-size:22px">No places yet</h2>
+      <p class="sub">Talk to Benji in Claude, ChatGPT or OpenClaw — for example: “I run a coffee shop in Cambridge, we lease. Here are our last 12 bills.” The agent creates the place in memory and it appears here.</p>
+    </div>
+
+    <section id="tab-home" class="tab">
+      <div id="stale" class="banner hide"><span>Something changed — ask Benji to refresh the plan.</span></div>
+      <div class="cols" style="margin-top:0">
+        <div class="main-col">
+          <section class="card next"><span class="eyebrow">Next step</span><h2 id="next" style="font-size:28px;line-height:1.25;white-space:pre-line"></h2></section>
+          <section class="card" style="display:flex;flex-direction:column;gap:16px">
+            <h2 style="font-size:22px">Waiting for you</h2>
+            <div id="waiting" style="display:flex;flex-direction:column;gap:14px"></div>
+          </section>
+          <section class="card">
+            <h2 style="font-size:22px;margin-bottom:8px">Plan</h2>
+            <div id="actions"></div>
+            <div id="tasks"></div>
+          </section>
+        </div>
+        <div class="side-col">
+          <section class="card"><h2 style="font-size:20px;margin-bottom:6px">What Benji remembers</h2><div id="facts"></div></section>
+          <section class="card"><h2 style="font-size:20px;margin-bottom:10px">Findings</h2><div id="findings"></div></section>
+          <section class="card" style="display:flex;flex-direction:column;gap:14px"><h2 style="font-size:20px">Activity</h2><div id="activity" style="display:flex;flex-direction:column;gap:14px"></div></section>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-chats" class="tab hide">
+      <div class="cols">
+        <section class="card" style="flex:1 1 300px;min-width:0;padding:12px" id="sessions"></section>
+        <section class="card" style="flex:999 1 520px;min-width:0;display:flex;flex-direction:column;gap:14px">
+          <div class="row" style="justify-content:space-between"><h2 style="font-size:22px" id="sess-title"></h2>
+            <span class="row"><a class="btn ghost" href="https://claude.ai/new" target="_blank" rel="noopener">Open Claude</a><a class="btn ghost" href="https://chatgpt.com/" target="_blank" rel="noopener">Open ChatGPT</a></span></div>
+          <div id="sess-body"></div>
+        </section>
+      </div>
+    </section>
+
+    <section id="tab-agents" class="tab hide"><div class="grid" id="agents"></div></section>
+
+    <section id="tab-memory" class="tab hide">
+      <div class="cols">
+        <section class="card" style="flex:1 1 280px;min-width:0;padding:12px" id="files"></section>
+        <section class="card" style="flex:999 1 520px;min-width:0;display:flex;flex-direction:column;gap:12px">
+          <h2 style="font-size:22px" id="file-title"></h2><pre id="file-body"></pre>
+        </section>
+      </div>
+    </section>
+  </div></main>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const NAMES = {claude:'Claude', chatgpt:'ChatGPT', openclaw:'OpenClaw', dashboard:'Dashboard', kiro:'Kiro', agent:'Agent', user:'You'};
+const chName = (c) => NAMES[c] || c;
+const chip = (c) => `<span class="ch ch-${esc(c)}">${esc(chName(c))}</span>`;
+const FILE_NAMES = {'profile.md':'Profile','bills.csv':'Bills','findings.md':'Findings','plan.md':'Plan & tasks','open-questions.md':'Open questions','log.md':'Activity log'};
+const STATUSES = ['not_started','in_progress','blocked','done','skipped'];
+let state = {tab:'home', slug:null, place:null, places:[], session:0, file:'findings.md', busy:false};
+try { $('key').value = localStorage.getItem('benji-key') || ''; } catch (e) {}
+$('key').addEventListener('change', () => { try { localStorage.setItem('benji-key', $('key').value); } catch (e) {} load(); });
+
+async function api(path, opts = {}) {
+  const headers = {'content-type':'application/json', 'x-benji-channel':'dashboard'};
+  const k = $('key').value.trim(); if (k) headers.authorization = 'Bearer ' + k;
+  const r = await fetch(path, {...opts, headers});
+  if (!r.ok) throw new Error(r.status + ' ' + (await r.text()).slice(0, 200));
+  return r.json();
+}
+
+async function load() {
+  try {
+    state.places = await api('/memory/places');
+    if (!state.slug || !state.places.some((p) => p.slug === state.slug)) state.slug = state.places[0]?.slug || null;
+    $('place').innerHTML = state.places.map((p) => `<option value="${esc(p.slug)}"${p.slug === state.slug ? ' selected' : ''}>${esc(p.name)}</option>`).join('');
+    state.place = state.slug ? await api('/memory/places/' + encodeURIComponent(state.slug)) : null;
+    $('sync').classList.remove('err'); $('sync-t').textContent = 'Memory synced · ' + new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+  } catch (e) {
+    $('sync').classList.add('err'); $('sync-t').textContent = 'Not connected: ' + e.message;
+  }
+  if (!state.busy) render();
+}
+
+function val(k) { return state.place?.profile?.[k]?.value || ''; }
+
+function render() {
+  const p = state.place;
+  $('empty').classList.toggle('hide', !!p);
+  document.querySelectorAll('.tab').forEach((t) => t.classList.toggle('hide', !p || t.id !== 'tab-' + state.tab));
+  document.querySelectorAll('.nav').forEach((b) => b.classList.toggle('on', b.dataset.tab === state.tab));
+  if (!p) { $('title').textContent = 'Benji'; return; }
+  const name = val('name') || p.slug;
+  const sub = [val('place_type'), val('business_type'), val('zip') && 'ZIP ' + val('zip'), val('user_role')].filter(Boolean).join(' · ').replace(/_/g, ' ');
+  const heads = {home:[new Date().toLocaleDateString([], {weekday:'long', month:'long', day:'numeric'}), name, sub],
+    chats:[name, 'Chats', 'What each assistant did for this place, from the shared memory log.'],
+    agents:[name, 'Agents', 'Same 12 skills and one memory, in whichever assistant you use.'],
+    memory:[name, 'Memory', 'benji-memory/' + p.slug + ' — every change records who made it.']}[state.tab];
+  $('eyebrow').textContent = heads[0]; $('title').textContent = heads[1]; $('subtitle').textContent = heads[2];
+
+  const pending = p.bills.filter((b) => b.status === 'pending');
+  const waitingN = (pending.length ? 1 : 0) + p.open_questions.length;
+  $('c-home').textContent = waitingN || ''; $('c-home').classList.toggle('hide', !waitingN);
+  const log = [...p.log].reverse();
+  const sessions = groupSessions(p.log);
+  $('c-chats').textContent = sessions.length;
+  const channels = [...new Set(p.log.map((l) => l.channel))].filter((c) => c !== 'dashboard');
+  $('c-agents').textContent = channels.length;
+
+  // Home
+  $('stale').classList.toggle('hide', !(p.plan_stale || p.findings_stale));
+  $('next').textContent = p.next_step && !p.next_step.startsWith('<') ? p.next_step : 'No next step yet — ask Benji to make a plan.';
+  let w = '';
+  if (pending.length) {
+    w += `<div class="box"><div><b style="font-size:16px">Benji read ${pending.length} bill${pending.length > 1 ? 's' : ''}. Are they right?</b>
+      <p class="sub">Nothing is used until you confirm.</p></div>
+      <div class="tbl"><table><thead><tr><th>Period</th><th>Fuel</th><th>Utility</th><th>Usage</th><th>Total</th><th>Read</th><th>Notes</th></tr></thead><tbody>
+      ${pending.map((b) => `<tr><td>${esc(b.period_start)} – ${esc(b.period_end)}</td><td>${esc(b.fuel)}</td><td>${esc(b.utility)}</td><td>${esc(b.quantity)} ${esc(b.unit)}</td><td>${b.total_usd ? '$' + esc(b.total_usd) : ''}</td><td>${b.estimated_read === 'yes' || b.estimated_read === 'true' ? '<span class="lab warn">estimated read</span>' : esc(b.source)}</td><td>${esc(b.notes)}</td></tr>`).join('')}
+      </tbody></table></div>
+      <div class="row"><button class="btn primary" data-act="confirm">Correct — use them</button><button class="btn ghost" data-act="wrong">Something's wrong</button></div></div>`;
+  }
+  p.open_questions.forEach((q, i) => {
+    w += `<div class="box"><label for="q${i}"><b style="font-size:16px">${esc(q.Question)}</b></label>
+      <p class="sub">${esc([q['Why it matters'], q['Who can answer'] && 'Who can answer: ' + q['Who can answer']].filter(Boolean).join(' · '))}</p>
+      <div class="row"><input id="q${i}" class="field" type="text" placeholder="Type your answer"><button class="btn primary" data-act="answer" data-q="${esc(q.id)}" data-i="${i}">Answer</button></div></div>`;
+  });
+  $('waiting').innerHTML = w || '<p class="sub">All caught up. Nothing waiting for you.</p>';
+
+  $('actions').innerHTML = p.actions.length ? `<div class="tbl" style="margin-bottom:16px"><table><thead><tr><th>#</th><th>Action</th><th>Cash now</th><th>Est. effect / yr</th><th>Approves</th></tr></thead><tbody>
+    ${p.actions.map((a) => `<tr><td>${esc(a['#'])}</td><td><b>${esc(a.Action)}</b><div class="muted" style="font-size:13px">${esc(a['Why now'])}</div></td><td>${esc(a['Cash now'])}</td><td>${esc(a['Est. effect / yr'])}</td><td>${esc(a.Approves)}</td></tr>`).join('')}</tbody></table></div>` : '';
+  $('tasks').innerHTML = p.tasks.length ? p.tasks.map((t) => `<div class="line" style="align-items:center;flex-wrap:wrap">
+      <div style="flex:1 1 260px;min-width:0"><b style="font-size:15px">${esc(t.Task)}</b><div class="muted" style="font-size:13px">${esc([t.Owner, t.Due].filter(Boolean).join(' · '))}</div></div>
+      <label class="hide" for="t-${esc(t.id)}">Status</label>
+      <select id="t-${esc(t.id)}" class="field" style="flex:0 0 160px" data-task="${esc(t.id)}">${STATUSES.map((s) => `<option value="${s}"${(t.Status || '').trim() === s ? ' selected' : ''}>${s.replace('_', ' ')}</option>`).join('')}</select></div>`).join('')
+    : (p.actions.length ? '' : '<p class="sub">No plan yet.</p>');
+
+  const facts = Object.entries(p.profile).filter(([, v]) => v.value);
+  $('facts').innerHTML = facts.length ? facts.map(([k, v]) => `<div class="line"><div style="min-width:0"><div class="muted" style="font-size:12px;font-weight:600">${esc(k.replace(/_/g, ' '))}</div><div style="font-size:14px;font-weight:600">${esc(v.value)}</div></div>${v.note ? `<span class="lab">${esc(v.note)}</span>` : ''}</div>`).join('') : '<p class="sub">Nothing yet.</p>';
+  $('findings').innerHTML = p.findings.length ? p.findings.map((f) => `<div class="line"><span style="font-size:14px">${esc(f)}</span></div>`).join('') : '<p class="sub">No findings yet.</p>';
+  $('activity').innerHTML = log.slice(0, 8).map((l) => `<div class="row" style="flex-wrap:nowrap;align-items:flex-start">${chip(l.channel)}<div><div style="font-size:14px;font-weight:600">${esc(l.what)}</div><div class="muted" style="font-size:12px">${esc(l.date)} · ${esc(l.skill)}</div></div></div>`).join('') || '<p class="sub">No activity yet.</p>';
+
+  // Chats
+  if (state.session >= sessions.length) state.session = 0;
+  $('sessions').innerHTML = sessions.map((s, i) => `<button class="pick${i === state.session ? ' on' : ''}" data-sess="${i}"><span class="row" style="justify-content:space-between;width:100%">${chip(s.channel)}<span class="muted" style="font-size:12px">${esc(s.date)}</span></span><b>${esc(s.items[s.items.length - 1].what)}</b><span class="sub">${s.items.length} change${s.items.length > 1 ? 's' : ''}</span></button>`).join('') || '<p class="sub" style="padding:12px">No conversations yet.</p>';
+  const cur = sessions[state.session];
+  $('sess-title').textContent = cur ? chName(cur.channel) + ' · ' + cur.date : 'No conversations yet';
+  $('sess-body').innerHTML = cur ? cur.items.map((l) => `<div class="line"><span style="font-size:15px">${esc(l.what)}</span><span class="lab">${esc(l.skill)}</span></div>`).join('') : '';
+
+  // Agents
+  const AG = [['claude', 'Claude', 'Desktop app · memory via MCP'], ['chatgpt', 'ChatGPT', 'Custom GPT · memory via HTTP Actions'], ['openclaw', 'OpenClaw', 'Business agent · check-ins on a schedule'], ['kiro', 'Kiro / Claude Code', 'Coding agent · direct file access']];
+  const today = new Date().toISOString().slice(0, 10);
+  $('agents').innerHTML = AG.map(([id, label, kind]) => {
+    const mine = p.log.filter((l) => l.channel === id);
+    const last = mine[mine.length - 1];
+    const st = !last ? ['idle', 'No activity yet'] : last.date === today ? ['ok', 'Active today'] : ['ok', 'Last seen ' + last.date];
+    return `<section class="card" style="display:flex;flex-direction:column;gap:14px"><div class="row" style="justify-content:space-between">${chip(id)}<span class="pill ${st[0]}">${esc(st[1])}</span></div>
+      <h2 style="font-size:20px">${esc(label)}</h2><p class="sub">${esc(kind)}</p>
+      <div class="line"><span class="muted">Changes here</span><b>${mine.length}</b></div>
+      <div class="line"><span class="muted">Last</span><span style="text-align:right;font-weight:600">${esc(last ? last.what : '—')}</span></div></section>`;
+  }).join('');
+
+  // Memory
+  $('files').innerHTML = Object.keys(FILE_NAMES).map((f) => `<button class="pick${f === state.file ? ' on' : ''}" data-file="${f}"><b>${FILE_NAMES[f]}</b><span class="sub">${f}</span></button>`).join('');
+  $('file-title').textContent = FILE_NAMES[state.file] + ' · ' + state.file;
+  $('file-body').textContent = p.raw[state.file] || '(empty)';
+}
+
+function groupSessions(log) {
+  const out = [];
+  for (const l of log) {
+    const last = out[out.length - 1];
+    if (last && last.channel === l.channel && last.date === l.date) last.items.push(l);
+    else out.push({channel: l.channel, date: l.date, items: [l]});
+  }
+  return out.reverse();
+}
+
+document.addEventListener('click', async (e) => {
+  const t = e.target.closest('button'); if (!t) return;
+  if (t.dataset.tab) { state.tab = t.dataset.tab; render(); return; }
+  if (t.dataset.sess) { state.session = +t.dataset.sess; render(); return; }
+  if (t.dataset.file) { state.file = t.dataset.file; render(); return; }
+  const base = '/memory/places/' + encodeURIComponent(state.slug);
+  try {
+    if (t.dataset.act === 'confirm') await api(base + '/bills/confirm', {method:'POST', body:JSON.stringify({confirmed_by:'user'})});
+    if (t.dataset.act === 'wrong') { alert('Tell Benji in your assistant what is wrong — it will re-read the bill.'); return; }
+    if (t.dataset.act === 'answer') {
+      const v = $('q' + t.dataset.i).value.trim(); if (!v) return;
+      await api(base + '/questions/' + encodeURIComponent(t.dataset.q), {method:'POST', body:JSON.stringify({answer:v})});
+    }
+    await load();
+  } catch (err) { alert(err.message); }
+});
+document.addEventListener('change', async (e) => {
+  if (e.target.id === 'place') { state.slug = e.target.value; await load(); return; }
+  if (e.target.dataset.task) {
+    try { await api('/memory/places/' + encodeURIComponent(state.slug) + '/tasks/' + encodeURIComponent(e.target.dataset.task), {method:'PATCH', body:JSON.stringify({status:e.target.value})}); } catch (err) { alert(err.message); }
+    await load();
+  }
+});
+document.addEventListener('focusin', (e) => { if (e.target.matches('input.field:not(#key)')) state.busy = true; });
+document.addEventListener('focusout', (e) => { if (e.target.matches('input.field:not(#key)')) state.busy = false; });
+load(); setInterval(load, 10000);
+</script>
+</body>
+</html>

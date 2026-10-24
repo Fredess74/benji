@@ -1,0 +1,19 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.hypothesis/
+.env
+dist/
+
+# runtime data (may contain addresses, bills, account numbers)
+benji-memory/
+data/benji.db
+data/uploads/
+data/documents/
+
+# source files we do not redistribute: raw BERDO workbooks (contain owner names/addresses),
+# hackathon rules. The anonymised peer cache data/processed/berdo_2026_peers.csv is committed.
+data/raw/
+HACKACHUSETTS*.pdf
+
+.kiro/settings/*.lock

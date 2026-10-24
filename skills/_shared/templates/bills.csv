@@ -1,0 +1,1 @@
+bill_id,fuel,utility,account_last4,period_start,period_end,days,quantity,unit,total_usd,fixed_usd,usage_usd,demand_usd,demand_kw,credits_usd,estimated_read,source,status,confirmed_by,confirmed_on,notes
