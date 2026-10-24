@@ -76,13 +76,15 @@ def integrations():
          "detail": "Optional. Rewords validated results only; deterministic summaries are used otherwise."},
         {"id": "claude_mcp", "name": "Claude (MCP server)", "status": "available",
          "detail": "python -m benji.mcp_server (stdio). Tools tested with an in-process MCP client; not yet tested "
-                   "inside the Claude Desktop app. Config: integrations/claude/claude_desktop_config.json."},
+                   "inside the Claude Desktop app. Config: integrations/claude/claude_desktop_config.json; also "
+                   "bundled in the Claude Code plugin (.claude-plugin/, .mcp.json)."},
         {"id": "chatgpt_actions", "name": "ChatGPT custom GPT (Actions)", "status": "ready_to_configure",
          "detail": "OpenAPI schema at /assistant/openapi.json and integrations/chatgpt/. Needs a public HTTPS URL "
                    "(tunnel) and BENJI_API_KEY; not yet tested inside ChatGPT."},
-        {"id": "openclaw", "name": "OpenClaw skill (business orchestrator)", "status": "ready_to_configure",
-         "detail": "integrations/openclaw/benji/SKILL.md calls the local /assistant API. Not yet tested inside "
-                   "OpenClaw."},
+        {"id": "openclaw", "name": "OpenClaw business agent", "status": "ready_to_configure",
+         "detail": "Load the same skills/ folder (13 SKILL.md files) and give the agent the benji-memory/ folder "
+                   "(or HTTP /memory/*). Tasks assigned to 'openclaw' in plan.md are its to do. Not yet tested "
+                   "inside OpenClaw."},
         {"id": "monitoring", "name": "Live building monitoring", "status": "planned",
          "detail": "Not implemented; Benji works from bills, no hardware required."},
     ]
@@ -115,9 +117,10 @@ def connect_info():
     root = str(documents.ROOT)
     return {
         "claude_desktop": {"mcpServers": {"benji": {"command": sys.executable, "args": ["-m", "benji.mcp_server"],
-                                                    "cwd": root, "env": {"BENJI_DB": store.path}}}},
+                                                    "cwd": root, "env": {"BENJI_MEMORY": str(memory.root())}}}},
         "chatgpt_openapi_url": f"{assistant.PUBLIC_URL}/assistant/openapi.json",
-        "openclaw_skill_path": str(documents.ROOT / "integrations" / "openclaw" / "benji"),
+        "openclaw_skills_path": str(documents.ROOT / "skills"),
+        "memory_path": str(memory.root()),
         "api_key_required": bool(os.environ.get("BENJI_API_KEY")),
         "example_prompt": ("I want to lower my energy bills. Use Benji: create my property, then I'll give you my "
                            "last 12 months of bills. Read them back to me before confirming."),

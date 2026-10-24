@@ -97,7 +97,10 @@ These consolidate the original 20 capability ideas. A written skill is an instru
 
 ## A working dashboard
 
-Open **http://127.0.0.1:8000/app** after starting the server. The interface is implemented, with four views:
+Open **http://127.0.0.1:8000/app** after starting the server. To see it populated without connecting an assistant,
+run `python scripts/load_demo.py` first: it adds one example place (a leased Cambridge cafe, 12 months of bills plus
+2 waiting for confirmation, a plan with a task assigned to `openclaw`). **All of it is invented demo data**; every file
+says so and the dashboard shows a DEMO DATA banner. The interface is implemented, with four views:
 
 | View | What the user can do |
 |---|---|

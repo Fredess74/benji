@@ -8,5 +8,5 @@
 - [x] 6. File memory module, MCP tools, HTTP /memory API, cross-check from memory (R2, R3.1)
 - [x] 7. Tests: skill files, memory, API, MCP (R1.2, R2.2-R2.5)
 - [x] 8. Remove demo data from the user path, old dashboard and intermediate files (R3.2)
-- [ ] 9. Dashboard on /memory (separate design pass)
+- [x] 9. Dashboard at /app on /memory: next step, bills to confirm, questions, plan + task owners (OpenClaw), impact via cross-check, memory map; opt-in demo place (`scripts/load_demo.py`, labelled DEMO DATA); Claude Code plugin packaging
 - [ ] 10. Side-by-side test: plain chatbot vs Benji skills on the same scenarios

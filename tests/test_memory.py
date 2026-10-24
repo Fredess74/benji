@@ -2,6 +2,7 @@
 
 import asyncio
 import json
+from pathlib import Path
 
 import pytest
 
@@ -138,6 +139,23 @@ def test_dashboard_page_and_memory_info(client, mem):
     assert client.get("/app").status_code == 200
     info = client.get("/memory/info").json()
     assert info["root"].endswith("benji-memory") and "plan.md" in info["files"]
+
+
+def test_demo_loader_marks_everything_as_demo(tmp_path, monkeypatch):
+    import importlib.util
+    monkeypatch.setenv("BENJI_MEMORY", str(tmp_path / "benji-memory"))
+    spec = importlib.util.spec_from_file_location("load_demo", Path(__file__).resolve().parent.parent / "scripts" / "load_demo.py")
+    demo = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(demo)
+    demo.load()
+    from benji import memory
+    r = memory.read_place(demo.SLUG)
+    assert all("DEMO DATA" in r["raw"][f] for f in ("profile.md", "bills.csv", "findings.md", "plan.md", "open-questions.md"))
+    assert r["bills_pending"] == 2 and any(t["Owner"] == "openclaw" for t in r["tasks"])
+    assert set(memory.cross_check(demo.SLUG)["costs"]) == {"electricity", "natural_gas"}
+    with pytest.raises(SystemExit):
+        demo.load()
+    demo.load(reset=True)
 
 
 def test_mcp_tools(mem):

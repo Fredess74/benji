@@ -30,6 +30,9 @@ These are design choices, not proven usability gains or an accessibility certifi
 
 ## Three-minute demonstration
 
+To try the dashboard without a connected client: `python scripts/load_demo.py`, then start the server and open
+`/app`. The example place is invented demo data, labelled as such in every file and on screen.
+
 1. Introduce a business tenant with bills and a limited budget.
 2. Show Benji reading back values and asking necessary questions.
 3. Confirm bills, inspect the calculation and explain missing inputs.

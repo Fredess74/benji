@@ -116,9 +116,12 @@ ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;font-si
         <li><b>Claude Desktop</b>: add the <code>benji</code> MCP server (<code>integrations/claude/</code>).</li>
         <li>Tell the agent about your place and send bills, e.g. “I run a coffee shop in Cambridge, we lease — here are our last 12 bills.” The place appears here within 10 seconds.</li>
       </ol>
+      <p class="sub">Just looking? <code>python scripts/load_demo.py</code> loads one example place, clearly marked as invented demo data.</p>
     </div>
 
     <!-- HOME -->
+    <div id="demo" class="banner hide" style="background:#E8E4F5;color:#3B2F6E"><span>DEMO DATA — this place and its bills are invented for the presentation. Not a real business.</span></div>
+
     <section id="tab-home" class="tab">
       <div id="stale" class="banner hide"><span>Something changed — ask Benji to refresh the plan.</span></div>
       <div class="cols">
@@ -255,6 +258,7 @@ function render() {
   const p = state.place;
   ['root-empty', 'root-agents'].forEach((id) => $(id).textContent = state.root || '(start the Benji server)');
   $('empty').classList.toggle('hide', !!p);
+  $('demo').classList.toggle('hide', !(p && (p.slug.startsWith('demo-') || (p.raw['profile.md'] || '').includes('DEMO DATA'))));
   document.querySelectorAll('.tab').forEach((t) => t.classList.toggle('hide', !p || t.id !== 'tab-' + state.tab));
   document.querySelectorAll('.nav').forEach((b) => b.classList.toggle('on', b.dataset.tab === state.tab));
   if (!p) { $('title').textContent = 'Benji'; $('subtitle').textContent = ''; $('eyebrow').textContent = ''; return; }
@@ -271,7 +275,7 @@ function render() {
   const waitingN = (pending.length ? 1 : 0) + p.open_questions.length;
   const tasksDone = p.tasks.filter((t) => (t.Status || '').trim() === 'done').length;
   const qTotal = tableRows(p.raw['open-questions.md'] || '');
-  const agentLog = p.log.filter((l) => l.channel !== 'dashboard');
+  const agentLog = p.log.filter((l) => l.channel !== 'dashboard' && l.skill !== 'demo-loader');
   const sessions = groupSessions(p.log);
   $('c-home').textContent = waitingN || ''; $('c-home').classList.toggle('hide', !waitingN);
   $('c-chats').textContent = sessions.length;
