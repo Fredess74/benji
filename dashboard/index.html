@@ -4,8 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Benji</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='23' fill='%232E6A4F'/%3E%3Cg transform='translate(14 14) scale(0.72)'%3E%3Cpath d='M18 92 V16 Q18 10 24 10 H32 Q38 10 38 16 V44 L62 26 L86 46 V84 Q86 92 78 92 Z' fill='%23EEF2EA' stroke='%23EEF2EA' stroke-width='8' stroke-linejoin='round'/%3E%3Cpath d='M48 82 C48 62 60 52 78 52 C78 72 66 82 48 82 Z' fill='%23F2B33D'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
 <style>
 :root{--accent:#2E6A4F;--soft:#2E6A4F1F;--bg:#F3F4EF;--ink:#1F2A24;--muted:#5B675F;--line:#E4E8E1}
 *{box-sizing:border-box}
@@ -21,7 +22,9 @@ main{flex:999 1 560px;min-width:0;padding:32px clamp(16px,3vw,44px) 48px}
 .wrap{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
 .logo{display:flex;align-items:center;gap:12px;padding:0 6px}
 .logo i{width:40px;height:40px;border-radius:13px;background:var(--accent);display:flex;align-items:center;justify-content:center}
-.logo b{font-family:'Bricolage Grotesque',sans-serif;font-size:22px}
+.logo b{font-family:'Bricolage Grotesque',sans-serif;font-size:26px;font-weight:800;letter-spacing:-.04em;line-height:1}
+.idot{position:relative;display:inline-block}
+.idot::after{content:'';position:absolute;left:50%;top:.035em;width:.21em;height:.21em;margin-left:-.105em;border-radius:50%;background:#F2B33D}
 .logo small{display:block;font-size:12px;color:var(--muted)}
 .nav{display:flex;align-items:center;gap:12px;width:100%;min-height:46px;padding:10px 14px;border:0;border-radius:14px;background:transparent;color:#3E4A43;font-size:15px;font-weight:600;cursor:pointer;text-align:left}
 .nav:hover{background:#E8ECE5}
@@ -79,8 +82,8 @@ ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;font-si
 <div class="app">
   <aside>
     <div class="logo">
-      <i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/></svg></i>
-      <div><b>Benji</b><small>energy manager</small></div>
+      <i><svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true"><path d="M18 92 V16 Q18 10 24 10 H32 Q38 10 38 16 V44 L62 26 L86 46 V84 Q86 92 78 92 Z" fill="#EEF2EA" stroke="#EEF2EA" stroke-width="6" stroke-linejoin="round"/><path d="M50 80 C50 64 60 55 75 55 C75 71 65 80 50 80 Z" fill="#F2B33D"/><path d="M53 77 L68 62" fill="none" stroke="#2E6A4F" stroke-width="2.6" stroke-linecap="round"/></svg></i>
+      <div><b>benj<span class="idot">ı</span></b><small>energy manager</small></div>
     </div>
     <label class="sub" for="place" style="display:flex;flex-direction:column;gap:6px;font-weight:600">Place
       <select id="place" class="field" style="flex:none"></select>

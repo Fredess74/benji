@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Benji">
+  <path d="M18 92 V16 Q18 10 24 10 H32 Q38 10 38 16 V44 L62 26 L86 46 V84 Q86 92 78 92 Z" fill="#2E6A4F" stroke="#2E6A4F" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M50 80 C50 64 60 55 75 55 C75 71 65 80 50 80 Z" fill="#F2B33D"/>
+  <path d="M53 77 L68 62" fill="none" stroke="#2E6A4F" stroke-width="2.6" stroke-linecap="round"/>
+</svg>
