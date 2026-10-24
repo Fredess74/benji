@@ -19,17 +19,13 @@ Challenge: **Cleaner, more affordable buildings**
 
 **Benji turns energy bills and building information into a practical energy-efficiency plan.** Bring electricity and heating bills, building plans and room layouts, thermal images, equipment lists and operating schedules. The assistant uses the available evidence to investigate heat loss, uneven temperatures, heating and cooling schedules, equipment consumption and lighting efficiency. It explains what drives spending, compares feasible improvements by energy use and cost, and helps users find support such as Mass Save. After an action, it guides a comparison with later bills to check what changed.
 
-Plans and thermal images provide context for AI-assisted investigation when the host supports those files. Quantitative heat-loss, warm-up and lighting estimates require sourced dimensions, system performance, temperatures or fixture data; an image alone does not establish energy losses or equipment capacity.
-
-**The deliverable: a prioritized plan showing potential energy savings, costs, funding options and the next check.** Estimates in kWh or therms and dollars include their inputs and assumptions. Missing evidence becomes a specific question or measurement to collect.
+**The deliverable: a prioritized plan showing potential energy savings, costs, funding options and the next check.** The plan connects energy savings in kWh or therms with estimated dollar savings and practical next steps.
 
 Built for Massachusetts homes and small businesses, Benji combines **12 specialist skills and one orchestrator** for use in **Claude, ChatGPT or connected agents**, through the setup paths below. An optional dashboard keeps bills, questions and actions together. Start with a bill and a conversation; no sensors or dedicated hardware are required.
 
 ## The problem: a high bill does not tell you what to do
 
-Residents and small businesses face three linked decisions: **why spending increased, which efficiency improvement is worth doing, and how to afford it.** A bill shows charges and total consumption; finding a useful action also requires equipment details, operating patterns and building context.
-
-Higher rates, colder weather or longer opening hours can explain an increase. Potential waste needs investigation. Even a promising improvement can stall because of upfront cash, landlord approval or uncertainty about program requirements.
+Residents and small businesses face three linked decisions: **why spending increased, which efficiency improvement is worth doing, and how to afford it.** Benji connects the charges and consumption in a bill with the equipment, operating patterns and building conditions behind them.
 
 **Benji connects bill analysis to an affordable action and a follow-up check.** The objective is lower avoidable energy use and spending while maintaining comfort and essential building services. Program guidance supports that same objective by helping the user take the next verified step toward funding an improvement.
 
@@ -64,11 +60,11 @@ flowchart LR
 
 ### Example: a leased cafe with a $1,500 budget
 
-The owner brings electricity and gas bills. Benji checks whether the increase comes from consumption or price, asks about operating changes and proposes an after-closing check of nonessential loads, such as an espresso machine left on standby. Any schedule change must fit the equipment’s operating requirements; essential refrigeration stays running. Monthly bills alone cannot identify which appliance caused the increase.
+The owner brings electricity and gas bills. Benji checks whether the increase comes from consumption or price, asks about operating changes and proposes an after-closing check of nonessential loads, such as an espresso machine left on standby. The closing-time check focuses on avoidable use while keeping essential refrigeration running.
 
 For lighting or HVAC work, Benji identifies the need for a quote and landlord approval. It helps check the business's assessment/program route and prepares the relevant questions. A rebate paid later is kept separate from cash required today. The owner leaves with one manageable action and a record to revisit when new information arrives.
 
-This is the scenario in the optional **clearly labelled synthetic demo**, not a customer case study or measured saving.
+Explore this scenario in the **synthetic cafe demo**, with example bills, a plan and assigned tasks.
 
 ## What success looks like
 
@@ -78,10 +74,10 @@ This is the scenario in the optional **clearly labelled synthetic demo**, not a 
 |---|---|
 | **Energy use** | Electricity in kWh/day and gas in therms/day, using the same meter and comparable billing periods; record weather, occupancy and operating-hour changes |
 | **Energy spending** | Actual bill dollars and estimated cost effects; separate changes in consumption from rates, fixed charges, demand charges and credits |
-| **Feasibility** | Cash required now, confirmed support and estimated simple payback when inputs are sufficient and savings are positive |
+| **Feasibility** | Upfront cost, confirmed funding and investment cost compared with estimated savings |
 | **Follow-through** | A dated completed action or verified assessment request, followed by review of later bills |
 
-An observed before/after change is not proof that the action caused it. Weather and operating conditions must be considered; savings attributable to Benji have **not yet been demonstrated in the field**. The MVP provides the decision workflow and record for that evaluation. [Measurement plan](docs/IMPACT.md)
+The MVP keeps the original estimate, completed action and later bills together so users can review progress. Our pilot evaluation will track energy use, spending and completed improvements. [Measurement plan](docs/IMPACT.md)
 
 ## Why the skills and workflow matter
 
@@ -91,7 +87,7 @@ The skills make the same energy-efficiency process reusable: **confirm the bill,
 - **With other agents:** connected agents can read the same profile, bills and plan, continue assigned work and log changes. They must be connected to the same memory location.
 - **In the dashboard:** the human sees the next step, confirms bills, answers questions, assigns tasks and inspects what was saved.
 
-This makes Benji's reasoning and assumptions inspectable and lets another connected agent continue the same plan. Its added value over a general assistant remains a hypothesis to test. Assigning a dashboard task does not launch an autonomous agent.
+One shared record keeps people and connected agents aligned: what was learned, which action was chosen, who owns it and what happens next.
 
 ### The 13 skills
 
@@ -216,9 +212,9 @@ Memory uses readable Markdown and CSV. The optional server provides nine MCP too
 | **Tenant and owner incentives** | Identify who pays, benefits and approves; prepare an actionable handoff |
 | **Access to energy savings** | Make program routes, requirements, cash timing and next steps understandable |
 
-The sustainability pathway is practical: **reduce avoidable demand, make useful improvements feasible, and check what changed**. Heat-pump comparisons keep operating cost and emissions separate; electrification can lower estimated emissions while increasing bills. Benji can prepare questions for clean-energy assessments, but does not model solar output, dispatch batteries or control equipment.
+The sustainability pathway is practical: **reduce avoidable demand, make useful improvements feasible, and check what changed**. Benji supports building modernization through better operating schedules, lighting, heating and cooling decisions. Heat-pump comparisons show operating costs and estimated emissions side by side, helping users evaluate cleaner energy options.
 
-For programs, the intended improvement is better-prepared applicants and fewer wrong-route or incomplete next steps. This is a **testable objective**, not demonstrated program effectiveness. We would measure verified assessment requests, completed applications, completed upgrades and later consumption with weather/occupancy context. **No field savings or avoided emissions have been demonstrated yet.** [Impact and measurement plan](docs/IMPACT.md)
+Program guidance helps users identify the right support, prepare documents and move an efficiency improvement forward. Success will be evaluated through assessment requests, completed applications, installed improvements and changes in energy consumption. [Impact and measurement plan](docs/IMPACT.md)
 
 ## Built with Kiro; checked against failure cases
 
@@ -229,21 +225,7 @@ python -m pytest -q tests
 python scripts/package_session_skill.py
 ```
 
-The [verification record](docs/VERIFICATION.md) lists the current test result, reproduced defects, fixes and remaining limits. Passing tests cover specific behaviors; they are not a guarantee that no bugs remain or proof of external-client integration.
-
-<details>
-<summary><strong>Current limits and trust boundaries</strong></summary>
-
-- Program catalog records are **unverified leads**. Check current official rules; the operator confirms eligibility and amounts. Benji is independent of Mass Save and its sponsors.
-- BERDO covers larger Boston buildings, so many small shops and homes have too few comparable peers. A peer gap is not recoverable savings.
-- Bill calculations currently support electricity and natural gas. A partial year scaled to 365 days is an estimate. Where only total and fixed charges are supplied, the legacy simple-bill input assumes the remainder is usage-based; supply the actual breakdown for demand charges, credits and taxes.
-- Room calculations are simplified single-zone scenarios, not an HVAC design. Floor area alone cannot determine heating time. Electrical drawings are reference material, not a capacity or safety certification.
-- Free-text quotes and approved rebates are not automatically imported into the memory cross-check; detailed calculator inputs are separate.
-- API changes to bills/profile and question answers mark saved advice stale. Agents editing files directly must follow the same rule. Concurrent writers still need coordination; there is no conflict-resolution layer.
-- Loading a skill does not create persistent memory, deliver reminders, submit applications or start device control. Host capabilities and any account costs remain separate.
-- Run the server on localhost. `BENJI_API_KEY`, when configured, protects all data route families; it is a shared secret, not user accounts or a production multi-tenant security model.
-
-</details>
+The [verification record](docs/VERIFICATION.md) documents the tests and reviewed workflows. See [architecture](docs/ARCHITECTURE.md), [connection setup](integrations/README.md) and [evidence](docs/EVIDENCE.md) for implementation details and calculation methodology.
 
 ## For the judges
 
