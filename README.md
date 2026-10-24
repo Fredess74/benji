@@ -3,7 +3,7 @@
 <img src="docs/brand/benji-app-icon.svg" alt="Benji: a house-shaped b with a leaf window" width="100" height="100">
 
 # Benji
-### Less energy waste. A clearer path to savings.
+### Understand your energy. Reduce waste. Make the next improvement affordable.
 
 **An AI energy and sustainability assistant for people and small businesses — built as reusable skills that work in a Claude conversation or alongside other agents.**
 
@@ -11,15 +11,38 @@ Hackachusetts 2026 · **TRACK 3 — CLIMATE TECH**
 
 Challenge: **Cleaner, more affordable buildings**
 
-[Try the skill](https://github.com/Fredess74/benji/raw/refs/heads/main/downloads/benji.zip) · [Quick start](#try-benji) · [How it works](#one-workflow-from-bill-to-follow-through) · [For judges](docs/JUDGING_GUIDE.md) · [Evidence](docs/EVIDENCE.md)
+[Try the skill](https://github.com/Fredess74/benji/raw/refs/heads/main/downloads/benji.zip) · [Everyday examples](#what-people-can-ask-benji) · [Quick start](#try-benji) · [Vision](#from-helpful-conversations-to-ongoing-energy-support) · [For judges](docs/JUDGING_GUIDE.md)
 
 </div>
 
-> “Our energy bill keeps going up. What is avoidable, what can we change, and which support can actually help us pay for it?”
+> “The coffee machine stays on after closing. Our refrigerator is old. The energy bill keeps rising. What should we check first — and what can we actually afford to change?”
 
-**Benji helps people investigate electricity and heating overspending, choose practical improvements, and navigate energy-efficiency programs such as Mass Save.** It combines **12 specialist skills and one orchestrator** into a repeatable workflow: understand the bill, investigate waste, compare options, check support, take an approved next step, and review the next bill.
+**The problem:** people receive an energy bill, not an explanation of which equipment, habits or building conditions they can improve. A cafe owner, renter or small landlord often has to connect consumption, equipment choices, upfront costs and program rules themselves.
 
-Start with a bill and a conversation. Add shared memory and a dashboard when people and agents need to continue the work together. No sensors or dedicated hardware are required for this entry point.
+**The solution:** Benji turns a conversation and the user's evidence into a practical energy plan: understand the spending, investigate avoidable use, compare improvements, check assistance such as Mass Save, and follow up on the result.
+
+**The value:** a clearer path to lower energy use and costs, less time spent navigating programs, and more informed modernization of homes and businesses. The user leaves with a next step, its expected benefit, what it costs and who needs to approve it. Savings remain estimates until checked against suitable evidence.
+
+**The product is 13 AI skills + a human dashboard + optional connections to other agents.** Start inside a normal Claude conversation. Add a shared place record when a person and their business agent need to continue the same work. No sensors or dedicated hardware are required to get started.
+
+## What people can ask Benji
+
+| A real question | How the skills help | What the person gets |
+|---|---|---|
+| **“Our espresso machine stays on all night. Is that costing us?”** | Review the closing schedule, standby settings, manufacturer guidance and measured draw; request a check when the evidence is missing | A shutdown/standby option to verify, an estimate from actual operating data, and a task for the closer |
+| **“Is this refrigerator inefficient? Which replacement makes sense?”** | Discuss model specifications, energy-use data, door seals, maintenance and replacement quotes; compare like-for-like service and capacity | Repair-versus-replace questions, estimated running costs and a program/pre-approval checklist |
+| **“We heat an empty room, but another room stays cold.”** | Investigate schedules, drafts, distribution and heating/cooling performance before proposing equipment replacement | A low-cost check, a landlord/contractor brief and calculations when sufficient building inputs are available |
+| **“My bill rose. Did we use more energy or did the price change?”** | Separate usage, rates, billing periods, fixed/demand charges and credits | An explanation tied to the bill and specific questions about any remaining increase |
+| **“Can Mass Save help, and what do I do next?”** | Check the appropriate property/provider route, current conditions, documents, cash timing and who can apply | A dated checklist, missing information and a next step to verify with the program |
+| **“We want a new appliance or longer opening hours. What changes?”** | Use equipment specifications, realistic operating hours and tariffs to discuss added consumption and cost | A transparent planning estimate and questions about electrical capacity, approvals and alternatives |
+
+These are **guided skill workflows**, not a claim that Benji already knows every appliance model or can identify an individual device from a monthly bill. The host AI uses the documents and tools available to it; the local calculator supports a narrower set of structured scenarios. Essential refrigeration and safety systems stay protected.
+
+### Convenient for the person, reusable by their agents
+
+An owner can ask a question in ordinary language, confirm the information Benji extracted, and choose what to investigate. The dashboard keeps the next step, unanswered questions, task owners and progress in one place. A connected agent can then prepare a landlord note, gather missing inputs or draft a report using the same record. The owner does not have to explain the building again each time.
+
+In a skills-only session, the user saves a handoff record for next time. Shared memory enables continuity across connected tools; it does not automatically connect every assistant or send messages.
 
 ## The problem: a high bill does not tell you what to do
 
@@ -44,6 +67,12 @@ Mass Save and professional assessors already provide valuable assistance. Benji 
 
 ## One workflow, from bill to follow-through
 
+| Inputs | What Benji does | Useful outputs |
+|---|---|---|
+| Bills, equipment lists/specifications, operating hours, building details, comfort complaints, quotes and budget | Confirm the facts → investigate patterns → compare feasible options → check program conditions → agree on a next step | A plain-language explanation, estimates with assumptions, a prioritized plan, program checklist, assigned tasks and a shareable report |
+
+Room layouts and electrical drawings can provide context when the host can read them. They do not by themselves establish heat loss, equipment capacity or wiring safety. Interval readings can support after-hours analysis; monthly bills support billing-period analysis. Automated sensor ingestion and equipment control are future integration work.
+
 ```mermaid
 flowchart LR
     A["Understand: bills, building, user role"] --> B["Investigate: usage, rates, equipment"]
@@ -61,13 +90,15 @@ flowchart LR
 | **Enable** | Check residential/commercial program routes, required evidence, cash timing and landlord consent | A funding checklist and a concrete next action |
 | **Follow through** | Draft requests, assign responsibilities and review later bills | A continuing record that people or connected agents can pick up |
 
-### Example: a leased cafe with a $1,500 budget
+### Example: a leased cafe, one overnight check, a $1,500 budget
 
-The owner brings electricity and gas bills. Benji checks whether the increase comes from consumption or price, asks about operating changes and proposes an after-closing observation. Essential refrigeration stays running. Monthly bills alone cannot prove an oven was left on.
+The owner brings electricity and gas bills and asks about the espresso machine and an aging refrigerator. Benji first separates price changes from consumption. It then proposes a closing-time check: what stays on, what must stay on, and what the manufacturer's operating instructions allow staff to change.
 
-For lighting or HVAC work, Benji identifies the need for a quote and landlord approval. It helps check the business's assessment/program route and prepares the relevant questions. A rebate paid later is kept separate from cash required today. The owner leaves with one manageable action and a record to revisit when new information arrives.
+**Illustrative calculation, not a demo result:** if an operating check identifies an unnecessary overnight load and a meter measures its average draw at **0.30 kW** for 10 hours on 300 nights, the opportunity is **900 kWh/year**. At an assumed usage-based rate of $0.25/kWh, that is **$225/year before restart-energy effects**. Fixed charges stay separate. Real savings require checking the equipment's operating needs and measuring what changed; the nameplate's maximum watts are not its average standby draw.
 
-This is the scenario in the optional **clearly labelled synthetic demo**, not a customer case study or measured saving.
+For the refrigerator, Benji helps compare maintenance and replacement using the actual model data and quotes. For lighting or HVAC work, it records landlord approval and checks the business's program route before purchase. A rebate paid later is kept separate from the $1,500 available today.
+
+**The immediate outcome is a decision the owner can act on:** verify the overnight load, ask the supplier one specific question, or prepare an assessment request. Lower consumption and spending are outcomes to measure afterward. The optional cafe dashboard is a **synthetic demo**; neither it nor the example above is a customer savings claim.
 
 ## Why the skills and workflow matter
 
@@ -192,7 +223,23 @@ Memory uses readable Markdown and CSV. The optional server provides nine MCP too
 
 The sustainability pathway is practical: **reduce avoidable demand, make useful improvements feasible, and check what changed**. Heat-pump comparisons keep operating cost and emissions separate; electrification can lower estimated emissions while increasing bills. Benji can prepare questions for clean-energy assessments, but does not model solar output, dispatch batteries or control equipment.
 
+This connects **sustainable consumption** with **building modernization**: start with unnecessary runtime and maintenance, then assess insulation, controls or equipment replacement. **Clean-energy adoption** becomes a more informed decision when the user can see operating costs, comfort needs, upfront funding and program requirements together. Both residential and commercial users can follow that process.
+
 For programs, the intended improvement is better-prepared applicants and fewer wrong-route or incomplete next steps. This is a **testable objective**, not demonstrated program effectiveness. We would measure verified assessment requests, completed applications, completed upgrades and later consumption with weather/occupancy context. **No field savings or avoided emissions have been demonstrated yet.** [Impact and measurement plan](docs/IMPACT.md)
+
+## From helpful conversations to ongoing energy support
+
+The vision is an accessible energy assistant that grows from **“help me understand this bill”** into **“help me keep this building efficient.”** People choose the checks, frequency and communication channel; automation should lead to a useful action, not a stream of unexplained alerts.
+
+| Stage | Experience | Status and requirements |
+|---|---|---|
+| **Available in the MVP** | Discuss equipment and spending; prepare a plan, program checklist or report; track questions and tasks in the dashboard | Skills run when invoked. Dashboard/server checks are tested; the AI conversation depends on the host and connected tools |
+| **Next: weekly spending emails** | A business agent drafts a short update: what changed, spending versus budget, tasks due and one recommended action | Report drafting exists; automatic scheduling and email delivery need a configured host, data access and user authorization. A weekly spending figure needs timely data; monthly bills alone cannot establish it |
+| **Next: actionable notifications** | Alert the chosen person about an unusual load, missed task or equipment exception and record their response | Needs reliable new readings or events, chosen thresholds, notification connections and tests for false alarms. Dashboard refresh is not continuous energy monitoring |
+| **Future: urgent equipment escalation** | Forward a refrigerator-temperature or heating-failure alarm to the responsible manager, preserve the incident record and help prepare a service request | Requires trusted sensors, delivery confirmation and a tested escalation path. Benji is not currently an emergency detection or response system |
+| **Future: connected building workflows** | Use OpenClaw on a server or Raspberry Pi to coordinate checks, follow-ups and approved communications with other business agents | Requires deployment and end-to-end integration testing. Device control, phone integration and automatic application submission are not implemented |
+
+The current project supplies the reusable skills and shared record this vision builds on. A weekly email or emergency notification should only be presented as working after its data source, trigger and delivery have been demonstrated.
 
 ## Built with Kiro; checked against failure cases
 
